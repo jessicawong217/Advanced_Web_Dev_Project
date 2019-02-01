@@ -1,33 +1,32 @@
 const mongoose = require('mongoose');
 
-const MenuSchema = new mongoose.Schema({
-    name: {
+const CounterSchema = new mongoose.Schema({
+    order_id: {
         type: String
     },
-    description: {
-        type: String
+    total: {
+        type: Number
     },
-    price: {
-        type: Number,
-        required: true
+    date_time: {
+        type: Date
     }
 });
 
-// Methods to be used on each menu object.
-MenuSchema.method({});
+// Methods to be used on each counter object.
+CounterSchema.method({});
 
-// Static methods to be called against Menu.
-MenuSchema.statics = {
+// Static methods to be called against Counter.
+CounterSchema.statics = {
     // Wrapper on find method will be used to return clearer errors.
     get(id) {
         return this.findById(id)
             .exec()
-            .then(menu => {
-                if (menu) {
-                    return menu;
+            .then(counter => {
+                if (counter) {
+                    return counter;
                 }
                 // TODO: return error status code within error.
-                return Promise.reject(new Error('No menu item found'));
+                return Promise.reject(new Error('No counter item found'));
             });
     },
 
@@ -40,4 +39,4 @@ MenuSchema.statics = {
     }
 };
 
-module.exports = mongoose.model('Menu', MenuSchema);
+module.exports = mongoose.model('Counter', CounterSchema);
