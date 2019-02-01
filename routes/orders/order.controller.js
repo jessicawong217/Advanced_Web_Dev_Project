@@ -1,5 +1,11 @@
 const Order = require('./order.model');
 
+/**
+ * Return a paged list of orders.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
 function list(req, res, next) {
   const { limit = 50, skip = 0 } = req.query;
   Order.list({ limit, skip })
@@ -7,6 +13,13 @@ function list(req, res, next) {
     .catch(e => next(e));
 }
 
+/**
+ * Seed the orders db with static data.
+ * TODO: use a json file to import.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
 function seed(req, res, next) {
   var dummyArray = [{ tableId: 1, createdAt: Date.now() }];
 
