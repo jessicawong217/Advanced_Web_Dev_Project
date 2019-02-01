@@ -18,7 +18,7 @@ var app = express();
 const mongoUri = config.mongodb.host;
 mongoose.connect(mongoUri, { useNewUrlParser: true });
 mongoose.connection.on('error', () => {
-  throw new Error(`unable to connect to database: ${mongoUri}`);
+    throw new Error(`unable to connect to database: ${mongoUri}`);
 });
 
 // view engine setup
@@ -52,12 +52,6 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('error');
-});
-
-const port = 3000;
-
-app.listen(port, () => {
-    console.log('Server started on port: ' + port);
 });
 
 module.exports = app;
