@@ -12,6 +12,10 @@ router
     .get(counterCtrl.item);
 
 router
+    .route('/')
+    .post(counterCtrl.saveBill);
+
+router
     .route('/period')
     .post(counterCtrl.billsForPeriodOfTime);
 

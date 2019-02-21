@@ -45,6 +45,22 @@ function billsForPeriodOfTime(req, res, next) {
         .catch(e => next(e));
 }
 
+function saveBill(req, res, next) {
+    let newBill = new Counter({
+        order_id: req.body.orderId,
+        total: req.body.total,
+        date_time: req.body.dateTime
+    });
+
+    newBill.save((err, bill) => {
+        if (err) {
+            res.status(422).json(err);
+        } else {
+            res.json(bill);
+        }
+    });
+}
+
 /**
  * Seed the counter item db with static counter data.
  * TODO: use a json file to import.
@@ -81,5 +97,6 @@ module.exports = {
     list: list,
     item: item,
     billsForPeriodOfTime: billsForPeriodOfTime,
-    seed: seed
+    seed: seed,
+    saveBill: saveBill
 };
