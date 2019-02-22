@@ -5,6 +5,6 @@ const PROXY_CONFIG = {
         "changeOrigin": true,
         "logLevel": "debug"
     }
-}
+};
 
 module.exports = PROXY_CONFIG;
