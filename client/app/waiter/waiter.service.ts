@@ -13,7 +13,7 @@ export class WaiterService {
     ) { }
 
     getCounter(): Observable<any> {
-        // I had to point streight to the UI because the proxy doesn't work on my machine
+        // I had to point straight to the UI because the proxy doesn't work on my machine
         // you should be able to just do '/api/counter'
         return this.http.get('http://localhost:3000/api/counter')
             .pipe(
