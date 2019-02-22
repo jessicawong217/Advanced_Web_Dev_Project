@@ -13,7 +13,9 @@ export class WaiterService {
     ) { }
 
     getCounter(): Observable<any> {
-        return this.http.get('api/counter')
+        // I had to point streight to the UI because the proxy doesn't work on my machine
+        // you should be able to just do '/api/counter'
+        return this.http.get('http://localhost:3000/api/counter')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
