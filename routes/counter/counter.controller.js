@@ -24,7 +24,7 @@ function item(req, res, next) {
     Counter.findById({
         _id: req.params.id
     })
-        .then(users => res.json(users))
+        .then(item => res.json(item))
         .catch(e => next(e));
 }
 

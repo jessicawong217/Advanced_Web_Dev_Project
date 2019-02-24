@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
 
 const routes: Routes = [
@@ -12,7 +13,11 @@ const routes: Routes = [
         path: '',
         redirectTo: 'waiter',
         pathMatch: 'full'
-    }
+    },
+    {
+        path: 'counter',
+        component: CounterComponent
+    },
 ];
 
 @NgModule({
