@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as jsPDF from 'jspdf';
 
 import { CounterService } from './counter.service';
 
@@ -30,7 +31,7 @@ export class CounterComponent implements OnInit {
         {
             name: 'Curry',
             quantity: 2,
-            price: 12
+            price: 11.99
         },
     ];
 
@@ -110,8 +111,66 @@ export class CounterComponent implements OnInit {
         // Change order status to done
     }
 
+    /**
+     * Creates the receipts and downloads it
+     */
     printReceipt() {
 
+        const date = new Date();
+
+        const text = [];
+        const lineHeight = 1.2,
+            margin = 0.1,
+            fontSize = 9,
+            ptsPerInch = 72,
+            oneLineHeight = fontSize * lineHeight / ptsPerInch,
+            doc = new jsPDF({
+                unit: 'in',
+                lineHeight: lineHeight,
+                format: 'credit-card'
+            }).setProperties({ title: 'Receipt' });
+
+        this.order.forEach(element => {
+            const itemPrice = element.price * element.quantity;
+            const item = '£' + itemPrice.toFixed(2) + ' x ' + element.quantity + ' - ' + element.name + '\n';
+            text.push(item.toString());
+        });
+
+        doc
+            .setFont('helvetica', 'neue')
+            .setFontSize(fontSize);
+
+        // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
+        doc.text(text, margin, margin + 4 * oneLineHeight);
+
+        // You can also calculate the height of the text very simply:
+        const textHeight = text.length * fontSize * lineHeight / ptsPerInch;
+        doc.setFontStyle('bold')
+            .text('Table ' + this.table.table_number + ' Receipt', 1, margin + oneLineHeight, 'center');
+
+        if (this.totalWithDiscount) {
+            doc.setFontStyle('normal')
+                .text('Discount: £' + this.dicountedValue.toFixed(2), 0.9, textHeight + 0.8, 'right');
+            doc.setFontStyle('bold')
+                .text('Total: £' + this.totalNoDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
+        } else {
+            doc.setFontStyle('bold')
+                .text('Total: £' + this.totalWithDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
+        }
+
+        // Show total
+        doc.setFontStyle('bold')
+            .text('Thank you for choosing us.', 1, textHeight + 1.5, 'center');
+        doc.setFontStyle('normal')
+            .text('VAT No: 132323 2323 2', 1, textHeight + 1.8, 'center');
+        // Show date
+        doc.setFontStyle('italic')
+            .text(date.toLocaleDateString(), 1, textHeight + 2, 'center');
+        // Receipt Id
+        doc.setFontStyle('normal')
+            .text('32322123', 1, textHeight + 2.15, 'center');
+
+        doc.save('receipt.pdf');
     }
 
 }
