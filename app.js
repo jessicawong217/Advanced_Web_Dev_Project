@@ -1,14 +1,15 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var cors = require("cors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var menuRouter = require('./routes/menu/menu.route');
 var ordersRouter = require('./routes/orders/order.route');
+var counterRouter = require('./routes/counter/counter.route');
 
 const config = require('./config/');
 
@@ -26,9 +27,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('local'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -37,6 +38,9 @@ app.use('/users', usersRouter);
 // Order routes.
 app.use('/api/menu', menuRouter);
 app.use('/api/orders', ordersRouter);
+
+// Counter routes
+app.use('/api/counter', counterRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
