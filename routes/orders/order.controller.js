@@ -63,7 +63,24 @@ function seed(req, res, next) {
         .catch(e => next(e));
 }
 
+/**
+ * Handle creating a new order.
+ * TODO: validate request body.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function create(req, res, next) {
+  const order = req.body.order;
+  order.status = 'InProgress';
+
+  return Order.create(order)
+    .then(createdOrder => res.json({ order: createdOrder }))
+    .catch(e => next(e));
+}
+
 module.exports = {
-    list: list,
-    seed: seed
+  list: list,
+  seed: seed,
+  create: create
 };
