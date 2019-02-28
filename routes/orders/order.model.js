@@ -5,14 +5,30 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    items: {
-        type: Array,
-        required: true
+    status: {
+        type: String,
+        enum: ['InProgress', 'Complete']
     },
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    orderItems: [
+        {
+            menuItemId: {
+                type: String
+            },
+            name: {
+                type: String
+            },
+            pricePerPortion: {
+                type: Number
+            },
+            quantity: {
+                type: Number
+            }
+        }
+    ]
 });
 
 OrderSchema.method({});
