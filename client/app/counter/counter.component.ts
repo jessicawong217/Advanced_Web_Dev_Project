@@ -80,19 +80,14 @@ export class CounterComponent implements OnInit {
      * Calculate the total of all prices. Item price * quantity
      */
     calculateTotal() {
-        const prices = [];
-        this.order.forEach(element => {
-            prices.push(element.price * element.quantity);
-        });
-
-        this.totalNoDiscount = prices.reduce((accumulator, currentValue) => accumulator + currentValue);
+        this.totalNoDiscount = this.order.reduce((accumulator, element) => element.price * element.quantity + accumulator, 0);
     }
 
     /**
      * Calculate  the discount out of the total price
      */
     addPromo() {
-        const discountValue = this.discountForm.controls.discount.value;
+        const discountValue = this.discountForm.value.discount;
         this.dicountedValue = (discountValue / 100) * this.totalNoDiscount;
 
         this.totalWithDiscount = (this.totalNoDiscount - this.dicountedValue);
@@ -115,7 +110,6 @@ export class CounterComponent implements OnInit {
      * Creates the receipts and downloads it
      */
     printReceipt() {
-
         const date = new Date();
 
         const text = [];
@@ -152,10 +146,10 @@ export class CounterComponent implements OnInit {
             doc.setFontStyle('normal')
                 .text('Discount: £' + this.dicountedValue.toFixed(2), 0.9, textHeight + 0.8, 'right');
             doc.setFontStyle('bold')
-                .text('Total: £' + this.totalNoDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
+                .text('Total: £' + this.totalWithDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
         } else {
             doc.setFontStyle('bold')
-                .text('Total: £' + this.totalWithDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
+                .text('Total: £' + this.totalNoDiscount.toFixed(2), 0.8, textHeight + 1, 'right');
         }
 
         // Show total
