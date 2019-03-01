@@ -9,7 +9,13 @@ import { WaiterService } from './waiter.service';
 })
 export class WaiterComponent implements OnInit {
 
+    // Dummy data to pass into order panel component
+    public tableId = 2;
+    public waiterId = 1;
+
     public orders: any;
+
+    public showView = true;
 
     constructor(
         protected waiterService: WaiterService
@@ -27,6 +33,12 @@ export class WaiterComponent implements OnInit {
             }, () => {
                 // Dismiss
             });
+    }
+
+    // TODO: change this to show the order panel
+    // if a table is selected
+    show(val: boolean) {
+        this.showView = val;
     }
 
 }
