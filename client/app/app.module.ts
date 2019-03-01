@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { OrderPanelComponent } from './order-panel/order-panel.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         WaiterComponent,
-        CounterComponent
+        CounterComponent,
+        OrderPanelComponent
     ],
     imports: [
         BrowserModule,
