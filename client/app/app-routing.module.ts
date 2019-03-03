@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,10 @@ const routes: Routes = [
         path: 'counter',
         component: CounterComponent
     },
+    {
+        path: 'admin',
+        component: AdminComponent
+    }
 ];
 
 @NgModule({

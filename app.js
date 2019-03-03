@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var menuRouter = require('./routes/menu/menu.route');
 var ordersRouter = require('./routes/orders/order.route');
 var counterRouter = require('./routes/counter/counter.route');
+var adminRouter = require('./routes/admin/admin.route');
 
 const config = require('./config/');
 
@@ -41,6 +42,9 @@ app.use('/api/orders', ordersRouter);
 
 // Counter routes
 app.use('/api/counter', counterRouter);
+
+// Admin routes
+app.use('/api/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

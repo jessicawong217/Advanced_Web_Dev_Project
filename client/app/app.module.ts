@@ -10,13 +10,15 @@ import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         WaiterComponent,
         CounterComponent,
-        OrderPanelComponent
+        OrderPanelComponent,
+        AdminComponent
     ],
     imports: [
         BrowserModule,
