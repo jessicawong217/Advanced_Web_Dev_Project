@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from "../shared/order.service";
+import { Order } from "../shared/order.model";
 
 @Component({
   selector: 'app-kitchen',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KitchenComponent implements OnInit {
 
-  constructor() { }
+  orders: Order[];
+
+  constructor(private orderService: OrderService) { }
 
   ngOnInit() {
+    this.orderService.getOrders().subscribe(response => this.orders = response);
   }
 
 }

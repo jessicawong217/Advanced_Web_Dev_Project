@@ -11,6 +11,7 @@ import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
+import { OrderService } from "./shared/order.service";
 
 @NgModule({
     declarations: [
@@ -28,7 +29,7 @@ import { KitchenComponent } from './kitchen/kitchen.component';
         FormsModule,
         ReactiveFormsModule
     ],
-    providers: [WaiterService],
+    providers: [WaiterService, OrderService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
