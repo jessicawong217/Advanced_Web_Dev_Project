@@ -13,15 +13,12 @@ const OrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    orderItems: [
+    items: [
         {
-            menuItemId: {
-                type: String
-            },
             name: {
                 type: String
             },
-            pricePerPortion: {
+            price: {
                 type: Number
             },
             quantity: {
@@ -47,9 +44,9 @@ OrderSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50 } = {}) {
+    list({skip = 0, limit = 50} = {}) {
         return this.find()
-            .sort({ createdAt: -1 })
+            .sort({createdAt: -1})
             .skip(+skip)
             .limit(+limit)
             .exec();

@@ -37,7 +37,7 @@ function seed(req, res, next) {
                 }
             ],
             createdAt: Date.now(),
-            status: "in progress"
+            status: "InProgress"
         },
         {
             tableId: 2,
@@ -54,7 +54,7 @@ function seed(req, res, next) {
                 }
             ],
             createdAt: Date.now(),
-            status: "in progress"
+            status: "InProgress"
         }
     ];
 
