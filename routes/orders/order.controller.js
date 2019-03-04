@@ -14,6 +14,18 @@ function list(req, res, next) {
 }
 
 /**
+ * Return a list of incomplete orders.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function listInProgress(req, res, next) {
+    Order.get("InProgress")
+        .then(users => res.json(users))
+        .catch(e => next(e));
+}
+
+/**
  * Seed the orders db with static data.
  * TODO: use a json file to import.
  * @param {*} req The express request object.
@@ -81,6 +93,7 @@ function create(req, res, next) {
 
 module.exports = {
     list: list,
+    listInProgress: listInProgress,
     seed: seed,
     create: create
 };

@@ -50,6 +50,12 @@ OrderSchema.statics = {
             .skip(+skip)
             .limit(+limit)
             .exec();
+    },
+
+    get(orderStatus) {
+        return this.find({status : orderStatus})
+            .sort({createdAt: -1})
+            .exec();
     }
 };
 

@@ -3,11 +3,14 @@ const orderCtrl = require('./order.controller');
 
 const router = express.Router();
 
-router
-  .route('/')
+router.route('/')
   /** GET /api/orders - Get list of orders */
   .get(orderCtrl.list)
   .post(orderCtrl.create);
+
+router.route('/in-progress')
+  /** GET /api/orders/in-progress - Get all orders that aren't completed */
+  .get(orderCtrl.listInProgress);
 
 
 router.route('/seed')

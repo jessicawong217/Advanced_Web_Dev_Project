@@ -13,7 +13,7 @@ export class OrderService {
     }
 
     getOrders(): Observable<any> {
-        return this.http.get("/api/orders")
+        return this.http.get("/api/orders/in-progress")
             .pipe(
                 map((response: any) => this.toOrderArray(response)),
                 catchError((error: any) => observableThrowError(error))
