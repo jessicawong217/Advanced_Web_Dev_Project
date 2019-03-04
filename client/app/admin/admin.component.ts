@@ -8,6 +8,95 @@ import { AdminService } from './admin.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+  /* Dummy data */
+  public food = [
+      {
+          name: 'Chicken Soup',
+          price: 7,
+          category: 'Food'
+      },
+      {
+          name: 'Curry',
+          price: 11.50,
+          category: 'Food'
+      },
+      {
+          name: 'Hot and Sour Soup',
+          price: 7,
+          category: 'Food'
+      },
+      {
+          name: 'Rice',
+          price: 3.50,
+          category: 'Food'
+      },
+      {
+          name: 'Iced Lemon Tea',
+          price: 3.50,
+          category: 'Drink'
+      },
+      {
+          name: 'CocaCola',
+          price: 2.50,
+          category: 'Drink'
+      },
+      {
+          name: 'Sweet and Sour',
+          price: 6.50,
+          category: 'Food'
+      },
+      {
+          name: 'Ice Cream',
+          price: 3.50,
+          category: 'Food'
+      },
+      {
+          name: 'Plum Wine',
+          price: 4.50,
+          category: 'Drink'
+      },
+      {
+          name: 'Fruit Bowl',
+          price: 3.50,
+          category: 'Food'
+      },
+      {
+          name: 'Stir Fry',
+          price: 7.50,
+          category: 'Food'
+      }
+
+  ];
+
+  public staff = [
+    {
+      firstname: 'Klaus',
+      surname: 'Logan',
+      role: 'Waiter'
+    },
+    {
+      firstname: 'Susanne',
+      surname: 'Smith',
+      role: 'Waiter'
+    },
+    {
+      firstname: 'Joanne',
+      surname: 'Lee',
+      role: 'Manager'
+    },
+    {
+      firstname: 'John',
+      surname: 'McGregor',
+      role: 'Manager'
+    },
+    {
+      firstname: 'Lucy',
+      surname: 'McCabe',
+      role: 'Chef'
+    }
+  ];
+
   constructor(
     protected adminService: AdminService
   ) { }
@@ -15,6 +104,8 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
 
   }
+
+
 
   openMenuNav() {
     document.getElementById("menuBar").style.width = "20%";

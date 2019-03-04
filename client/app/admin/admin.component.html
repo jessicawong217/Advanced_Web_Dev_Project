@@ -1,4 +1,4 @@
-<div class="container-fluid fill-height">
+<div class="container-fluid fill-height p-0">
   <div class="row">
     <div class="col px-0">
       <div class="bg-primary py-2 px-3">
@@ -9,23 +9,25 @@
 
   <div class="row">
     <div id="menuBar" class="col-3 sidebar pl-0">
+      <button class="savebtn" (click)="saveMenu()">Save</button>
       <button class="closebtn" (click)="closeMenuNav()">Edit Menu -</button>
       <div class="sideScroll">
-        <ol>
-          <li contenteditable="true">Item #1</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-        </ol>
+        <table class="table table-hover table-sm" width="100%">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of food">
+              <td contenteditable="true">{{ item.name }}</td>
+              <td contenteditable="true">£{{ item.price }}</td>
+              <td contenteditable="true">{{ item.category }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -34,28 +36,34 @@
     </div>
     <div class="col content pr-0" id="summary">
       <h3>Income Summary</h3>
+      <hr>
+      <h1 class="text-info">Today: £837.35</h1>
+      <hr>
+      <h1 class="text-info">This week: £12,245.95</h1>
     </div>
   </div>
 
   <div class="row">
     <div id="staffBar" class="col-3 sidebar pl-0">
-      <button class="closebtn" (click)="closeStaffNav()">Edit Menu -</button>
+      <button class="savebtn" (click)="saveMenu()">Save</button>
+      <button class="closebtn" (click)="closeStaffNav()">Edit Staff -</button>
       <div class="sideScroll">
-        <ol>
-          <li contenteditable="true">Staff #1</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-          <li>Item #2</li>
-          <li>Item #3</li>
-          <li>Item #4</li>
-        </ol>
+        <table class="table table-hover table-sm" width="100%">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Surname</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let person of staff">
+              <td contenteditable="true">{{ person.firstname }}</td>
+              <td contenteditable="true">{{ person.surname }}</td>
+              <td contenteditable="true">{{ person.role }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -64,6 +72,41 @@
     </div>
     <div class="col content pr-0" id="analytics">
       <h3>Analytics</h3>
+      <hr>
+      <div class="row data">
+        <div class="col border border-info rounded m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              104
+            </div>
+            <div class="displayText text-secondary">
+              Orders
+            </div>
+          </div>
+        </div>
+
+        <div class="col border border-info rounded m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              £10,864,25
+            </div>
+            <div class="displayText text-secondary">
+              Weekly average
+            </div>
+          </div>
+        </div>
+
+        <div class="col border border-info rounded m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              £64,565.55
+            </div>
+            <div class="displayText text-secondary">
+              This month
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
