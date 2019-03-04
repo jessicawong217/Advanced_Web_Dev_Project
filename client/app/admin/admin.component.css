@@ -24,9 +24,9 @@ html, body {
   position: fixed;
   z-index: 1;
   left: 0;
-  overflow-x: hidden;
   transition: 0.5s;
   display: none;
+  background-color: lightgrey;
 }
 
 /* The sidebar links */
@@ -77,6 +77,19 @@ html, body {
 .content {
   transition: margin-left .5s;
   padding: 15px;
+}
+
+.sideScroll {
+
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 50px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 100px;
+  height: 35vh;
+
+  overflow-x: hidden;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
