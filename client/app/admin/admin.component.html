@@ -1,5 +1,50 @@
-<div>
-<h1>
-  admin works!
-</h1>
+<div class="container-fluid fill-height">
+  <div class="row">
+    <div class="col px-0">
+      <div class="bg-primary py-2 px-3">
+        <h1>Admin</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div id="menuBar" class="col-3 sidebar bg-light pl-0">
+      <button class="closebtn" (click)="closeMenuNav()">Edit Menu -</button>
+      <div class="py-3">
+        <ol>
+          <li contenteditable="true">Item #1</li>
+          <li>Item #2</li>
+          <li>Item #3</li>
+          <li>Item #4</li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="menuMain" class="main w-10 pl-0">
+      <button class="openbtn" (click)="openMenuNav()">Edit Menu +</button>
+    </div>
+
+    <div class="col content pr-0" id="summary">
+      <h3>Income Summary</h3>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div id="staffBar" class="mySidebar col-3 sidebar bg-light pl-0">
+      <button class="closebtn" (click)="closeStaffNav()">Edit Menu -</button>
+    </div>
+
+    <div id="staffMain" class="main w-10 pl-0">
+      <button class="openbtn" (click)="openStaffNav()">Edit Menu +</button>
+    </div>
+
+    <div class="col content pr-0" id="analytics">
+      <h3>Income Summary</h3>
+    </div>
+
+  </div>
+
 </div>
