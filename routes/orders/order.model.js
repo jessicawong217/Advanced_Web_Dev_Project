@@ -13,6 +13,9 @@ const OrderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    finishedAt: {
+        type: Date
+    },
     orderItems: [
         {
             menuItemId: {
@@ -24,8 +27,9 @@ const OrderSchema = new mongoose.Schema({
             pricePerPortion: {
                 type: Number
             },
-            quantity: {
-                type: Number
+            status: {
+                type: String,
+                enum: ['InProgress', 'Complete']
             }
         }
     ]
