@@ -52,7 +52,11 @@ function create(req, res, next) {
     order.status = 'InProgress';
 
     return Order.create(order)
-        .then(createdOrder => res.json({ order: createdOrder }))
+        .then(createdOrder => {
+            const result = { order: createdOrder };
+            res.io.emit('order-opened', result);
+            res.json(result);
+        })
         .catch(e => next(e));
 }
 
