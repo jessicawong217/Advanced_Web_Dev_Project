@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['InProgress', 'Complete']
+        enum: ['InProgress', 'Completed']
     },
     createdAt: {
         type: Date,
@@ -31,7 +31,15 @@ const OrderSchema = new mongoose.Schema({
     ]
 });
 
-OrderSchema.method({});
+// Define order object methods, abstracts away modification of a given order.
+OrderSchema.method({
+    /**
+     * Mark the current order as completed.
+     */
+    complete() {
+        this.status = 'Completed';
+    }
+});
 
 OrderSchema.statics = {
     // Wrapper on find method uwill be used to return clearer errors.
