@@ -26,35 +26,35 @@ function seed(req, res, next) {
             tableId: 1,
             items: [
                 {
-                    name: "Curry Chicken",
+                    name: 'Curry Chicken',
                     quantity: 1,
                     price: 19.99
                 },
                 {
-                    name: "Chicken Soup",
+                    name: 'Chicken Soup',
                     quantity: 2,
-                    price: 7.29,
+                    price: 7.29
                 }
             ],
             createdAt: Date.now(),
-            status: "in progress"
+            status: 'InProgress'
         },
         {
             tableId: 2,
             items: [
                 {
-                    name: "Curry Beef",
+                    name: 'Curry Beef',
                     quantity: 1,
                     price: 25.78
                 },
                 {
-                    name: "Chicken Soup",
+                    name: 'Chicken Soup',
                     quantity: 3,
-                    price: 7.29,
+                    price: 7.29
                 }
             ],
             createdAt: Date.now(),
-            status: "in progress"
+            status: 'InProgress'
         }
     ];
 
@@ -75,7 +75,11 @@ function create(req, res, next) {
     order.status = 'InProgress';
 
     return Order.create(order)
-        .then(createdOrder => res.json({ order: createdOrder }))
+        .then(createdOrder => {
+            const result = { order: createdOrder };
+            res.io.emit('order-opened', result);
+            res.json(result);
+        })
         .catch(e => next(e));
 }
 
