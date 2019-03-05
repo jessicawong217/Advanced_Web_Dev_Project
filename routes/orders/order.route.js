@@ -3,17 +3,19 @@ const orderCtrl = require('./order.controller');
 
 const router = express.Router();
 
-router.route('/')
-  /** GET /api/orders - Get list of orders */
-  .get(orderCtrl.list)
-  .post(orderCtrl.create);
+router
+    .route('/')
+    /** GET /api/orders - Get list of orders */
+    .get(orderCtrl.list)
+    .post(orderCtrl.create);
 
-router.route('/in-progress')
-  /** GET /api/orders/in-progress - Get all orders that aren't completed */
-  .get(orderCtrl.listInProgress);
+router
+    .route('/in-progress')
+    /** GET /api/orders/in-progress - Get all orders that aren't completed */
+    .get(orderCtrl.listInProgress);
 
-
-router.route('/seed')
+router
+    .route('/seed')
     /** GET /api/orders/seed - Add dummy data */
     .post(orderCtrl.seed);
 
