@@ -40,6 +40,30 @@ function seed(req, res, next) {
         .catch(e => next(e));
 }
 
+
+/**
+ * Handle completing an existing order.
+ * TODO: validate there is no pending order items?
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function complete(req, res, next) {
+    var orderId = req.params.id;
+
+    return Order.get(orderId)
+        .then(order => {
+            order.complete();
+            return order.save();
+        })
+        .then(completedOrder => {
+            const result = { order: completedOrder };
+            res.io.emit('order-completed', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
 /**
  * Handle creating a new order.
  * TODO: validate request body.
@@ -61,8 +85,9 @@ function create(req, res, next) {
 }
 
 module.exports = {
-    list: list,
-    listInProgress: listInProgress,
-    seed: seed,
-    create: create
+    list,
+    listInProgress,
+    seed,
+    create,
+    complete
 };
