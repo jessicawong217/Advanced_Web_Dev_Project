@@ -20,6 +20,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     public showView = true;
 
+    public sidebarOrder = null;
+
     /**
      * Array of tables within the restaurant.
      */
@@ -71,6 +73,15 @@ export class WaiterComponent implements OnInit, OnDestroy {
         table.orderId = order.id;
     }
 
+    startOrderClick(table) {
+        var newOrder = {
+            tableId: table.id,
+            orderItems: []
+        };
+
+        this.sidebarOrder = newOrder;
+    }
+    
     // TODO: change this to show the order panel
     // if a table is selected
     show(val: boolean) {
