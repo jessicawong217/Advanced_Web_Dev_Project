@@ -4,20 +4,23 @@
     for more ui designs -->
     <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-8">
-            <button (click)="show(false)" class="btn btn-success">Hide</button>
-            <button (click)="show(true)" class="btn btn-success">Show</button>
+            <!-- <button (click)="show(false)" class="btn btn-success">Hide</button>
+            <button (click)="show(true)" class="btn btn-success">Show</button> -->
 
             <div class="tables">
                 <div *ngFor="let table of tables">
                     id : {{table.id}}
                     status: {{table.openOrder}}
+
+                    <button class="btn" (click)="startOrderClick(table)">Start Order</button>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="showView">
+        <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
             <app-order-panel
-                [tableId]="tableId"
                 [waiterId]="waiterId"
+                [order]="sidebarOrder"
+                (close)="sidebarOrder = null"
             ></app-order-panel>
         </div>
     </div>
