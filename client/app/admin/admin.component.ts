@@ -97,6 +97,10 @@ export class AdminComponent implements OnInit {
     }
   ];
 
+  displayOrdersToday_bool;
+  displayOrdersWeek_bool;
+  displayOrdersMonth_bool;
+
   constructor(
     protected adminService: AdminService
   ) { }
@@ -104,8 +108,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
 
   }
-
-
 
   openMenuNav() {
     document.getElementById("menuBar").style.width = "20%";
@@ -119,7 +121,6 @@ export class AdminComponent implements OnInit {
     document.getElementById("menuBar").style.display = "none";
     document.getElementById("menuMain").style.visibility = "visible";
     document.getElementById("summary").style.marginLeft = "0";
-
   }
 
   openStaffNav() {
@@ -134,7 +135,38 @@ export class AdminComponent implements OnInit {
     document.getElementById("staffBar").style.display = "none";
     document.getElementById("staffMain").style.visibility = "visible";
     document.getElementById("analytics").style.marginLeft = "0";
-
   }
 
+  displayOrdersToday() {
+    this.displayOrdersToday_bool = !this.displayOrdersToday_bool;
+    if (this.displayOrdersToday_bool) {
+      document.getElementById("summaryToday").style.display = "none";
+      document.getElementById("summaryDetailsToday").style.display = "block";
+    } else {
+      document.getElementById("summaryToday").style.display = "block";
+      document.getElementById("summaryDetailsToday").style.display = "none";
+    }
+  }
+
+  displayOrdersWeek() {
+    this.displayOrdersWeek_bool = !this.displayOrdersWeek_bool;
+    if (this.displayOrdersWeek_bool) {
+      document.getElementById("summaryWeek").style.display = "none";
+      document.getElementById("summaryDetailsWeek").style.display = "block";
+    } else {
+      document.getElementById("summaryWeek").style.display = "block";
+      document.getElementById("summaryDetailsWeek").style.display = "none";
+    }
+  }
+
+  displayOrdersMonth() {
+    this.displayOrdersMonth_bool = !this.displayOrdersMonth_bool;
+    if (this.displayOrdersMonth_bool) {
+      document.getElementById("summaryMonth").style.display = "none";
+      document.getElementById("summaryDetailsMonth").style.display = "block";
+    } else {
+      document.getElementById("summaryMonth").style.display = "block";
+      document.getElementById("summaryDetailsMonth").style.display = "none";
+    }
+  }
 }

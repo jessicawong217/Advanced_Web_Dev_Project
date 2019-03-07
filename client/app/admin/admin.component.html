@@ -1,13 +1,6 @@
 <div class="container-fluid fill-height p-0">
-  <div class="row">
-    <div class="col px-0">
-      <div class="bg-primary py-2 px-3">
-        <h1>Admin</h1>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
+  <div class="row half">
     <div id="menuBar" class="col-3 sidebar pl-0">
       <button class="savebtn" (click)="saveMenu()">Save</button>
       <button class="closebtn" (click)="closeMenuNav()">Edit Menu -</button>
@@ -37,13 +30,55 @@
     <div class="col content pr-0" id="summary">
       <h3>Income Summary</h3>
       <hr>
-      <h1 class="text-info">Today: £837.35</h1>
-      <hr>
-      <h1 class="text-info">This week: £12,245.95</h1>
+      <div class="row data">
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersToday()">
+          <div class="display" id="summaryToday">
+            <div class="displayValue text-secondary">
+              £837.35
+            </div>
+            <div class="displayText text-secondary">
+              Today
+            </div>
+          </div>
+
+          <div class="summaryDetails" id="summaryDetailsToday">
+            <p>Placeholder</p>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersWeek()">
+          <div class="display" id="summaryWeek">
+            <div class="displayValue text-secondary">
+              £12,245.95
+            </div>
+            <div class="displayText text-secondary">
+              This week
+            </div>
+          </div>
+
+          <div class="summaryDetails" id="summaryDetailsWeek">
+            <p>Placeholder</p>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersMonth()">
+          <div class="display" id="summaryMonth">
+            <div class="displayValue text-secondary">
+              £64,565.55
+            </div>
+            <div class="displayText text-secondary">
+              This month
+            </div>
+          </div>
+          <div class="summaryDetails" id="summaryDetailsMonth">
+            <p>Placeholder</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row half">
     <div id="staffBar" class="col-3 sidebar pl-0">
       <button class="savebtn" (click)="saveMenu()">Save</button>
       <button class="closebtn" (click)="closeStaffNav()">Edit Staff -</button>
@@ -74,35 +109,35 @@
       <h3>Analytics</h3>
       <hr>
       <div class="row data">
-        <div class="col border border-info rounded m-4">
+        <div class="col displayBox m-4">
           <div class="display">
             <div class="displayValue text-secondary">
               104
             </div>
             <div class="displayText text-secondary">
-              Orders
+              Orders average/day
             </div>
           </div>
         </div>
 
-        <div class="col border border-info rounded m-4">
+        <div class="col displayBox m-4">
           <div class="display">
             <div class="displayValue text-secondary">
               £10,864,25
             </div>
             <div class="displayText text-secondary">
-              Weekly average
+              Revenue average/week
             </div>
           </div>
         </div>
 
-        <div class="col border border-info rounded m-4">
+        <div class="col displayBox m-4">
           <div class="display">
             <div class="displayValue text-secondary">
-              £64,565.55
+              £60,667.05
             </div>
             <div class="displayText text-secondary">
-              This month
+              Revenue average/month
             </div>
           </div>
         </div>
