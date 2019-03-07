@@ -3,6 +3,7 @@ import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { OrderSocketService } from '../socket/order-socket.service';
 import { WaiterService } from './waiter.service';
+import { untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
     selector: 'app-waiter',
@@ -51,7 +52,10 @@ export class WaiterComponent implements OnInit, OnDestroy {
         var closedSub$ = this.orderSocket.getOrdersCompleted();
 
         merge(openSub$, closedSub$)
-            .pipe(tap(order => this.handleOrderEvent(order)))
+            .pipe(
+                tap(order => this.handleOrderEvent(order)),
+                untilDestroyed(this)
+            )
             .subscribe();
     }
 
@@ -65,17 +69,6 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
         table.openOrder = openOrder;
         table.orderId = order.id;
-    }
-
-    test(): void {
-        this.waiterService.getCounter().subscribe(
-            data => {
-                console.log(data);
-            },
-            () => {
-                // Dismiss
-            }
-        );
     }
 
     // TODO: change this to show the order panel
