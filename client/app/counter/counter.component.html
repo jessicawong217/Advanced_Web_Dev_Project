@@ -1,95 +1,38 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-8">
-            <button (click)="show(false)" class="btn btn-success">Hide</button>
-            <button (click)="show(true)" class="btn btn-success">Show</button>
-
-            {{order|json}}
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Table Number</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders" (click)="selectedOrder(order)">
+                        <th scope="row">{{order.tableId}}</th>
+                        <td>
+                            <small *ngFor="let items of order.orderItems">
+                        <td>
+                            {{items.name}}
+                            <b>{{items.pricePerPortion}}</b>
+                        </td>
+                        </small>
+                        </td>
+                        <td>{{order.createdAt}}</td>
+                        <td [ngClass]="{
+                            'table-warning': order.status === 'InProgress',
+                            'table-success': order.status === 'Completed'
+                          }">{{order.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="showView">
-            <div class="nav-side-menu" style="padding: 1%;">
-                <h3>Order - <i>Table {{table.table_number}}</i></h3>
-                <hr>
-                <div class="menu-list">
-                    <div id="menu-content" class="menu-content collapse out">
-                        <div class="row">
-                            <div class="col-sm col-md-2 col-lg-2">
-                                <b>Item</b>
-                            </div>
-                            <div class="col-sm col-md-1 col-lg-1">
-                                <b>Quantity</b>
-                            </div>
-                            <div class="col-sm col-md-1 col-lg-1">
-                                <b>Price</b>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row" *ngFor="let item of order">
-                            <div class="col-2">
-                                {{item.name}}
-                            </div>
-                            <div class="col-1">
-                                {{item.quantity}}
-                            </div>
-                            <div class="col-1">
-                                {{item.price}}
-                            </div>
-                        </div>
-                        <hr>
-                        <form name="addDiscount" [formGroup]="discountForm" (submit)="addPromo()" #newDiscount="ngForm">
-                            <div class="row">
-
-                                <div class="col-3">
-                                    <div class="input-group input-group-sm mb-3">
-                                        <input type="text" class="form-control" formControlName="discount"
-                                            aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">% Discount</span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-1">
-                                    <button type="submit" class="btn btn-sm btn-primary">Add</button>
-                                </div>
-
-                            </div>
-                        </form>
-                        <hr>
-                        <div class="row">
-                            <div class="col-2">
-                                <h2>Total:</h2>
-                            </div>
-                            <div class="col-2" style="text-align: right;" *ngIf="!totalWithDiscount">
-                                <h2>&#163;{{totalNoDiscount.toFixed(2)}}</h2>
-                            </div>
-                            <div class="col-2" style="text-align: right;" *ngIf="totalWithDiscount">
-                                <h2>&#163;{{totalWithDiscount.toFixed(2)}}</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <b>Discount:</b>
-                            </div>
-                            <div class="col-2" style="text-align: right;">
-                                <b>- &#163;{{dicountedValue.toFixed(2)}}</b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="row">
-                        <div class="col-1" style="padding: 1%;">
-                            <button type="button" class="btn btn-warning">Order</button>
-                        </div>
-                        <div class="col-2" style="padding: 1%;">
-                            <button type="button" class="btn btn-success">Complete</button>
-                        </div>
-                        <div class="col-1" style="padding: 1%;">
-                            <button type="button" (click)="printReceipt()" class="btn btn-info">Print</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
+            <app-order-panel [waiterId]="waiterId" [type]="counterType" [setOrder]="sidebarOrder"
+                (close)="sidebarOrder = null">
+            </app-order-panel>
         </div>
     </div>

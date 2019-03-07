@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
 import { OrderSocketService } from '../socket/order-socket.service';
 import { WaiterService } from './waiter.service';
-import { untilDestroyed} from 'ngx-take-until-destroy';
 
 @Component({
     selector: 'app-waiter',
@@ -34,7 +35,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
     constructor(
         private waiterService: WaiterService,
         private orderSocket: OrderSocketService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.configureSockets();
@@ -50,8 +51,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
      * completion.
      */
     configureSockets() {
-        var openSub$ = this.orderSocket.getOrdersOpened();
-        var closedSub$ = this.orderSocket.getOrdersCompleted();
+        const openSub$ = this.orderSocket.getOrdersOpened();
+        const closedSub$ = this.orderSocket.getOrdersCompleted();
 
         merge(openSub$, closedSub$)
             .pipe(
@@ -66,22 +67,22 @@ export class WaiterComponent implements OnInit, OnDestroy {
      * completed.
      */
     handleOrderEvent(order) {
-        var openOrder = order.status == 'InProgress';
-        var table = this.tables.filter(t => t.id == order.tableId)[0];
+        const openOrder = order.status === 'InProgress';
+        const table = this.tables.filter(t => t.id === order.tableId)[0];
 
         table.openOrder = openOrder;
         table.orderId = order.id;
     }
 
     startOrderClick(table) {
-        var newOrder = {
+        const newOrder = {
             tableId: table.id,
             orderItems: []
         };
 
         this.sidebarOrder = newOrder;
     }
-    
+
     // TODO: change this to show the order panel
     // if a table is selected
     show(val: boolean) {
@@ -90,5 +91,5 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     // Method needs to exist for untilDestroyed to work as expected in prod
     // builds.
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 }

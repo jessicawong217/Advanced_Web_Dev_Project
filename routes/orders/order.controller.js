@@ -61,7 +61,6 @@ function complete(req, res, next) {
  */
 function create(req, res, next) {
     const order = req.body.order;
-    order.status = 'InProgress';
 
     return Order.create(order)
         .then(createdOrder => {

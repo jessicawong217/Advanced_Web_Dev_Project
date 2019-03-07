@@ -12,10 +12,10 @@ export class CounterService {
         private http: HttpClient
     ) { }
 
-    getCounter(): Observable<any> {
+    getOrders(): Observable<any> {
         // I had to point straight to the UI because the proxy doesn't work on my machine
         // you should be able to just do '/api/counter'
-        return this.http.get('http://localhost:3000/api/counter')
+        return this.http.get('http://localhost:3000/api/orders')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
