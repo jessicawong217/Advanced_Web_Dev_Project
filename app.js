@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-var cors = require("cors");
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,6 +15,12 @@ var adminRouter = require('./routes/admin/admin.route');
 const config = require('./config/');
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+io.on('connection', socket => {
+    console.log('New client connected.');
+});
 
 // connect to mongo db
 const mongoUri = config.mongodb.host;
@@ -26,6 +32,12 @@ mongoose.connection.on('error', () => {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+// Configure socket io middleware.
+app.use(function(req, res, next) {
+    res.io = io;
+    next();
+});
 
 app.use(logger('local'));
 app.use(cors());
@@ -62,4 +74,4 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-module.exports = app;
+module.exports = { app: app, server: server };

@@ -21,45 +21,34 @@ function list(req, res, next) {
  * @param {*} next Next match route handler.
  */
 function seed(req, res, next) {
-    var dummyArray = [
-        {
-            tableId: 1,
-            items: [
-                {
-                    name: "Curry Chicken",
-                    quantity: 1,
-                    price: 19.99
-                },
-                {
-                    name: "Chicken Soup",
-                    quantity: 2,
-                    price: 7.29,
-                }
-            ],
-            createdAt: Date.now(),
-            status: "in progress"
-        },
-        {
-            tableId: 2,
-            items: [
-                {
-                    name: "Curry Beef",
-                    quantity: 1,
-                    price: 25.78
-                },
-                {
-                    name: "Chicken Soup",
-                    quantity: 3,
-                    price: 7.29,
-                }
-            ],
-            createdAt: Date.now(),
-            status: "in progress"
-        }
-    ];
+    var dummyArray = require('./order-seed');
 
     Order.insertMany(dummyArray)
         .then(() => res.json({ ok: true }))
+        .catch(e => next(e));
+}
+
+
+/**
+ * Handle completing an existing order.
+ * TODO: validate there is no pending order items?
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function complete(req, res, next) {
+    var orderId = req.params.id;
+
+    return Order.get(orderId)
+        .then(order => {
+            order.complete();
+            return order.save();
+        })
+        .then(completedOrder => {
+            const result = { order: completedOrder };
+            res.io.emit('order-completed', result);
+            res.json(result);
+        })
         .catch(e => next(e));
 }
 
@@ -75,12 +64,17 @@ function create(req, res, next) {
     order.status = 'InProgress';
 
     return Order.create(order)
-        .then(createdOrder => res.json({ order: createdOrder }))
+        .then(createdOrder => {
+            const result = { order: createdOrder };
+            res.io.emit('order-opened', result);
+            res.json(result);
+        })
         .catch(e => next(e));
 }
 
 module.exports = {
-    list: list,
-    seed: seed,
-    create: create
+    list,
+    seed,
+    create,
+    complete
 };
