@@ -10,7 +10,6 @@ import { CounterComponent } from './counter/counter.component';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
-import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
