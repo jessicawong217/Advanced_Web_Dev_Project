@@ -21,42 +21,7 @@ function list(req, res, next) {
  * @param {*} next Next match route handler.
  */
 function seed(req, res, next) {
-    var dummyArray = [
-        {
-            tableId: 1,
-            items: [
-                {
-                    name: 'Curry Chicken',
-                    quantity: 1,
-                    price: 19.99
-                },
-                {
-                    name: 'Chicken Soup',
-                    quantity: 2,
-                    price: 7.29
-                }
-            ],
-            createdAt: Date.now(),
-            status: 'InProgress'
-        },
-        {
-            tableId: 2,
-            items: [
-                {
-                    name: 'Curry Beef',
-                    quantity: 1,
-                    price: 25.78
-                },
-                {
-                    name: 'Chicken Soup',
-                    quantity: 3,
-                    price: 7.29
-                }
-            ],
-            createdAt: Date.now(),
-            status: 'InProgress'
-        }
-    ];
+    var dummyArray = require('./order-seed');
 
     Order.insertMany(dummyArray)
         .then(() => res.json({ ok: true }))
