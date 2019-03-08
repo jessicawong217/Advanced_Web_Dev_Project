@@ -9,7 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CounterSortPipe } from './counter/counter-sort.pipe';
 import { CounterComponent } from './counter/counter.component';
+import { KitchenComponent } from './kitchen/kitchen.component';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
+import { OrderService } from './shared/order.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 
@@ -19,7 +21,8 @@ import { WaiterService } from './waiter/waiter.service';
         WaiterComponent,
         CounterComponent,
         OrderPanelComponent,
-        CounterSortPipe
+        CounterSortPipe,
+        KitchenComponent
     ],
     imports: [
         BrowserModule,
@@ -30,7 +33,7 @@ import { WaiterService } from './waiter/waiter.service';
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService],
+    providers: [WaiterService, OrderService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -47,7 +47,7 @@ OrderSchema.method({
 
 OrderSchema.statics = {
     // Wrapper on find method uwill be used to return clearer errors.
-    get(id) {
+    getById(id) {
         return this.findById(id)
             .exec()
             .then(order => {
@@ -64,6 +64,12 @@ OrderSchema.statics = {
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)
+            .exec();
+    },
+
+    getByStatus(orderStatus) {
+        return this.find({status : orderStatus})
+            .sort({createdAt: -1})
             .exec();
     }
 };

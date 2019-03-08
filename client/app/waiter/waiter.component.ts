@@ -3,6 +3,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { MenuService } from '../menu/menu.service';
 import { OrderSocketService } from '../socket/order-socket.service';
 import { WaiterService } from './waiter.service';
 
@@ -34,7 +35,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     constructor(
         private waiterService: WaiterService,
-        private orderSocket: OrderSocketService
+        private orderSocket: OrderSocketService,
+        private menuService: MenuService
     ) { }
 
     ngOnInit() {
@@ -44,6 +46,10 @@ export class WaiterComponent implements OnInit, OnDestroy {
         // IDEA: would be to get all InProgress orders (or at least their ids)
         // on init and assign them to the correct tables at init. The socket
         // events would then handle addition and removal of orders.
+
+        this.menuService.getMenu().subscribe(result => {
+            console.log(result);
+        });
     }
 
     /**
