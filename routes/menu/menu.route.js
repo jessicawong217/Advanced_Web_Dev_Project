@@ -6,7 +6,13 @@ const router = express.Router();
 router
   .route('/')
   /** GET /api/menu - Get list of menu */
-  .get(menuCtrl.list);
+  .get(menuCtrl.list)
+  .post(menuCtrl.create);
+
+router 
+    .route('/:id')
+    .put(menuCtrl.update)
+    .get(menuCtrl.get);
 
 router
   .route('/seed')
