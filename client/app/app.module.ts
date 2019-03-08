@@ -7,6 +7,7 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CounterComponent } from './counter/counter.component';
+import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
