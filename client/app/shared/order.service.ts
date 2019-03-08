@@ -15,24 +15,7 @@ export class OrderService {
     getOrders(): Observable<any> {
         return this.http.get("/api/orders/in-progress")
             .pipe(
-                map((response: any) => this.toOrderArray(response)),
                 catchError((error: any) => observableThrowError(error))
             );
-    }
-
-
-    toOrderArray(response: any): Order[] {
-        const orders = [];
-
-        for (let i = 0; i < response.length; i++) {
-            orders.push(new Order(
-                response[i]._id,
-                response[i].tableId,
-                response[i].status,
-                response[i].createdAt,
-                response[i].items
-            ));
-        }
-        return orders;
     }
 }

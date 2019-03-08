@@ -9,7 +9,7 @@ const Order = require('./order.model');
 function list(req, res, next) {
     const { limit = 50, skip = 0 } = req.query;
     Order.list({ limit, skip })
-        .then(users => res.json(users))
+        .then(data => res.json(data))
         .catch(e => next(e));
 }
 
@@ -20,8 +20,8 @@ function list(req, res, next) {
  * @param {*} next Next match route handler.
  */
 function listInProgress(req, res, next) {
-    Order.get("InProgress")
-        .then(users => res.json(users))
+    Order.getByStatus("InProgress")
+        .then(data => res.json(data))
         .catch(e => next(e));
 }
 
