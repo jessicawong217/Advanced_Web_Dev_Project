@@ -28,7 +28,6 @@ function seed(req, res, next) {
         .catch(e => next(e));
 }
 
-
 /**
  * Handle completing an existing order.
  * TODO: validate there is no pending order items?

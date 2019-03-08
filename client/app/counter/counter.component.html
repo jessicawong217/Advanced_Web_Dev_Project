@@ -11,17 +11,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let order of orders" (click)="selectedOrder(order)">
+                    <tr *ngFor="let order of orders | orderBy:'status'" (click)="selectedOrder(order)">
                         <th scope="row">{{order.tableId}}</th>
                         <td>
                             <small *ngFor="let items of order.orderItems">
                         <td>
                             {{items.name}}
-                            <b>{{items.pricePerPortion}}</b>
+                            <b>£{{items.pricePerPortion}}</b>
                         </td>
                         </small>
                         </td>
-                        <td>{{order.createdAt}}</td>
+                        <td>{{order.createdAt | date: 'dd/MM/yyyy/ hh:mm'}}</td>
                         <td [ngClass]="{
                             'table-warning': order.status === 'InProgress',
                             'table-success': order.status === 'Completed'

@@ -121,9 +121,7 @@ export class OrderPanelComponent implements OnInit {
             // const itemPrice = element.price * element.quantity;
             const item =
                 '£' +
-                element.price.toFixed(2) +
-                ' x ' +
-                // element.quantity +
+                element.pricePerPortion.toFixed(2) +
                 ' - ' +
                 element.name +
                 '\n';
@@ -195,6 +193,6 @@ export class OrderPanelComponent implements OnInit {
         );
 
         doc.output('dataurlnewwindow');
-        // doc.open('receipt.pdf');
+        // doc.open('receipt.pdf'); // If you want to download it
     }
 }
