@@ -3,11 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
-<<<<<<< HEAD
 import { AdminComponent } from './admin/admin.component';
-=======
-import { KitchenComponent } from "./kitchen/kitchen.component";
->>>>>>> 680dae7898f5d6670e9365823821b01d9eb9a75b
+import { KitchenComponent } from './kitchen/kitchen.component';
 
 const routes: Routes = [
     {
@@ -24,15 +21,12 @@ const routes: Routes = [
         component: CounterComponent
     },
     {
-<<<<<<< HEAD
         path: 'admin',
         component: AdminComponent
-    }
-=======
+    },
         path: 'kitchen',
         component: KitchenComponent
-    },
->>>>>>> 680dae7898f5d6670e9365823821b01d9eb9a75b
+    }
 ];
 
 @NgModule({
