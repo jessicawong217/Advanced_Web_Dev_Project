@@ -1,5 +1,4 @@
 @import "~bootstrap/dist/css/bootstrap.css";
-@import "~font-awesome/css/font-awesome.css";
 
 html, body {
   overflow: hidden;
@@ -156,7 +155,7 @@ html, body {
 }
 
 .displayBoxLink:hover {
-  border: 4px solid gray;
+  border: 2px solid gray;
 }
 
 .summaryDetails {

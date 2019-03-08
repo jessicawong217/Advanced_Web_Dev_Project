@@ -24,6 +24,7 @@ const routes: Routes = [
         path: 'admin',
         component: AdminComponent
     },
+    {
         path: 'kitchen',
         component: KitchenComponent
     }

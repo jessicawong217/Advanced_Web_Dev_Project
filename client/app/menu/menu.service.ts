@@ -20,7 +20,7 @@ export class MenuService {
         if (page > 1) {
             skip = page * perpage;
         }
-
+console.log("getMenuItem");
         return this.httpClient.get<MenuItem[]>(environment.apiUrl + 'menu', {
             params: {
                 skip: skip + '',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from './admin.service';
+import { MenuService } from '../menu/menu.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,6 +9,8 @@ import { AdminService } from './admin.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+  public menu = [];
 
   /* Dummy data */
   public food = [
@@ -102,11 +105,15 @@ export class AdminComponent implements OnInit {
   displayOrdersMonth_bool;
 
   constructor(
-    protected adminService: AdminService
+    protected adminService: AdminService,
+    private menuService: MenuService
   ) { }
 
   ngOnInit() {
-
+    this.menuService.getMenu().subscribe(result => {
+        console.log(result[0].name);
+        this.menu = result;
+    })
   }
 
   openMenuNav() {
@@ -149,6 +156,7 @@ export class AdminComponent implements OnInit {
   }
 
   displayOrdersWeek() {
+
     this.displayOrdersWeek_bool = !this.displayOrdersWeek_bool;
     if (this.displayOrdersWeek_bool) {
       document.getElementById("summaryWeek").style.display = "none";
@@ -169,4 +177,5 @@ export class AdminComponent implements OnInit {
       document.getElementById("summaryDetailsMonth").style.display = "none";
     }
   }
+
 }

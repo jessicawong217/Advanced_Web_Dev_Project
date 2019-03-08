@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of food">
+            <tr *ngFor="let item of menu">
               <td contenteditable="true">{{ item.name }}</td>
               <td contenteditable="true">£{{ item.price }}</td>
               <td contenteditable="true">{{ item.category }}</td>
@@ -109,7 +109,7 @@
       <h3>Analytics</h3>
       <hr>
       <div class="row data">
-        <div class="col displayBox m-4">
+        <div class="col displayBox displayBoxLink m-4">
           <div class="display">
             <div class="displayValue text-secondary">
               104
@@ -120,7 +120,7 @@
           </div>
         </div>
 
-        <div class="col displayBox m-4">
+        <div class="col displayBox displayBoxLink m-4">
           <div class="display">
             <div class="displayValue text-secondary">
               £10,864,25
@@ -131,7 +131,7 @@
           </div>
         </div>
 
-        <div class="col displayBox m-4">
+        <div class="col displayBox displayBoxLink m-4">
           <div class="display">
             <div class="displayValue text-secondary">
               £60,667.05
