@@ -9,7 +9,19 @@ const Order = require('./order.model');
 function list(req, res, next) {
     const { limit = 50, skip = 0 } = req.query;
     Order.list({ limit, skip })
-        .then(users => res.json(users))
+        .then(data => res.json(data))
+        .catch(e => next(e));
+}
+
+/**
+ * Return a list of incomplete orders.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function listInProgress(req, res, next) {
+    Order.getByStatus("InProgress")
+        .then(data => res.json(data))
         .catch(e => next(e));
 }
 
@@ -74,6 +86,7 @@ function create(req, res, next) {
 
 module.exports = {
     list,
+    listInProgress,
     seed,
     create,
     complete
