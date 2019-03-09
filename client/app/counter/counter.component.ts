@@ -99,9 +99,9 @@ export class CounterComponent implements OnInit, OnDestroy {
      * completed.
      */
     handleOrderEvent(order) {
-        this.orders.forEach(element => {
+        this.orders.forEach((element, index) => {
             if (element._id === order._id) {
-                this.orders.splice(this.orders.indexOf(element), 1);
+                this.orders.splice(index, 1);
             }
         });
 
@@ -110,6 +110,7 @@ export class CounterComponent implements OnInit, OnDestroy {
 
     selectedOrder(order) {
         this.sidebarOrder = order;
+        console.log(order);
     }
 
     completeOrder() {
