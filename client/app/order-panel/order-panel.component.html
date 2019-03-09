@@ -1,5 +1,11 @@
-<div class="nav-side-menu" style="padding: 1%;">
-    <h3>Order - <i>Table {{order.tableId}}</i> <a (click)="closeClick()">close</a></h3>
+<div class="nav-side-menu" style="padding: 1%;" *ngIf="order">
+
+    <h3>Order - <i>Table {{order.tableId}} </i>
+        <i class="fas fa-times-circle" (click)="closeClick()">
+        </i>
+    </h3>
+
+
     <small>Waiter ID: {{waiterId}}</small>
     <hr>
     <div class="menu-list">
@@ -11,7 +17,7 @@
                 <!-- <div class="col-sm col-md-1 col-lg-1">
                     <b>Quantity</b>
                 </div> -->
-                <div class="col-sm col-md-1 col-lg-1">
+                <div class="col-sm col-md-2 col-lg-2">
                     <b>Price</b>
                 </div>
             </div>
@@ -26,13 +32,13 @@
                     <i class="fas fa-minus" (click)="decreaseQuantity(item)"></i>
                 </div> -->
                 <div class="col-1">
-                    {{item.price}}
+                    £{{item.pricePerPortion}}
                 </div>
             </div>
-            
-            <ng-container *ngIf="type == 'counter'">
-            <hr>
-                <form name="addDiscount" [formGroup]="discountForm" (submit)="addPromo()" #newDiscount="ngForm" >
+
+            <ng-container *ngIf="type == 'counter' && order.status != 'Completed'">
+                <hr>
+                <form name="addDiscount" [formGroup]="discountForm" (submit)="addPromo()" #newDiscount="ngForm">
                     <div class="row">
                         <div class="col-3">
                             <div class="input-group input-group-sm mb-3">
@@ -49,7 +55,7 @@
                         </div>
 
                     </div>
-            </form>
+                </form>
             </ng-container>
             <hr>
             <div class="row">
@@ -75,11 +81,12 @@
     </div>
     <div>
         <div class="row">
-            <div class="col-1">
-                <button type="button" class="btn btn-warning">Start</button>
+            <div class="col-1" *ngIf="order.status != 'Completed'">
+                <button type="button" class="btn btn-warning" *ngIf="type == 'waiter'">Start</button>
+                <button type="button" class="btn btn-warning" *ngIf="type == 'counter'">Update</button>
             </div>
             <ng-container *ngIf="type == 'counter'">
-                <div class="col-2">
+                <div class="col-2" *ngIf="order.status != 'Completed'">
                     <button type="button" class="btn btn-success">Complete</button>
                 </div>
                 <div class="col-1">

@@ -40,7 +40,6 @@ function seed(req, res, next) {
         .catch(e => next(e));
 }
 
-
 /**
  * Handle completing an existing order.
  * TODO: validate there is no pending order items?
@@ -51,7 +50,7 @@ function seed(req, res, next) {
 function complete(req, res, next) {
     var orderId = req.params.id;
 
-    return Order.get(orderId)
+    return Order.getById(orderId)
         .then(order => {
             order.complete();
             return order.save();
@@ -73,7 +72,6 @@ function complete(req, res, next) {
  */
 function create(req, res, next) {
     const order = req.body.order;
-    order.status = 'InProgress';
 
     return Order.create(order)
         .then(createdOrder => {
