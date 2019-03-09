@@ -14,9 +14,6 @@
                 <div class="col-sm col-md-2 col-lg-2">
                     <b>Item</b>
                 </div>
-                <!-- <div class="col-sm col-md-1 col-lg-1">
-                    <b>Quantity</b>
-                </div> -->
                 <div class="col-sm col-md-2 col-lg-2">
                     <b>Price</b>
                 </div>
@@ -26,11 +23,6 @@
                 <div class="col-2">
                     {{item.name}}
                 </div>
-                <!-- <div class="col-1">
-                    {{item.quantity}}&nbsp;
-                    <i class="fas fa-plus" (click)="increaseQuantity(item)"></i>&nbsp;
-                    <i class="fas fa-minus" (click)="decreaseQuantity(item)"></i>
-                </div> -->
                 <div class="col-1">
                     £{{item.pricePerPortion}}
                 </div>
@@ -87,9 +79,9 @@
             </div>
             <ng-container *ngIf="type == 'counter'">
                 <div class="col-2" *ngIf="order.status != 'Completed'">
-                    <button type="button" class="btn btn-success">Complete</button>
+                    <button type="button" class="btn btn-success" (click)="completeOrder(order)">Complete</button>
                 </div>
-                <div class="col-1">
+                <div class="col-1" *ngIf="order.status === 'Completed'">
                     <button type="button" (click)="printReceipt()" class="btn btn-info">Print</button>
                 </div>
             </ng-container>

@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
+import { Order } from '../shared/order.model';
+import { OrderService } from '../shared/order.service';
+
 export type PanelType = 'waiter' | 'counter';
 
 @Component({
@@ -40,7 +43,10 @@ export class OrderPanelComponent implements OnInit {
      * @param counterService Counter Service
      * @param formBuilder Form Builder
      */
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private orderSerice: OrderService,
+    ) { }
 
     ngOnInit() {
         this.createForm();
@@ -87,11 +93,23 @@ export class OrderPanelComponent implements OnInit {
         this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
     }
 
-    completeOrder() {
-        // TO DO: change table status from busy to available again.
-        // Change order status to done
+    /**
+     * Completes the order
+     *
+     * @param order Order
+     */
+    completeOrder(order: Order) {
+        this.orderSerice
+            .completeOrder(order._id)
+            .subscribe((data) => {
+
+            }, (error) => {
+            });
     }
 
+    /**
+     * Close side view
+     */
     closeClick() {
         this.close.emit();
     }

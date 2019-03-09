@@ -110,12 +110,6 @@ export class CounterComponent implements OnInit, OnDestroy {
 
     selectedOrder(order) {
         this.sidebarOrder = order;
-        console.log(order);
-    }
-
-    completeOrder() {
-        // TO DO: change table status from busy to available again.
-        // Change order status to done
     }
 
     // Method needs to exist for untilDestroyed to work as expected in prod
