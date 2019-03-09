@@ -3,8 +3,9 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { Order } from '../shared/order.model';
+import { OrderService } from '../shared/order.service';
 import { OrderSocketService } from '../socket/order-socket.service';
-import { CounterService } from './counter.service';
 
 @Component({
     selector: 'app-counter',
@@ -30,7 +31,7 @@ export class CounterComponent implements OnInit, OnDestroy {
     // dummy data for now
     public waiterId = 1;
 
-    public orders: any;
+    public orders: Order[];
 
     public sidebarOrder = null;
 
@@ -39,8 +40,8 @@ export class CounterComponent implements OnInit, OnDestroy {
     public showView = true;
 
     /**
- * Array of tables within the restaurant.
- */
+     * Array of tables within the restaurant.
+     */
     public tables = [
         { id: 1, openOrder: false, orderId: null },
         { id: 2, openOrder: false, orderId: null },
@@ -54,12 +55,12 @@ export class CounterComponent implements OnInit, OnDestroy {
      * @param formBuilder Form Builder
      */
     constructor(
-        protected counterService: CounterService,
+        protected orderSerice: OrderService,
         private orderSocket: OrderSocketService
     ) { }
 
     ngOnInit() {
-        this.getOrders();
+        this.getAllOrders();
         this.configureSockets();
 
         this.dicountedValue = 0;
@@ -68,11 +69,10 @@ export class CounterComponent implements OnInit, OnDestroy {
     /**
      * Get all the orders from the database
      */
-    getOrders() {
-        this.counterService
-            .getOrders()
+    getAllOrders() {
+        this.orderSerice
+            .getAllOrders()
             .subscribe((data) => {
-                console.log(data);
                 this.orders = data;
                 this.sidebarOrder = data[0];
             }, (error) => {
@@ -99,6 +99,12 @@ export class CounterComponent implements OnInit, OnDestroy {
      * completed.
      */
     handleOrderEvent(order) {
+        this.orders.forEach(element => {
+            if (element._id === order._id) {
+                this.orders.splice(this.orders.indexOf(element), 1);
+            }
+        });
+
         this.orders.push(order);
     }
 

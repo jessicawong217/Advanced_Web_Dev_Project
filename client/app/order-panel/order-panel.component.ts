@@ -14,10 +14,7 @@ export class OrderPanelComponent implements OnInit {
 
     @Input()
     public set setOrder(val: any) {
-        console.log(val);
-
         this.order = val;
-
         this.calculateTotal();
     }
 

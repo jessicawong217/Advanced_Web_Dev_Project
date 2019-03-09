@@ -50,7 +50,7 @@ function seed(req, res, next) {
 function complete(req, res, next) {
     var orderId = req.params.id;
 
-    return Order.get(orderId)
+    return Order.getById(orderId)
         .then(order => {
             order.complete();
             return order.save();

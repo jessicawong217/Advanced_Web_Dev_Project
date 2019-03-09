@@ -1,11 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, throwError as observableThrowError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-import { Order } from "./order.model";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root'
 })
 export class OrderService {
 
@@ -13,7 +12,14 @@ export class OrderService {
     }
 
     getOrders(): Observable<any> {
-        return this.http.get("/api/orders/in-progress")
+        return this.http.get('/api/orders/in-progress')
+            .pipe(
+                catchError((error: any) => observableThrowError(error))
+            );
+    }
+
+    getAllOrders(): Observable<any> {
+        return this.http.get('/api/orders')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
