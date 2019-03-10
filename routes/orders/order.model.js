@@ -9,6 +9,10 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         enum: ['InProgress', 'Completed']
     },
+    discount: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -68,8 +72,8 @@ OrderSchema.statics = {
     },
 
     getByStatus(orderStatus) {
-        return this.find({status : orderStatus})
-            .sort({createdAt: -1})
+        return this.find({ status: orderStatus })
+            .sort({ createdAt: -1 })
             .exec();
     }
 };

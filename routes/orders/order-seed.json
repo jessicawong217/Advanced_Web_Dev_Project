@@ -2,6 +2,7 @@
     {
         "tableId": 1,
         "status": "InProgress",
+        "discount": 0,
         "createdAt": 1551370345281,
         "orderItems": [
             {
@@ -21,7 +22,9 @@
     {
         "tableId": 2,
         "status": "Completed",
+        "discount": 50,
         "createdAt": 1551370979222,
+        "finishedAt": 1551370999222,
         "orderItems": [
             {
                 "menuItemId": "322",

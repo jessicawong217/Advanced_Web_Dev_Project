@@ -13,6 +13,7 @@ export type PanelType = 'waiter' | 'counter';
     styleUrls: ['./order-panel.component.css']
 })
 export class OrderPanelComponent implements OnInit {
+
     @Input() waiterId: any;
 
     @Input()
@@ -49,10 +50,9 @@ export class OrderPanelComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.dicountedValue = 0;
         this.createForm();
         this.calculateTotal();
-
-        this.dicountedValue = 0;
     }
 
     /**
@@ -87,10 +87,16 @@ export class OrderPanelComponent implements OnInit {
         if (this.discountForm === undefined) {
             return;
         }
-        const discountValue = this.discountForm.value.discount;
-        this.dicountedValue = (discountValue / 100) * this.totalNoDiscount;
 
-        this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
+        if (this.order.discount !== undefined) {
+            this.dicountedValue = (this.order.discount / 100) * this.totalNoDiscount;
+            this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
+
+        } else {
+            const discountValue = this.discountForm.value.discount;
+            this.dicountedValue = (discountValue / 100) * this.totalNoDiscount;
+            this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
+        }
     }
 
     /**
@@ -119,7 +125,6 @@ export class OrderPanelComponent implements OnInit {
      */
     printReceipt() {
         const date = new Date();
-
         const text = [];
         const lineHeight = 1.2,
             margin = 0.1,
@@ -148,8 +153,9 @@ export class OrderPanelComponent implements OnInit {
         // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
         doc.text(text, margin, margin + 4 * oneLineHeight);
 
-        // You can also calculate the height of the text very simply:
+        // Calculate the height of the text very simply:
         const textHeight = (text.length * fontSize * lineHeight) / ptsPerInch;
+
         doc.setFontStyle('bold').text(
             'Table ' + this.order.tableId + ' Receipt',
             1,
