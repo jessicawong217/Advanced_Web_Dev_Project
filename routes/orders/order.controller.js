@@ -65,6 +65,25 @@ function complete(req, res, next) {
 }
 
 /**
+ * Handle updating an existing order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function update(req, res, next) {
+    var orderId = req.params.id;
+    var items = req.body.items;
+
+    return Order.addItems(orderId, items)
+        .then(updateOrder => {
+            const result = { order: updateOrder };
+            res.io.emit('order-updated', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
  * Handle creating a new order.
  * TODO: validate request body.
  * @param {*} req The express request object.
@@ -88,5 +107,6 @@ module.exports = {
     listInProgress,
     seed,
     create,
-    complete
+    complete,
+    update
 };

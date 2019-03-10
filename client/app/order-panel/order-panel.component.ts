@@ -117,10 +117,42 @@ export class OrderPanelComponent implements OnInit {
      */
     completeOrder(order: Order) {
         this.orderSerice
-            .completeOrder(order._id, JSON.stringify({ discountedValue: this.dicountedValue }))
-            .subscribe((data) => {
+            .completeOrder(
+                order._id,
+                JSON.stringify({ discountedValue: this.dicountedValue }
+                )
+            );
+    }
 
+    /**
+     * Update an order by adding items to it
+     *
+     * @param order Order
+     */
+    updateOrder(order: Order) {
+        const itemsDummy = [
+            {
+                menuItemId: 1,
+                name: 'Pork',
+                pricePerPortion: 20.99,
+                status: 'InProgress'
+            },
+            {
+                menuItemId: 2,
+                name: 'Fanta',
+                pricePerPortion: 3.50,
+                status: 'InProgress'
+            }
+        ];
+        this.orderSerice
+            .updateOrder(
+                order._id,
+                JSON.stringify({ items: itemsDummy }
+                )
+            ).subscribe(data => {
+                console.log(data);
             }, (error) => {
+                console.log(error);
             });
     }
 

@@ -76,6 +76,23 @@ OrderSchema.statics = {
         return this.find({ status: orderStatus })
             .sort({ createdAt: -1 })
             .exec();
+    },
+
+    addItems(id, items) {
+        return this.findOneAndUpdate(
+            { "_id": id },
+            { $push: { orderItems: { $each: items } } },
+            { new: true }
+        )
+            .exec()
+            .then(order => {
+                if (order) {
+                    return order;
+                }
+                // TODO: return error status code within error.
+                return Promise.reject(new Error('No order found'));
+
+            });
     }
 };
 

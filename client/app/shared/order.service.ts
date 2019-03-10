@@ -40,4 +40,14 @@ export class OrderService {
                 catchError((error: any) => observableThrowError(error))
             );
     }
+
+    /**
+     * Calls API endpoint to update an order
+     */
+    updateOrder(orderId, items): Observable<any> {
+        return this.http.patch('/api/orders/' + orderId, items)
+            .pipe(
+                catchError((error: any) => observableThrowError(error))
+            );
+    }
 }

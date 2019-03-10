@@ -84,9 +84,10 @@ export class CounterComponent implements OnInit, OnDestroy {
      */
     configureSockets() {
         const openSub$ = this.orderSocket.getOrdersOpened();
+        const updatedSub$ = this.orderSocket.getOrdersUpdated();
         const closedSub$ = this.orderSocket.getOrdersCompleted();
 
-        merge(openSub$, closedSub$)
+        merge(openSub$, updatedSub$, closedSub$)
             .pipe(
                 tap(order => this.handleOrderEvent(order)),
                 untilDestroyed(this)
