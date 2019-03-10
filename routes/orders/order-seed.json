@@ -27,13 +27,13 @@
                 "menuItemId": "322",
                 "name": "Fried Rice",
                 "price": 8.95,
-                "status": "Complete"
+                "status": "Completed"
             },
             {
                 "menuItemId": "321",
                 "name": "Sticky Pork",
                 "price": 18.95,
-                "status": "Complete"
+                "status": "Completed"
             }
         ]
     }

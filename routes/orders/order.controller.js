@@ -64,6 +64,51 @@ function complete(req, res, next) {
 }
 
 /**
+ * Complete a single item on an order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function completeItem(req, res, next) {
+    var orderId = req.params.id;
+    var itemId = req.params.itemId;
+
+    return Order.getById(orderId)
+        .then(order => {
+            order.completeItem(itemId);
+            return order.save();
+        })
+        .then(updatedOrder => {
+            const result = { order: updatedOrder };
+            res.io.emit('order-updated', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
+ * Complete all remaining items on an order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function completeAllItems(req, res, next) {
+    var orderId = req.params.id;
+
+    return Order.getById(orderId)
+        .then(order => {
+            order.completeAllItems();
+            return order.save();
+        })
+        .then(updatedOrder => {
+            const result = { order: updatedOrder };
+            res.io.emit('order-updated', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
  * Handle creating a new order.
  * TODO: validate request body.
  * @param {*} req The express request object.
@@ -87,5 +132,7 @@ module.exports = {
     listInProgress,
     seed,
     create,
-    complete
+    complete,
+    completeItem,
+    completeAllItems,
 };

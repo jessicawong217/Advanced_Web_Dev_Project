@@ -12,7 +12,7 @@ var OrderItemsSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['InProgress', 'Complete']
+        enum: ['InProgress', 'Completed']
     }
 });
 
@@ -44,6 +44,29 @@ OrderSchema.method({
      */
     complete() {
         this.status = 'Completed';
+    },
+
+    /**
+     * Complete an item on the order by its id.
+     * @param {*} id Id of the order item being completed.
+     */
+    completeItem(id) {
+        var item = this.items.id(id);
+
+        if (item == null || item.status == 'Completed') {
+            throw new Error('No InProgress order item found');
+        }
+
+        item.status = 'Completed';
+    },
+
+    /**
+     * Complete all items on an order.
+     */
+    completeAllItems() {
+        this.items.forEach(item => {
+            item.status = 'Completed';            
+        });
     }
 });
 
