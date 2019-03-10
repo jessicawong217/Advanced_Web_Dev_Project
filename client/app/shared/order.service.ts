@@ -24,4 +24,8 @@ export class OrderService {
                 catchError((error: any) => observableThrowError(error))
             );
     }
+
+    completeOrder(orderId: string): Observable<any> {
+        return this.http.post(`/api/orders/${orderId}/complete`, null);
+    }
 }

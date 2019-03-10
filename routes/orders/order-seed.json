@@ -1,40 +1,40 @@
 [
-    {
-        "tableId": 1,
-        "status": "InProgress",
-        "createdAt": 1551370345281,
-        "orderItems": [
-            {
-                "menuItemId": "1234567",
-                "name": "Sweet & Sour Chicken",
-                "pricePerPortion": 8.95,
-                "status": "InProgress"
-            },
-            {
-                "menuItemId": "1234567",
-                "name": "Sweet & Sour Chicken",
-                "pricePerPortion": 8.95,
-                "status": "InProgress"
-            }
-        ]
-    },
-    {
-        "tableId": 2,
-        "status": "Completed",
-        "createdAt": 1551370979222,
-        "orderItems": [
-            {
-                "menuItemId": "322",
-                "name": "Fried Rice",
-                "pricePerPortion": 8.95,
-                "status": "Complete"
-            },
-            {
-                "menuItemId": "321",
-                "name": "Sticky Pork",
-                "pricePerPortion": 18.95,
-                "status": "Complete"
-            }
-        ]
-    }
+  {
+    "tableId": 1,
+    "status": "InProgress",
+    "createdAt": 1551370345281,
+    "orderItems": [
+      {
+        "menuItemId": "1234567",
+        "name": "Sweet & Sour Chicken",
+        "pricePerPortion": 8.95,
+        "status": "InProgress"
+      },
+      {
+        "menuItemId": "1234567",
+        "name": "Sweet & Sour Chicken",
+        "pricePerPortion": 8.95,
+        "status": "InProgress"
+      }
+    ]
+  },
+  {
+    "tableId": 2,
+    "status": "Completed",
+    "createdAt": 1551370979222,
+    "orderItems": [
+      {
+        "menuItemId": "322",
+        "name": "Fried Rice",
+        "pricePerPortion": 8.95,
+        "status": "Completed"
+      },
+      {
+        "menuItemId": "321",
+        "name": "Sticky Pork",
+        "pricePerPortion": 18.95,
+        "status": "Completed"
+      }
+    ]
+  }
 ]

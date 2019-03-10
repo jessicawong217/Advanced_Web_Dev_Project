@@ -1,7 +1,6 @@
 export class OrderItem {
-    constructor(
-        public name: string,
-        public price: number,
-        public quantity: number
-    ) { }
+    constructor(public menuItemId: string,
+                public name: string,
+                public pricePerPortion: number,
+                public status: string){}
 }

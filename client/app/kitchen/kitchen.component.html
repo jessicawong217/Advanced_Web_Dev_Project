@@ -1,3 +1,42 @@
-<div *ngFor="let order of orders">
-  <p>{{order | json}}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Table Number</th>
+                    <th scope="col">Items</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders | orderBy:'status'">
+                    <th scope="row">{{order.tableId}}</th>
+                    <td>
+                        <small *ngFor="let item of order.orderItems">
+                    <td [ngClass]="{
+                            'table-warning': item.status === 'InProgress',
+                            'table-success': item.status === 'Completed'
+                          }">
+                        {{item.name}}
+                        <b>£{{item.pricePerPortion}}</b>
+                    <button (click)="completeOrderItem(item)">Complete</button>
+                    <br>
+                    </td>
+                    <br>
+                    </small>
+                    </td>
+                    <td>{{order.createdAt | date: 'hh:mm'}}</td>
+                    <td [ngClass]="{
+                            'table-warning': order.status === 'InProgress',
+                            'table-success': order.status === 'Completed'
+                          }">{{order.status}}
+                    </td>
+                    <td><button (click)="completeOrder(order)">Complete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

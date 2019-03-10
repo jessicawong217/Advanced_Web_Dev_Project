@@ -29,7 +29,7 @@ const OrderSchema = new mongoose.Schema({
             },
             status: {
                 type: String,
-                enum: ['InProgress', 'Complete']
+                enum: ['InProgress', 'Completed']
             }
         }
     ]
@@ -42,11 +42,15 @@ OrderSchema.method({
      */
     complete() {
         this.status = 'Completed';
+
+        for(let i = 0; i < this.orderItems.length; i++) {
+            this.orderItems[i].status = 'Completed';
+        }
     }
 });
 
 OrderSchema.statics = {
-    // Wrapper on find method uwill be used to return clearer errors.
+    // Wrapper on find method will be used to return clearer errors.
     getById(id) {
         return this.findById(id)
             .exec()
