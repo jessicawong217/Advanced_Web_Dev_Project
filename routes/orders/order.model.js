@@ -44,8 +44,9 @@ OrderSchema.method({
     /**
      * Mark the current order as completed.
      */
-    complete() {
+    complete(dicountedValue) {
         this.status = 'Completed';
+        this.discount = dicountedValue;
     }
 });
 

@@ -19,6 +19,8 @@ export class OrderPanelComponent implements OnInit {
     @Input()
     public set setOrder(val: any) {
         this.order = val;
+        this.dicountedValue = 0;
+        this.setDiscountToZero();
         this.calculateTotal();
     }
 
@@ -74,8 +76,7 @@ export class OrderPanelComponent implements OnInit {
     calculateTotal() {
         this.totalNoDiscount = this.order.orderItems.reduce(
             (accumulator, element) =>
-                element.pricePerPortion + accumulator,
-            0
+                element.pricePerPortion + accumulator, 0
         );
         this.addPromo();
     }
@@ -88,8 +89,8 @@ export class OrderPanelComponent implements OnInit {
             return;
         }
 
-        if (this.order.discount !== undefined) {
-            this.dicountedValue = (this.order.discount / 100) * this.totalNoDiscount;
+        if (this.order.discount !== undefined && this.discountForm.value.discount === 0) {
+            this.dicountedValue = this.order.discount;
             this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
 
         } else {
@@ -100,13 +101,23 @@ export class OrderPanelComponent implements OnInit {
     }
 
     /**
+     * When the order changes, set the discount to 0
+     */
+    setDiscountToZero() {
+        if (this.discountForm === undefined) {
+            return;
+        }
+        this.discountForm.controls.discount.patchValue(0);
+    }
+
+    /**
      * Completes the order
      *
      * @param order Order
      */
     completeOrder(order: Order) {
         this.orderSerice
-            .completeOrder(order._id)
+            .completeOrder(order._id, JSON.stringify({ discountedValue: this.dicountedValue }))
             .subscribe((data) => {
 
             }, (error) => {

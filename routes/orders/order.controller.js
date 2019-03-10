@@ -49,10 +49,11 @@ function seed(req, res, next) {
  */
 function complete(req, res, next) {
     var orderId = req.params.id;
+    var dicountedValue = req.body.discountedValue;
 
     return Order.getById(orderId)
         .then(order => {
-            order.complete();
+            order.complete(dicountedValue);
             return order.save();
         })
         .then(completedOrder => {

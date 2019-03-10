@@ -34,8 +34,8 @@ export class OrderService {
     /**
      * Calls API endpoint to complete an order
      */
-    completeOrder(orderId): Observable<any> {
-        return this.http.post('/api/orders/' + orderId + '/complete', '')
+    completeOrder(orderId, discountedValue): Observable<any> {
+        return this.http.post('/api/orders/' + orderId + '/complete', discountedValue)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );

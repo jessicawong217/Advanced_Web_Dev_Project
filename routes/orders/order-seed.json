@@ -22,7 +22,7 @@
     {
         "tableId": 2,
         "status": "Completed",
-        "discount": 50,
+        "discount": 20,
         "createdAt": 1551370979222,
         "finishedAt": 1551370999222,
         "orderItems": [
