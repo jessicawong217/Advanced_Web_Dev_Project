@@ -1,5 +1,21 @@
 const mongoose = require('mongoose');
 
+var OrderItemsSchema = new mongoose.Schema({
+    menuItemId: {
+        type: String
+    },
+    name: {
+        type: String
+    },
+    price: {
+        type: Number
+    },
+    status: {
+        type: String,
+        enum: ['InProgress', 'Complete']
+    }
+});
+
 const OrderSchema = new mongoose.Schema({
     tableId: {
         type: Number,
@@ -16,22 +32,8 @@ const OrderSchema = new mongoose.Schema({
     finishedAt: {
         type: Date
     },
-    orderItems: [
-        {
-            menuItemId: {
-                type: String
-            },
-            name: {
-                type: String
-            },
-            pricePerPortion: {
-                type: Number
-            },
-            status: {
-                type: String,
-                enum: ['InProgress', 'Complete']
-            }
-        }
+    items: [
+        OrderItemsSchema
     ]
 });
 
