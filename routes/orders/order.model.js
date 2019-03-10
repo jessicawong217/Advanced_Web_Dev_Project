@@ -10,6 +10,13 @@ var OrderItemsSchema = new mongoose.Schema({
     price: {
         type: Number
     },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    finishedAt: {
+        type: Date
+    },
     status: {
         type: String,
         enum: ['InProgress', 'Completed']
@@ -43,6 +50,7 @@ OrderSchema.method({
      * Mark the current order as completed.
      */
     complete() {
+        this.finishedAt = Date.now;
         this.status = 'Completed';
     },
 
@@ -58,6 +66,7 @@ OrderSchema.method({
         }
 
         item.status = 'Completed';
+        item.finishedAt = Date.now;
     },
 
     /**
@@ -65,7 +74,8 @@ OrderSchema.method({
      */
     completeAllItems() {
         this.items.forEach(item => {
-            item.status = 'Completed';            
+            item.status = 'Completed'; 
+            item.finishedAt = Date.now;           
         });
     }
 });
