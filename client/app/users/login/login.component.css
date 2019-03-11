@@ -1,0 +1,51 @@
+.login {
+    height: 100vh;
+}
+
+.login-input {
+    margin: 35px 0;
+    line-height: 15px;
+}
+
+.login-input-pin {
+    background: #000;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    margin: 0 10px;
+    display: block;
+}
+
+.login-input--error .login-input-pin {
+    background: #ce0303;
+}
+
+.login-input-pin--hidden {
+    opacity: 0;
+}
+
+.login-keypad {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 310px;
+}
+
+.btn-keypad {
+    border: 1px solid #000;
+    border-radius: 50px;
+    display: inline-block;
+    font-size: 26px;
+    height: 80px;
+    line-height: 80px;
+    margin: 10px;
+    text-align: center;
+    width: 80px;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.btn-keypad:hover {
+    background-color: #000;
+    color: #FFF;
+}
