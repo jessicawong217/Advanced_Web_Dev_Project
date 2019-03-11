@@ -96,6 +96,7 @@ export class OrderPanelComponent implements OnInit {
 
     addItem(item: OrderItem) {
         this.order.items.push(item);
+        this.calculateTotal();
     }
 
     closeClick() {

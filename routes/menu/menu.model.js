@@ -32,8 +32,18 @@ MenuSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50 } = {}) {
-        return this.find()
+    list({ skip = 0, limit = 50, query = null } = {}) {
+        var searchData = {};
+
+        if (query !== null)  {
+            searchData.$or = [
+                { 'name': { "$regex": query, "$options": "i" }  },
+                // TODO add searching by id.
+                // { 'itemId': { "$regex": query, "$options": "i" }}
+            ]
+        }
+
+        return this.find(searchData)
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)

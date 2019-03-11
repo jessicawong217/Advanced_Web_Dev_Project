@@ -6,6 +6,8 @@ import { tap } from 'rxjs/operators';
 import { MenuService } from '../menu/menu.service';
 import { OrderSocketService } from '../socket/order-socket.service';
 import { WaiterService } from './waiter.service';
+import { Order } from '../shared/order.model';
+import { OrderItem } from '../shared/order-item.model';
 
 @Component({
     selector: 'app-waiter',
@@ -83,8 +85,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
     startOrderClick(table) {
         const newOrder = {
             tableId: table.id,
-            orderItems: []
-        };
+            items: []
+        } as Order;
 
         this.sidebarOrder = newOrder;
     }
