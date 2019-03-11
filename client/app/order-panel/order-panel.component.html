@@ -1,38 +1,39 @@
-<div class="nav-side-menu" style="padding: 1%;" *ngIf="order">
+<div class="nav-side-menu d-flex flex-column" *ngIf="order">
+    <div class="nav-side-menu-header">
+        <h3>
+            Order - <i>Table {{order.tableId}}</i>
+            <i class="fas fa-times-circle" (click)="closeClick()"></i>
+        </h3>
 
-    <h3>Order - <i>Table {{order.tableId}} </i>
-        <i class="fas fa-times-circle" (click)="closeClick()">
-        </i>
-    </h3>
+        <small>Waiter ID: {{waiterId}}</small>
 
+        <hr>
+    </div>
 
-    <small>Waiter ID: {{waiterId}}</small>
-    <hr>
-    <div class="menu-list">
-        <div id="menu-content" class="menu-content collapse out">
+    <div class="menu-list" [ngSwitch]="order.items?.length > 0">
+
+        <div *ngSwitchDefault>
+            No items added to the order.
+        </div>
+    
+        <div id="menu-content" class="menu-content collapse out" *ngSwitchCase="true">
             <div class="row">
                 <div class="col-sm col-md-2 col-lg-2">
                     <b>Item</b>
                 </div>
-                <!-- <div class="col-sm col-md-1 col-lg-1">
-                    <b>Quantity</b>
-                </div> -->
+ 
                 <div class="col-sm col-md-2 col-lg-2">
                     <b>Price</b>
                 </div>
             </div>
             <hr>
-            <div class="row" *ngFor="let item of order.orderItems">
+            <div class="row" *ngFor="let item of order.items">
                 <div class="col-2">
                     {{item.name}}
                 </div>
-                <!-- <div class="col-1">
-                    {{item.quantity}}&nbsp;
-                    <i class="fas fa-plus" (click)="increaseQuantity(item)"></i>&nbsp;
-                    <i class="fas fa-minus" (click)="decreaseQuantity(item)"></i>
-                </div> -->
+
                 <div class="col-1">
-                    £{{item.pricePerPortion}}
+                    £{{item.price}}
                 </div>
             </div>
 
@@ -79,11 +80,12 @@
             </div>
         </div>
     </div>
-    <div>
+
+    <div class="container">
         <div class="row">
             <div class="col-1" *ngIf="order.status != 'Completed'">
-                <button type="button" class="btn btn-warning" *ngIf="type == 'waiter'">Start</button>
-                <button type="button" class="btn btn-warning" *ngIf="type == 'counter'">Update</button>
+                <button type="button" class="btn btn-warning" *ngIf="!order._id">Start</button>
+                <button type="button" class="btn btn-warning" *ngIf="!!order._id">Update</button>
             </div>
             <ng-container *ngIf="type == 'counter'">
                 <div class="col-2" *ngIf="order.status != 'Completed'">
