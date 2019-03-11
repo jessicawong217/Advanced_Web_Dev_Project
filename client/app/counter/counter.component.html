@@ -14,10 +14,10 @@
                     <tr *ngFor="let order of orders | orderBy:'status'" (click)="selectedOrder(order)">
                         <th scope="row">{{order.tableId}}</th>
                         <td>
-                            <small *ngFor="let items of order.orderItems">
+                            <small *ngFor="let items of order.items">
                         <td>
                             {{items.name}}
-                            <b>£{{items.pricePerPortion}}</b>
+                            <b>£{{items.price}}</b>
                         </td>
                         </small>
                         </td>

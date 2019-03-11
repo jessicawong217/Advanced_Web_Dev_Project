@@ -1,5 +1,28 @@
 const mongoose = require('mongoose');
 
+var OrderItemsSchema = new mongoose.Schema({
+    menuItemId: {
+        type: String
+    },
+    name: {
+        type: String
+    },
+    price: {
+        type: Number
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    finishedAt: {
+        type: Date
+    },
+    status: {
+        type: String,
+        enum: ['InProgress', 'Completed']
+    }
+});
+
 const OrderSchema = new mongoose.Schema({
     tableId: {
         type: Number,
@@ -20,22 +43,8 @@ const OrderSchema = new mongoose.Schema({
     finishedAt: {
         type: Date
     },
-    orderItems: [
-        {
-            menuItemId: {
-                type: String
-            },
-            name: {
-                type: String
-            },
-            pricePerPortion: {
-                type: Number
-            },
-            status: {
-                type: String,
-                enum: ['InProgress', 'Complete']
-            }
-        }
+    items: [
+        OrderItemsSchema
     ]
 });
 
@@ -48,6 +57,31 @@ OrderSchema.method({
         this.status = 'Completed';
         this.discount = dicountedValue;
         this.finishedAt = Date.now();
+    },
+
+    /**
+     * Complete an item on the order by its id.
+     * @param {*} id Id of the order item being completed.
+     */
+    completeItem(id) {
+        var item = this.items.id(id);
+
+        if (item == null || item.status == 'Completed') {
+            throw new Error('No InProgress order item found');
+        }
+
+        item.status = 'Completed';
+        item.finishedAt = Date.now;
+    },
+
+    /**
+     * Complete all items on an order.
+     */
+    completeAllItems() {
+        this.items.forEach(item => {
+            item.status = 'Completed';
+            item.finishedAt = Date.now;
+        });
     }
 });
 
@@ -82,7 +116,7 @@ OrderSchema.statics = {
     addItems(id, items) {
         return this.findOneAndUpdate(
             { "_id": id },
-            { $push: { orderItems: { $each: items } } },
+            { $push: { items: { $each: items } } },
             { new: true }
         )
             .exec()

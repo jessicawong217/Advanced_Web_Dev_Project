@@ -25,6 +25,15 @@ router
     .patch(orderCtrl.update);
 
 router
+    .route('/:id/items/complete')
+    .post(orderCtrl.completeAllItems);
+
+router
+    .route('/:id/items/:itemId/complete')
+    /** POST /api/orders/:id/items/:itemId/complete - Mark an order item as completed */
+    .post(orderCtrl.completeItem);
+
+router
     .route('/seed')
     /** GET /api/orders/seed - Add dummy data */
     .post(orderCtrl.seed);

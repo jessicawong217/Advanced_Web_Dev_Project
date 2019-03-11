@@ -17,8 +17,8 @@ export class OrderPanelComponent implements OnInit {
     @Input() waiterId: any;
 
     @Input()
-    public set setOrder(val: any) {
-        this.order = val;
+    public set setOrder(order: Order) {
+        this.order = order;
         this.dicountedValue = 0;
         this.setDiscountToZero();
         this.calculateTotal();
@@ -30,7 +30,7 @@ export class OrderPanelComponent implements OnInit {
     @Output()
     close = new EventEmitter();
 
-    public order: any;
+    public order: Order;
 
     public totalNoDiscount: number;
 
@@ -48,7 +48,7 @@ export class OrderPanelComponent implements OnInit {
      */
     constructor(
         private formBuilder: FormBuilder,
-        private orderSerice: OrderService,
+        private orderService: OrderService,
     ) { }
 
     ngOnInit() {
@@ -74,9 +74,10 @@ export class OrderPanelComponent implements OnInit {
      * Calculate the total of all prices. Item price * quantity
      */
     calculateTotal() {
-        this.totalNoDiscount = this.order.orderItems.reduce(
+        this.totalNoDiscount = this.order.items.reduce(
             (accumulator, element) =>
-                element.pricePerPortion + accumulator, 0
+                element.price + accumulator,
+            0
         );
         this.addPromo();
     }
@@ -116,7 +117,7 @@ export class OrderPanelComponent implements OnInit {
      * @param order Order
      */
     completeOrder(order: Order) {
-        this.orderSerice
+        this.orderService
             .completeOrder(
                 order._id,
                 JSON.stringify({ discountedValue: this.dicountedValue }
@@ -138,17 +139,17 @@ export class OrderPanelComponent implements OnInit {
             {
                 menuItemId: 1,
                 name: 'Pork',
-                pricePerPortion: 20.99,
+                price: 20.99,
                 status: 'InProgress'
             },
             {
                 menuItemId: 2,
                 name: 'Fanta',
-                pricePerPortion: 3.50,
+                price: 3.50,
                 status: 'InProgress'
             }
         ];
-        this.orderSerice
+        this.orderService
             .updateOrder(
                 order._id,
                 JSON.stringify({ items: itemsDummy }
@@ -184,11 +185,11 @@ export class OrderPanelComponent implements OnInit {
                 format: 'credit-card'
             }).setProperties({ title: 'Receipt' });
 
-        this.order.orderItems.forEach(element => {
+        this.order.items.forEach(element => {
             // const itemPrice = element.price * element.quantity;
             const item =
                 '£' +
-                element.pricePerPortion.toFixed(2) +
+                element.price.toFixed(2) +
                 ' - ' +
                 element.name +
                 '\n';
