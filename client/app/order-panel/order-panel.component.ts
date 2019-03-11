@@ -94,8 +94,37 @@ export class OrderPanelComponent implements OnInit {
         // Change order status to done
     }
 
+    /**
+     * Add a new item to the order.
+     * @param item The new item.
+     */
     addItem(item: OrderItem) {
         this.order.items.push(item);
+        this.calculateTotal();
+    }
+
+    /**
+     * Duplicate an order item and add it to the order.
+     * @param item Existing order item.
+     */
+    duplicateItem(item: OrderItem) {
+        const newItem = {
+            name: item.name,
+            price: item.price,
+            menuId: item.menuId
+        } as OrderItem;
+
+        this.order.items.push(newItem);
+        this.calculateTotal();
+    }
+
+    /**
+     * Remove a new item from the order.
+     * @param index item index in orders array.
+     */
+    removeItem(index: number) {
+        console.log(index);
+        this.order.items.splice(index, 1);
         this.calculateTotal();
     }
 

@@ -11,16 +11,30 @@ import { debounceTime, switchMap, tap } from 'rxjs/operators';
     styleUrls: ['./menu-selection.component.css']
 })
 export class MenuSelectionComponent implements OnInit {
+    /**
+     * New item added event.
+     */
     @Output()
     itemAdded = new EventEmitter<Partial<OrderItem>>();
 
+    /**
+     * List of displayed menu items for selection.
+     */
     items: MenuItem[];
 
+    /**
+     * Search string subject.
+     */
     searchSubject$ = new Subject<string>();
 
     constructor(private menuService: MenuService) {}
 
+    /**
+     * Configure the subscribe to the search subjext and load the intial list of
+     * items.
+     */
     ngOnInit() {
+        // Debounce any search to decrease calls to the API.
         this.searchSubject$
             .pipe(
                 debounceTime(1000),
@@ -33,10 +47,18 @@ export class MenuSelectionComponent implements OnInit {
         this.menuService.getMenu().subscribe(items => (this.items = items));
     }
 
+    /**
+     * Trigger event emitter to add a new item to the order..
+     * @param item The new menu item to add.
+     */
     addItemClick(item: MenuItem) {
-        this.itemAdded.emit({ name: item.name, price: item.price });
+        this.itemAdded.emit({ name: item.name, price: item.price, menuId: item._id });
     }
 
+    /**
+     * Add the newly updated search value to the search subject to be debounced.
+     * @param event Input event.
+     */
     searchInput(event: { target: HTMLInputElement }) {
         this.searchSubject$.next(event.target.value);
     }

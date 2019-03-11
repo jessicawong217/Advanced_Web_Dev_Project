@@ -3,10 +3,13 @@ export enum MenuItemCategory {
     Drink
 }
 
-export interface MenuItem {
-    name: string;
-    price: number;
-    category: MenuItemCategory;
+export class MenuItem {
+    constructor(
+        public _id: string,
+        public name: string,
+        public price: number,
+        public category: MenuItemCategory
+    ) { }
 }
 
 export interface MenuItemViewModel {
