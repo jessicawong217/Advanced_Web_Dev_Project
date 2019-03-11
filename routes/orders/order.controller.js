@@ -49,15 +49,36 @@ function seed(req, res, next) {
  */
 function complete(req, res, next) {
     var orderId = req.params.id;
+    var dicountedValue = req.body.discountedValue;
 
     return Order.getById(orderId)
         .then(order => {
-            order.complete();
+            order.complete(dicountedValue);
             return order.save();
         })
         .then(completedOrder => {
             const result = { order: completedOrder };
             res.io.emit('order-completed', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
+ * Handle updating an existing order.
+ * Complete a single item on an order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function update(req, res, next) {
+    var orderId = req.params.id;
+    var items = req.body.items;
+
+    return Order.addItems(orderId, items)
+        .then(updateOrder => {
+            const result = { order: updateOrder };
+            res.io.emit('order-updated', result);
             res.json(result);
         })
         .catch(e => next(e));
@@ -133,6 +154,7 @@ module.exports = {
     seed,
     create,
     complete,
+    update,
     completeItem,
     completeAllItems,
 };

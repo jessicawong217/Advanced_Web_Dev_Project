@@ -1,4 +1,4 @@
-<div class="nav-side-menu d-flex flex-column" *ngIf="order">
+<div class="nav-side-menu d-flex flex-column p-1" *ngIf="order">
     <div class="nav-side-menu-header">
         <h3>
             Order - <i>Table {{order.tableId}}</i>
@@ -15,20 +15,20 @@
         <div *ngSwitchDefault>
             No items added to the order.
         </div>
-    
+
         <div id="menu-content" class="menu-content collapse out" *ngSwitchCase="true">
             <div class="row">
-                <div class="col-sm col-md-2 col-lg-2">
+                <div class="col-sm col-md-3 col-lg-3">
                     <b>Item</b>
                 </div>
- 
-                <div class="col-sm col-md-2 col-lg-2">
+
+                <div class="col-sm col-md-1 col-lg-1">
                     <b>Price</b>
                 </div>
             </div>
             <hr>
             <div class="row" *ngFor="let item of order.items">
-                <div class="col-2">
+                <div class="col-3">
                     {{item.name}}
                 </div>
 
@@ -75,7 +75,7 @@
                     <b>Discount:</b>
                 </div>
                 <div class="col-2" style="text-align: right;">
-                    <b>- &#163;{{dicountedValue.toFixed(2)}}</b>
+                    <b>- &#163;{{order.discount.toFixed(2)}}</b>
                 </div>
             </div>
         </div>
@@ -85,13 +85,14 @@
         <div class="row">
             <div class="col-1" *ngIf="order.status != 'Completed'">
                 <button type="button" class="btn btn-warning" *ngIf="!order._id">Start</button>
-                <button type="button" class="btn btn-warning" *ngIf="!!order._id">Update</button>
+                <button type="button" class="btn btn-warning" *ngIf="!!order._id"
+                    (click)="updateOrder(order)">Update</button>
             </div>
             <ng-container *ngIf="type == 'counter'">
                 <div class="col-2" *ngIf="order.status != 'Completed'">
-                    <button type="button" class="btn btn-success">Complete</button>
+                    <button type="button" class="btn btn-success" (click)="completeOrder(order)">Complete</button>
                 </div>
-                <div class="col-1">
+                <div class="col-1" *ngIf="order.status === 'Completed'">
                     <button type="button" (click)="printReceipt()" class="btn btn-info">Print</button>
                 </div>
             </ng-container>

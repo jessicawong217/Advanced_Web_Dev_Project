@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { OrderViewModel } from './order-view.model';
 
 @Injectable({
@@ -13,8 +14,7 @@ export class OrderService {
     }
 
     /**
-     * Get all orders that have a status of InProgress
-     * @return Observable that can be subscribed to in order to convert response into Orders
+     * Calls API endpoint to get all orders in progress
      */
     getInProgressOrders(): Observable<any> {
         return this.http.get('/api/orders/in-progress')
@@ -23,8 +23,31 @@ export class OrderService {
             );
     }
 
+    /**
+     * Calls API endpoint to get all orders
+     */
     getAllOrders(): Observable<any> {
         return this.http.get('/api/orders')
+            .pipe(
+                catchError((error: any) => observableThrowError(error))
+            );
+    }
+
+    /**
+     * Calls API endpoint to complete an order
+     */
+    completeOrder(orderId: string, discountedValue: any): Observable<any> {
+        return this.http.post('/api/orders/' + orderId + '/complete', discountedValue)
+            .pipe(
+                catchError((error: any) => observableThrowError(error))
+            );
+    }
+
+    /**
+     * Calls API endpoint to update an order
+     */
+    updateOrder(orderId: string, items: any): Observable<any> {
+        return this.http.patch('/api/orders/' + orderId, items)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -40,7 +63,7 @@ export class OrderService {
         return this.http.post(`/api/orders/${id}/items/${itemId}/complete`, {})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
-        ) as Observable<OrderViewModel>;
+            ) as Observable<OrderViewModel>;
     }
 
     /**
