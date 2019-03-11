@@ -173,7 +173,7 @@ export class OrderPanelComponent implements OnInit {
         const newItem = {
             name: item.name,
             price: item.price,
-            menuId: item.menuId
+            menuItemId: item.menuItemId
         } as OrderItem;
 
         this.order.items.push(newItem);

@@ -52,7 +52,7 @@ export class MenuSelectionComponent implements OnInit {
      * @param item The new menu item to add.
      */
     addItemClick(item: MenuItem) {
-        this.itemAdded.emit({ name: item.name, price: item.price, menuId: item._id });
+        this.itemAdded.emit({ name: item.name, price: item.price, menuItemId: item._id });
     }
 
     /**
