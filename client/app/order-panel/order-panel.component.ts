@@ -19,7 +19,6 @@ export class OrderPanelComponent implements OnInit {
     @Input()
     public set setOrder(order: Order) {
         this.order = order;
-        this.dicountedValue = 0;
         this.setDiscountToZero();
         this.calculateTotal();
     }
@@ -38,8 +37,6 @@ export class OrderPanelComponent implements OnInit {
 
     public discountForm: FormGroup;
 
-    public dicountedValue: number;
-
     /**
      * Counter Comoponent Constructor
      *
@@ -52,7 +49,6 @@ export class OrderPanelComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.dicountedValue = 0;
         this.createForm();
         this.calculateTotal();
     }
@@ -91,13 +87,11 @@ export class OrderPanelComponent implements OnInit {
         }
 
         if (this.order.discount !== undefined && this.discountForm.value.discount === 0) {
-            this.dicountedValue = this.order.discount;
-            this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
+            this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
 
         } else {
-            const discountValue = this.discountForm.value.discount;
-            this.dicountedValue = (discountValue / 100) * this.totalNoDiscount;
-            this.totalWithDiscount = this.totalNoDiscount - this.dicountedValue;
+            this.order.discount = (this.discountForm.value.discount / 100) * this.totalNoDiscount;
+            this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
         }
     }
 
@@ -120,7 +114,7 @@ export class OrderPanelComponent implements OnInit {
         this.orderService
             .completeOrder(
                 order._id,
-                JSON.stringify({ discountedValue: this.dicountedValue }
+                JSON.stringify({ discountedValue: this.order.discount }
                 )
             ).subscribe(data => {
                 console.log(data);
@@ -213,7 +207,7 @@ export class OrderPanelComponent implements OnInit {
 
         if (this.totalWithDiscount) {
             doc.setFontStyle('normal').text(
-                'Discount: £' + this.dicountedValue.toFixed(2),
+                'Discount: £' + this.order.discount.toFixed(2),
                 0.9,
                 textHeight + 0.8,
                 'right'

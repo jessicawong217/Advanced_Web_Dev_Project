@@ -36,7 +36,7 @@ export class OrderService {
     /**
      * Calls API endpoint to complete an order
      */
-    completeOrder(orderId, discountedValue): Observable<any> {
+    completeOrder(orderId: string, discountedValue: any): Observable<any> {
         return this.http.post('/api/orders/' + orderId + '/complete', discountedValue)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
@@ -46,7 +46,7 @@ export class OrderService {
     /**
      * Calls API endpoint to update an order
      */
-    updateOrder(orderId, items): Observable<any> {
+    updateOrder(orderId: string, items: any): Observable<any> {
         return this.http.patch('/api/orders/' + orderId, items)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
