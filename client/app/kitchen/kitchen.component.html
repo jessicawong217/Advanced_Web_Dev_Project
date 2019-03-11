@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                 <ng-container *ngFor="let order of orders">
-                    <ng-container *ngFor="let item of order.items">
+                    <ng-container *ngFor="let item of order.items | orderBy: 'createdAt'">
                         <tr *ngIf="item.status === 'InProgress'">
                             <th scope="row">{{order.tableId}}</th>
                             <td>{{item.name}}</td>

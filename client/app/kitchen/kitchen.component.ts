@@ -53,7 +53,18 @@ export class KitchenComponent implements OnInit, OnDestroy {
 
         merge(openedSub$, updatedSub$)
             .pipe(
-                tap(() => this.getInProgressOrders()),
+                tap((order) => {
+                    //check if order already exists
+                    let filteredOrders = this.orders.filter(o => o._id === order._id);
+                    if (filteredOrders.length > 0) {
+                        //if order exists, replace it's items with the updated orders items
+                        let existingOrder = filteredOrders[0];
+                        existingOrder.items = order.items;
+                    } else {
+                        //if order didn't already exist, add to orders list
+                        this.orders.push(order);
+                    }
+                }),
                 untilDestroyed(this)
             )
             .subscribe();
