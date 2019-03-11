@@ -27,7 +27,7 @@ export class OrderService {
     }
 
     /**
-     * Update an InProgress order item to Completed. Item must be InProgress of
+     * Update an InProgress order item to Completed. Item must be InProgress or
      * the api reports an error.
      * @param id The order id.
      * @param itemId Id of the item on the order.
