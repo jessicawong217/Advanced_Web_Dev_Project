@@ -12,7 +12,11 @@ export class OrderService {
     constructor(private http: HttpClient) {
     }
 
-    getOrders(): Observable<any> {
+    /**
+     * Get all orders that have a status of InProgress
+     * @return Observable that can be subscribed to in order to convert response into Orders
+     */
+    getInProgressOrders(): Observable<any> {
         return this.http.get('/api/orders/in-progress')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
