@@ -45,12 +45,13 @@ export class KitchenComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Listen for newly created orders to update the table view
+     * Listen for newly created and updated orders to update the table view
      */
     configureSockets() {
-        const openSub$ = this.orderSocket.getOrdersOpened();
+        const openedSub$ = this.orderSocket.getOrdersOpened();
+        const updatedSub$ = this.orderSocket.getOrdersUpdated();
 
-        merge(openSub$)
+        merge(openedSub$, updatedSub$)
             .pipe(
                 tap(() => this.getInProgressOrders()),
                 untilDestroyed(this)
