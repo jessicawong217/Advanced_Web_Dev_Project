@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 import { OrderItem } from '../shared/order-item.model';
+import { Order } from '../shared/order.model';
 
 export type PanelType = 'waiter' | 'counter';
 
@@ -14,7 +15,7 @@ export class OrderPanelComponent implements OnInit {
     @Input() waiterId: any;
 
     @Input()
-    public set setOrder(val: any) {
+    public set setOrder(val: Order) {
         this.order = val;
         this.calculateTotal();
     }
@@ -25,7 +26,7 @@ export class OrderPanelComponent implements OnInit {
     @Output()
     close = new EventEmitter();
 
-    public order: any;
+    public order: Order;
 
     public totalNoDiscount: number;
 
@@ -67,9 +68,9 @@ export class OrderPanelComponent implements OnInit {
      * Calculate the total of all prices. Item price * quantity
      */
     calculateTotal() {
-        this.totalNoDiscount = this.order.orderItems.reduce(
+        this.totalNoDiscount = this.order.items.reduce(
             (accumulator, element) =>
-                element.pricePerPortion + accumulator,
+                element.price + accumulator,
             0
         );
         this.addPromo();
@@ -119,11 +120,11 @@ export class OrderPanelComponent implements OnInit {
                 format: 'credit-card'
             }).setProperties({ title: 'Receipt' });
 
-        this.order.orderItems.forEach(element => {
+        this.order.items.forEach(element => {
             // const itemPrice = element.price * element.quantity;
             const item =
                 '£' +
-                element.pricePerPortion.toFixed(2) +
+                element.price.toFixed(2) +
                 ' - ' +
                 element.name +
                 '\n';
