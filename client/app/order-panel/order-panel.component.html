@@ -8,6 +8,9 @@
 
     <small>Waiter ID: {{waiterId}}</small>
     <hr>
+
+    <app-menu-selection (itemAdded)="addItem($event)"></app-menu-selection>
+
     <div class="menu-list">
         <div id="menu-content" class="menu-content collapse out">
             <div class="row">

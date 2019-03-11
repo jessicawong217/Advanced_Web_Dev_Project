@@ -14,6 +14,7 @@ import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { OrderService } from './shared/order.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { WaiterService } from './waiter/waiter.service';
         CounterComponent,
         OrderPanelComponent,
         CounterSortPipe,
-        KitchenComponent
+        KitchenComponent,
+        MenuSelectionComponent
     ],
     imports: [
         BrowserModule,

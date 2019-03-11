@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
+import { OrderItem } from '../shared/order-item.model';
 
 export type PanelType = 'waiter' | 'counter';
 
@@ -90,6 +91,10 @@ export class OrderPanelComponent implements OnInit {
     completeOrder() {
         // TO DO: change table status from busy to available again.
         // Change order status to done
+    }
+
+    addItem(item: OrderItem) {
+        this.order.items.pust(item);
     }
 
     closeClick() {
