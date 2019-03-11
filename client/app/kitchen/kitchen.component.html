@@ -11,18 +11,20 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tbody *ngFor="let order of orders">
-                <ng-container *ngFor="let item of order.items">
-                    <tr *ngIf="item.status === 'InProgress'">
-                        <th scope="row">{{order.tableId}}</th>
-                        <td>{{item.name}}</td>
-                        <td>{{item.createdAt | date: 'hh:mm'}}</td>
-                        <td [ngClass]="{'table-warning': item.status === 'InProgress'}">{{item.status}}
-                        </td>
-                        <td>
-                            <button (click)="completeItem(order._id, item)">Complete</button>
-                        </td>
-                    </tr>
+                <tbody>
+                <ng-container *ngFor="let order of orders">
+                    <ng-container *ngFor="let item of order.items">
+                        <tr *ngIf="item.status === 'InProgress'">
+                            <th scope="row">{{order.tableId}}</th>
+                            <td>{{item.name}}</td>
+                            <td>{{item.createdAt | date: 'HH:mm'}}</td>
+                            <td [ngClass]="{'table-warning': item.status === 'InProgress'}">{{item.status}}
+                            </td>
+                            <td>
+                                <button (click)="completeItem(order._id, item)">Complete</button>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </ng-container>
                 </tbody>
             </table>
