@@ -40,7 +40,6 @@ function seed(req, res, next) {
         .catch(e => next(e));
 }
 
-
 /**
  * Handle completing an existing order.
  * TODO: validate there is no pending order items?
@@ -51,7 +50,7 @@ function seed(req, res, next) {
 function complete(req, res, next) {
     var orderId = req.params.id;
 
-    return Order.get(orderId)
+    return Order.getById(orderId)
         .then(order => {
             order.complete();
             return order.save();
@@ -59,6 +58,51 @@ function complete(req, res, next) {
         .then(completedOrder => {
             const result = { order: completedOrder };
             res.io.emit('order-completed', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
+ * Complete a single item on an order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function completeItem(req, res, next) {
+    var orderId = req.params.id;
+    var itemId = req.params.itemId;
+
+    return Order.getById(orderId)
+        .then(order => {
+            order.completeItem(itemId);
+            return order.save();
+        })
+        .then(updatedOrder => {
+            const result = { order: updatedOrder };
+            res.io.emit('order-updated', result);
+            res.json(result);
+        })
+        .catch(e => next(e));
+}
+
+/**
+ * Complete all remaining items on an order.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function completeAllItems(req, res, next) {
+    var orderId = req.params.id;
+
+    return Order.getById(orderId)
+        .then(order => {
+            order.completeAllItems();
+            return order.save();
+        })
+        .then(updatedOrder => {
+            const result = { order: updatedOrder };
+            res.io.emit('order-updated', result);
             res.json(result);
         })
         .catch(e => next(e));
@@ -73,7 +117,6 @@ function complete(req, res, next) {
  */
 function create(req, res, next) {
     const order = req.body.order;
-    order.status = 'InProgress';
 
     return Order.create(order)
         .then(createdOrder => {
@@ -89,5 +132,7 @@ module.exports = {
     listInProgress,
     seed,
     create,
-    complete
+    complete,
+    completeItem,
+    completeAllItems,
 };

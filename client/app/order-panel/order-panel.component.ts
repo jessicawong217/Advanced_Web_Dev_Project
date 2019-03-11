@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Order } from '../shared/order.model';
 
 export type PanelType = 'waiter' | 'counter';
 
@@ -14,26 +13,19 @@ export type PanelType = 'waiter' | 'counter';
 export class OrderPanelComponent implements OnInit {
     @Input() waiterId: any;
 
-    @Input() order: any = {
-        orderItems: [
-            {
-                name: 'Chicken Soup',
-                price: 7,
-                status: 'InProgress'
-            },
-            {
-                name: 'Chicken Soup',
-                price: 7,
-                status: 'Draft'
-            }
-        ]
-    };
+    @Input()
+    public set setOrder(val: Order) {
+        this.order = val;
+        this.calculateTotal();
+    }
 
     @Input()
-    type: PanelType = 'waiter';
+    type: PanelType;
 
     @Output()
     close = new EventEmitter();
+
+    public order: Order;
 
     public totalNoDiscount: number;
 
@@ -49,7 +41,7 @@ export class OrderPanelComponent implements OnInit {
      * @param counterService Counter Service
      * @param formBuilder Form Builder
      */
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { }
 
     ngOnInit() {
         this.createForm();
@@ -72,53 +64,24 @@ export class OrderPanelComponent implements OnInit {
     }
 
     /**
-     * Increseas the quantity and reclaculates the price
-     * @param item The item object
-     */
-    increaseQuantity(item) {
-        // this.order.forEach(element => {
-        //     if (element.name === item.name) {
-        //         element.quantity = item.quantity + 1;
-        //     }
-        // });
-
-        this.calculateTotal();
-    }
-
-    /**
-     * Decreases the quantity and reclaculates the price
-     * @param item The item object
-     */
-    decreaseQuantity(item) {
-        // if (item.quantity === 0) {
-        //     return;
-        // }
-
-        // this.order.forEach(element => {
-        //     if (element.name === item.name) {
-        //         element.quantity = item.quantity - 1;
-        //     }
-        // });
-
-        this.calculateTotal();
-    }
-
-    /**
      * Calculate the total of all prices. Item price * quantity
      */
     calculateTotal() {
-        this.totalNoDiscount = this.order.orderItems.reduce(
+        this.totalNoDiscount = this.order.items.reduce(
             (accumulator, element) =>
-                element.price * element.quantity + accumulator,
+                element.price + accumulator,
             0
         );
         this.addPromo();
     }
 
     /**
-     * Calculate  the discount out of the total price
+     * Calculate the discount out of the total price
      */
     addPromo() {
+        if (this.discountForm === undefined) {
+            return;
+        }
         const discountValue = this.discountForm.value.discount;
         this.dicountedValue = (discountValue / 100) * this.totalNoDiscount;
 
@@ -152,13 +115,11 @@ export class OrderPanelComponent implements OnInit {
                 format: 'credit-card'
             }).setProperties({ title: 'Receipt' });
 
-        this.order.orderItems.forEach(element => {
+        this.order.items.forEach(element => {
             // const itemPrice = element.price * element.quantity;
             const item =
                 '£' +
                 element.price.toFixed(2) +
-                ' x ' +
-                // element.quantity +
                 ' - ' +
                 element.name +
                 '\n';
@@ -229,7 +190,7 @@ export class OrderPanelComponent implements OnInit {
             'center'
         );
 
-        doc.output('dataurlnewwindow')
-        //doc.open('receipt.pdf');
+        doc.output('dataurlnewwindow');
+        // doc.open('receipt.pdf'); // If you want to download it
     }
 }
