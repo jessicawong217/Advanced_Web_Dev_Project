@@ -9,7 +9,7 @@ router
   .get(menuCtrl.list)
   .post(menuCtrl.create);
 
-router 
+router
     .route('/:id')
     .put(menuCtrl.update)
     .get(menuCtrl.get);
@@ -18,5 +18,9 @@ router
   .route('/seed')
   /** GET /api/menu/seed - Add dummy data */
   .post(menuCtrl.seed);
+
+//router
+//  .route('/remove')
+//  .delete(menuCtrl.delete);
 
 module.exports = router;

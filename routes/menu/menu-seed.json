@@ -1,77 +1,91 @@
-[
-  {
+[{
+    "id": 1,
     "name": "Filet-Mignon",
     "price": "20",
     "category": "Main"
   },
   {
-      "name": "Chicken Soup",
-      "price": 7,
-      "category": "Starter"
+    "id": 2,
+    "name": "Chicken Soup",
+    "price": 7,
+    "category": "Starter"
   },
   {
-      "name": "Curry Sauce",
-      "price": 4.50,
-      "category": "Side"
+    "id": 3,
+    "name": "Curry Sauce",
+    "price": 4.50,
+    "category": "Side"
   },
   {
-      "name": "Hot and Sour Soup",
-      "price": 7,
-      "category": "Starter"
+    "id": 4,
+    "name": "Hot and Sour Soup",
+    "price": 7,
+    "category": "Starter"
   },
   {
-      "name": "Egg Fried Rice",
-      "price": 3,
-      "category": "Side"
+    "id": 5,
+    "name": "Egg Fried Rice",
+    "price": 3,
+    "category": "Side"
   },
   {
-      "name": "Jasmine Rice",
-      "price": 2.5,
-      "category": "Side"
+    "id": 6,
+    "name": "Jasmine Rice",
+    "price": 2.5,
+    "category": "Side"
   },
   {
-      "name": "Iced Lemon Tea",
-      "price": 3.5,
-      "category": "Drink"
+    "id": 7,
+    "name": "Iced Lemon Tea",
+    "price": 3.5,
+    "category": "Drink"
   },
   {
-      "name": "CocaCola",
-      "price": 2.5,
-      "category": "Drink"
+    "id": 8,
+    "name": "CocaCola",
+    "price": 2.5,
+    "category": "Drink"
   },
   {
-      "name": "Sweet and Sour Chicken",
-      "price": 6.5,
-      "category": "Main"
+    "id": 9,
+    "name": "Sweet and Sour Chicken",
+    "price": 6.5,
+    "category": "Main"
   },
   {
-      "name": "Char Sui Bao",
-      "price": 4.5,
-      "category": "Side"
+    "id": 10,
+    "name": "Char Sui Bao",
+    "price": 4.5,
+    "category": "Side"
   },
   {
-      "name": "Ice Cream",
-      "price": 3.5,
-      "category": "Dessert"
+    "id": 11,
+    "name": "Ice Cream",
+    "price": 3.5,
+    "category": "Dessert"
   },
   {
-      "name": "Plum Wine",
-      "price": 4.5,
-      "category": "Drink"
+    "id": 12,
+    "name": "Plum Wine",
+    "price": 4.5,
+    "category": "Drink"
   },
   {
-      "name": "Fruit Bowl",
-      "price": 3.5,
-      "category": "Dessert"
+    "id": 13,
+    "name": "Fruit Bowl",
+    "price": 3.5,
+    "category": "Dessert"
   },
   {
-      "name": "Chicken Stir Fry",
-      "price": 7.5,
-      "category": "Main"
+    "id": 14,
+    "name": "Chicken Stir Fry",
+    "price": 7.5,
+    "category": "Main"
   },
   {
-      "name": "Vegetable Stir Fry",
-      "price": 7,
-      "category": "Main"
+    "id": 15,
+    "name": "Vegetable Stir Fry",
+    "price": 7,
+    "category": "Main"
   }
 ]

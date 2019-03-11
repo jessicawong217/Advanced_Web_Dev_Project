@@ -7,8 +7,13 @@ const Menu = require('./menu.model');
  * @param {*} next Next match route handler.
  */
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    Menu.list({ limit, skip })
+    const {
+        limit = 50, skip = 0
+    } = req.query;
+    Menu.list({
+            limit,
+            skip
+        })
         .then(users => res.json(users))
         .catch(e => next(e));
 }
@@ -23,7 +28,9 @@ function get(req, res, next) {
     const id = req.params.id;
 
     Menu.get(id)
-        .then(menuItem => res.json({ item: menuItem }))
+        .then(menuItem => res.json({
+            item: menuItem
+        }))
         .catch(e => next(e));
 }
 
@@ -37,7 +44,9 @@ function create(req, res, next) {
     const newItem = req.body.item;
 
     Menu.create(newItem)
-        .then(menuItem => res.json({ item: menuItem }))
+        .then(menuItem => res.json({
+            item: menuItem
+        }))
         .catch(e => next(e));
 }
 
@@ -53,12 +62,15 @@ function update(req, res, next) {
 
     Menu.get(id)
         .then(menuItem => {
+            menuItem.id = modifiedItem.id;
             menuItem.name = modifiedItem.name;
             menuItem.price = modifiedItem.price;
             menuItem.category = modifiedItem.category;
             return menuItem.save();
         })
-        .then(menuItem => res.json({ item: menuItem }))
+        .then(menuItem => res.json({
+            item: menuItem
+        }))
         .catch(e => next(e));
 }
 
@@ -72,7 +84,9 @@ function seed(req, res, next) {
     var dummyArray = require('./menu-seed');
 
     Menu.insertMany(dummyArray)
-        .then(() => res.json({ ok: true }))
+        .then(() => res.json({
+            ok: true
+        }))
         .catch(e => next(e));
 }
 

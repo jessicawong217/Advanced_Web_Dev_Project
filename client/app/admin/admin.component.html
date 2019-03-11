@@ -17,10 +17,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of menu">
-              <td class="menuName" contenteditable="true">{{ item.name }}</td>
-              <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
-              <td class="menuCategory" contenteditable="true">{{ item.category }}</td>
+            <tr *ngFor="let item of menu" [attr.id]="item.id">
+              <td class="menuName">{{ item.name }}</td>
+              <td class="menuPrice">£{{ item.price }}</td>
+              <td class="menuCategory">{{ item.category }}
+                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs" (click)="removeItem(item.id)">-</button>
+              </td>
             </tr>
           </tbody>
         </table>

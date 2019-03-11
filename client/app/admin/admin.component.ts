@@ -57,6 +57,10 @@ export class AdminComponent implements OnInit {
         this.menuService.getMenu().subscribe(result => {
             this.menu = result;
         })
+        //console.log(Math.max(this.menu.id))
+        console.log(Math.max.apply(Math, this.menu.map(function(o) { return o.id; })));
+
+
     }
 
     updateMenu(itemId, menuItem) {
@@ -66,17 +70,24 @@ export class AdminComponent implements OnInit {
     addItem() {
         var itemName = this.removeBrackets(document.getElementById("itemName").innerHTML);
         var itemPrice = this.removeBrackets(document.getElementById("itemPrice").innerHTML);
-        var itemCategory = document.getElementById("menuCategorySelect").value;
+        var itemCategory = <HTMLInputElement>(document.getElementById("menuCategorySelect").value);
         console.log(itemName);
         console.log(itemPrice);
         console.log(itemCategory);
         if (this.isNumeric(itemPrice)) {
-            var newItem = { name: itemName, price: itemPrice, category: itemCategory };
-            this.menuService.create(newItem);
-            this.getMenu();
+            var newItem = { id: 20, name: itemName, price: itemPrice, category: itemCategory };
+            //this.menuService.create(newItem);
+            //this.getMenu();
+            //console.log("ok");
         } else {
             alert("Item price is not a valid number. Try again and add to menu.");
         }
+    }
+
+    removeItem(id_) {
+        console.log(id_);
+        var element = document.getElementById(id_);
+        element.remove();
     }
 
     removeBrackets(string) {

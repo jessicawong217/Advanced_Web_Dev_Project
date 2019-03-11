@@ -77,7 +77,6 @@ html, body {
 .addBtn {
   position: relative;
   top: 0;
-
   padding: 10px 15px;
   font-size: 1.0em;
   color: white;
@@ -127,16 +126,21 @@ html, body {
   text-decoration-line: underline;
 }
 
+.removeBtn {
+  position: relative;
+  float: right;
+}
+
 .menuName {
-  width: 50%;
+  width: 45%;
 }
 
 .menuPrice {
-  width: 20%;
+  width: 15%;
 }
 
 .menuCategory {
-  width: 30%
+  width: 40%
 }
 
 .menuCategorySelect {
@@ -146,7 +150,6 @@ html, body {
 
 .btnAdd {
   float: right;
-
 }
 
 .data {

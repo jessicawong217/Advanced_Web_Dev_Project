@@ -10,7 +10,7 @@ import { MenuItem, MenuItemViewModel } from './menu.model';
     providedIn: 'root'
 })
 export class MenuService {
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient) { }
 
     /**
      * Get paged list of menu items.
@@ -20,7 +20,7 @@ export class MenuService {
         if (page > 1) {
             skip = page * perpage;
         }
-console.log("getMenuItem");
+        console.log("getMenuItem");
         return this.httpClient.get<MenuItem[]>(environment.apiUrl + 'menu', {
             params: {
                 skip: skip + '',
@@ -65,4 +65,10 @@ console.log("getMenuItem");
             }
         );
     }
+//
+//    delete(id: string) {
+//        return this.httpClient.delete<MenuItemViewModel>(
+//            environment.apiUrl + 'menu/' + id
+//        );
+//    }
 }
