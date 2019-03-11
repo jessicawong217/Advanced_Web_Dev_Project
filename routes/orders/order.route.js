@@ -20,6 +20,11 @@ router
     .post(orderCtrl.complete);
 
 router
+    .route('/:id')
+    /** PATCH /api/orders/:id - Add items to an order*/
+    .patch(orderCtrl.update);
+
+router
     .route('/:id/items/complete')
     .post(orderCtrl.completeAllItems);
 

@@ -33,7 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // Configure socket io middleware.
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.io = io;
     next();
 });

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CounterComponent } from './counter/counter.component';
+import { KitchenComponent } from './kitchen/kitchen.component';
 import { WaiterComponent } from './waiter/waiter.component';
-import { KitchenComponent } from "./kitchen/kitchen.component";
 
 const routes: Routes = [
     {

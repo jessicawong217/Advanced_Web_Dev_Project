@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { SocketIoConfig, Socket } from 'ngx-socket-io';
-import { environment } from '../../environments/environment';
+import { Socket, SocketIoConfig } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
+
+import { environment } from '../../environments/environment';
 
 const socketconfig: SocketIoConfig = {
     url: environment.socketUrl,
@@ -27,6 +28,13 @@ export class OrderSocketService extends Socket {
     getOrdersOpened() {
         // TODO: type the response.
         return this.fromEvent('order-opened').pipe(
+            map((data: any) => data.order)
+        );
+    }
+
+    getOrdersUpdated() {
+        // TODO: type the response.
+        return this.fromEvent('order-updated').pipe(
             map((data: any) => data.order)
         );
     }
