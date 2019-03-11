@@ -32,6 +32,10 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         enum: ['InProgress', 'Completed']
     },
+    discount: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -49,9 +53,10 @@ OrderSchema.method({
     /**
      * Mark the current order as completed.
      */
-    complete() {
-        this.finishedAt = Date.now;
+    complete(dicountedValue) {
         this.status = 'Completed';
+        this.discount = dicountedValue;
+        this.finishedAt = Date.now();
     },
 
     /**
@@ -103,9 +108,26 @@ OrderSchema.statics = {
     },
 
     getByStatus(orderStatus) {
-        return this.find({status : orderStatus})
-            .sort({createdAt: -1})
+        return this.find({ status: orderStatus })
+            .sort({ createdAt: -1 })
             .exec();
+    },
+
+    addItems(id, items) {
+        return this.findOneAndUpdate(
+            { "_id": id },
+            { $push: { items: { $each: items } } },
+            { new: true }
+        )
+            .exec()
+            .then(order => {
+                if (order) {
+                    return order;
+                }
+                // TODO: return error status code within error.
+                return Promise.reject(new Error('No order found'));
+
+            });
     }
 };
 

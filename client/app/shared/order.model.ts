@@ -7,6 +7,7 @@ export class Order {
         public status: string,
         public createdAt: Date,
         public finishedAt: Date,
-        public items: OrderItem[]
+        public items: OrderItem[],
+        public discount: number
     ) { }
 }

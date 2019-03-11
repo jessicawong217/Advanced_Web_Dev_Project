@@ -83,7 +83,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
     startOrderClick(table) {
         const newOrder = {
             tableId: table.id,
-            orderItems: []
+            items: []
         };
 
         this.sidebarOrder = newOrder;
