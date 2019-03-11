@@ -51,6 +51,7 @@ function complete(req, res, next) {
     var orderId = req.params.id;
     var dicountedValue = req.body.discountedValue;
 
+    console.log('here');
     return Order.getById(orderId)
         .then(order => {
             order.complete(dicountedValue);

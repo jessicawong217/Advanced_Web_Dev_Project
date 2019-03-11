@@ -47,6 +47,7 @@ OrderSchema.method({
     complete(dicountedValue) {
         this.status = 'Completed';
         this.discount = dicountedValue;
+        this.finishedAt = Date.now();
     }
 });
 

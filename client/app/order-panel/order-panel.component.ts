@@ -121,7 +121,11 @@ export class OrderPanelComponent implements OnInit {
                 order._id,
                 JSON.stringify({ discountedValue: this.dicountedValue }
                 )
-            );
+            ).subscribe(data => {
+                console.log(data);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     /**
