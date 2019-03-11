@@ -1,3 +1,26 @@
-<p>
-  menu-selection works!
-</p>
+<div>
+    <div class="form-group">
+        <input
+            type="search"
+            class="form-control"
+            (input)="searchInput($event)"
+            placeholder="Search"
+        />
+    </div>
+
+    <div class="menu-items" *ngIf="items?.length > 0">
+        <div class="row" *ngFor="let item of items">
+            <div class="col-2">
+                {{item.name}}
+            </div>
+
+            <div class="col-1">
+                £{{item.price}}
+            </div>
+
+            <div class="col-1">
+                <a class="btn btn--primary" (click)="addItemClick(item)">Add</a>
+            </div>
+        </div>
+    </div>
+</div>
