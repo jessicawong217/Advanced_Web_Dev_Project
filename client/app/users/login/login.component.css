@@ -3,7 +3,7 @@
 }
 
 .login-input {
-    margin: 35px 0;
+    margin: 10px 0 50px;
     line-height: 15px;
 }
 
@@ -47,5 +47,9 @@
 
 .btn-keypad:hover {
     background-color: #000;
-    color: #FFF;
+    color: #fff;
+}
+
+.btn-keypad--hidden {
+    opacity: 0;
 }

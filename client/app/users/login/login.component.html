@@ -20,8 +20,8 @@
         <a class="btn-keypad" (click)="addKey('7')">7</a>
         <a class="btn-keypad" (click)="addKey('8')">8</a>
         <a class="btn-keypad" (click)="addKey('9')">9</a>
-        <a class="btn-keypad" (click)="removeClick()">&larr;</a>
+        <a class="btn-keypad" [ngClass]="{'btn-keypad--hidden': !pin}" (click)="removeClick()">&larr;</a>
         <a class="btn-keypad" (click)="addKey('0')">0</a>
-        <a class="btn-keypad" (click)="submitClick()">&rarr;</a>
+        <a class="btn-keypad" [ngClass]="{'btn-keypad--hidden': !pin}" (click)="submitClick()">&rarr;</a>
     </div>
 </div>
