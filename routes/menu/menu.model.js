@@ -10,7 +10,7 @@ const MenuSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['Food', 'Drink']
+        enum: ['Main', 'Starter', 'Dessert', 'Side', 'Drink']
     }
 });
 

@@ -1,5 +1,8 @@
 export enum MenuItemCategory {
-    Food,
+    Starter,
+    Main,
+    Side,
+    Dessert,
     Drink
 }
 

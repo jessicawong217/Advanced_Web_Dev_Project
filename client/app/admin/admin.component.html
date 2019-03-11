@@ -2,8 +2,11 @@
 
   <div class="row half">
     <div id="menuBar" class="col-3 sidebar pl-0">
-      <button class="savebtn" (click)="saveMenu()">Save</button>
-      <button class="closebtn" (click)="closeMenuNav()">Edit Menu -</button>
+
+      <button type="button" class="btn savebtn" (click)="updateMenu()">Save</button>
+
+      <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
+
       <div class="sideScroll">
         <table class="table table-hover table-sm" width="100%">
           <thead>
@@ -15,17 +18,36 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of menu">
-              <td contenteditable="true">{{ item.name }}</td>
-              <td contenteditable="true">£{{ item.price }}</td>
-              <td contenteditable="true">{{ item.category }}</td>
+              <td class="menuName" contenteditable="true">{{ item.name }}</td>
+              <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+              <td class="menuCategory" contenteditable="true">{{ item.category }}</td>
             </tr>
           </tbody>
         </table>
+        <div>
+          <table class="table table-hover table-sm">
+            <label class="text-info">Add an item</label>
+            <tr>
+              <td class="menuName border" id="itemName" contenteditable="true"></td>
+              <td class="menuPrice border" id="itemPrice" contenteditable="true"></td>
+              <td class="menuCategory border">
+                <select class="menuCategorySelect" id="menuCategorySelect">
+                  <option value="Starter">Starter</option>
+                  <option value="Main">Main</option>
+                  <option value="Side">Side</option>
+                  <option value="Dessert">Dessert</option>
+                  <option value="Drink">Drink</option>
+                </select>
+                <button type="button" class="btnAdd btn btn-light btn-sm" (click)="addItem()">+</button>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
 
     <div id="menuMain" class="main w-10 pl-0">
-      <button class="openbtn" (click)="openMenuNav()">Edit Menu +</button>
+      <button type="button" class="btn openbtn" (click)="openMenuNav()">Edit Menu +</button>
     </div>
     <div class="col content pr-0" id="summary">
       <h3>Income Summary</h3>
@@ -80,8 +102,8 @@
 
   <div class="row half">
     <div id="staffBar" class="col-3 sidebar pl-0">
-      <button class="savebtn" (click)="saveMenu()">Save</button>
-      <button class="closebtn" (click)="closeStaffNav()">Edit Staff -</button>
+      <button type="button" class="btn savebtn" (click)="saveMenu()">Save</button>
+      <button type="button" class="btn closebtn" (click)="closeStaffNav()">Edit Staff -</button>
       <div class="sideScroll">
         <table class="table table-hover table-sm" width="100%">
           <thead>
@@ -103,7 +125,7 @@
     </div>
 
     <div id="staffMain" class="main w-10 pl-0">
-      <button class="openbtn" (click)="openStaffNav()">Edit Staff +</button>
+      <button type="button" class="btn openbtn" (click)="openStaffNav()">Edit Staff +</button>
     </div>
     <div class="col content pr-0" id="analytics">
       <h3>Analytics</h3>

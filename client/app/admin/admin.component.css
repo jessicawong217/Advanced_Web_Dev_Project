@@ -69,7 +69,19 @@ html, body {
   padding: 10px 15px;
   font-size: 1.0em;
   color: white;
-  background-color: green;
+  background-color: lightgreen;
+  cursor: pointer;
+  border: none;
+}
+
+.addBtn {
+  position: relative;
+  top: 0;
+
+  padding: 10px 15px;
+  font-size: 1.0em;
+  color: white;
+  background-color: lightblue;
   cursor: pointer;
   border: none;
 }
@@ -106,13 +118,35 @@ html, body {
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 100px;
-  height: 50vh;
+  height: calc(100% - 55px);
   overflow-x: hidden;
   font-size: 1em;
 }
 
 .table td {
   text-decoration-line: underline;
+}
+
+.menuName {
+  width: 50%;
+}
+
+.menuPrice {
+  width: 20%;
+}
+
+.menuCategory {
+  width: 30%
+}
+
+.menuCategorySelect {
+  border: none;
+  background-color: transparent;
+}
+
+.btnAdd {
+  float: right;
+
 }
 
 .data {
