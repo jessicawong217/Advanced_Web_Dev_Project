@@ -67,11 +67,11 @@ OrderSchema.method({
         var item = this.items.id(id);
 
         if (item == null || item.status == 'Completed') {
-            throw new Error('No InProgress order item found');
+            throw new Error(`No InProgress order item found with id of ${id}`);
         }
 
         item.status = 'Completed';
-        item.finishedAt = Date.now;
+        item.finishedAt = new Date().toISOString();
     },
 
     /**
@@ -86,7 +86,7 @@ OrderSchema.method({
 });
 
 OrderSchema.statics = {
-    // Wrapper on find method uwill be used to return clearer errors.
+    // Wrapper on find method will be used to return clearer errors.
     getById(id) {
         return this.findById(id)
             .exec()

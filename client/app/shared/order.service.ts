@@ -16,7 +16,7 @@ export class OrderService {
     /**
      * Calls API endpoint to get all orders in progress
      */
-    getOrders(): Observable<any> {
+    getInProgressOrders(): Observable<any> {
         return this.http.get('/api/orders/in-progress')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
@@ -54,12 +54,12 @@ export class OrderService {
     }
 
     /**
-    * Update an InProgress order item to Completed. Item must be InProgress of
-    * the api reports an error.
-    * @param id The order id.
-    * @param itemId Id of the item on the order.
+     * Update an InProgress order item to Completed. Item must be InProgress or
+     * the api reports an error.
+     * @param id The order id.
+     * @param itemId Id of the item on the order.
      */
-    completeItem(id: string, itemId: string): Observable<any> {
+    completeItem(id: string, itemId: string) {
         return this.http.post(`/api/orders/${id}/items/${itemId}/complete`, {})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
@@ -70,7 +70,7 @@ export class OrderService {
      * Complete all items on an order.
      * @param id The order id.
      */
-    completeAllItems(id: string): Observable<any> {
+    completeAllItems(id: string) {
         return this.http.post(`/api/orders/${id}/items/complete`, {})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
