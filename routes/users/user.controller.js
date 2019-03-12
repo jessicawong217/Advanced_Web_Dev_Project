@@ -14,6 +14,12 @@ function list(req, res, next) {
         .catch(e => next(e));
 }
 
+/**
+ * Handle logging a user in via their pin.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
 function login(req, res, next) {
     const { pin = null } = req.body;
 
@@ -22,8 +28,13 @@ function login(req, res, next) {
         return;
     }
 
-    User.getByPin(pin)
-        .then(user => res.json({ user: user }))
+    User.findOne({ pin: newUser.pin })
+        .then(user => {
+            if (user == null) {
+                return Promise.reject(new Error('No user exists with that pin.'));
+            }
+            res.json({ user: user })
+        })
         .catch(e => next(e));
 }
 
@@ -57,7 +68,7 @@ function update(req, res, next) {
     var userId = req.params.id;
     var updatedUser = req.body.user;
 
-    return User.getById(userId)
+    return User.get(userId)
         .then(user => {
             user.name = updatedUser.name;
             user.type = updatedUser.type;

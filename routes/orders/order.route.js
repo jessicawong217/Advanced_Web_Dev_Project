@@ -26,6 +26,7 @@ router
 
 router
     .route('/:id/items/complete')
+    /** POST /api/orders/:id/items/complete - Mark all order item as completed */
     .post(orderCtrl.completeAllItems);
 
 router

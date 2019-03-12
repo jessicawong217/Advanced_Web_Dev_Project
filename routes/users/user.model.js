@@ -21,7 +21,10 @@ UserSchema.method({});
 
 // Static methods to be called against User.
 UserSchema.statics = {
-    // Wrapper on find method will be used to return clearer errors.
+    /**
+     * Get a user by there id.
+     * @param {*} id Users id.
+     */
     get(id) {
         return this.findById(id)
             .exec()
@@ -29,35 +32,17 @@ UserSchema.statics = {
                 if (user) {
                     return user;
                 }
-                // TODO: return error status code within error.
+                
                 return Promise.reject(new Error('No user item found'));
             });
     },
 
-    getByPin(pin) {
-        return this.findOne({ pin: pin })
-            .exec()
-            .then(user => {
-                if (user) {
-                    return user;
-                }
-
-                return Promise.reject(new Error('No user item found'));
-            });
-    },
-
+    /**
+     * Get a paged list of use
+     * @param {*} param0 query data.
+     */
     list({ skip = 0, limit = 50, query = null } = {}) {
-        var searchData = {};
-
-        if (query !== null) {
-            searchData.$or = [
-                { 'name': { "$regex": query, "$options": "i" } },
-                // TODO add searching by id.
-                // { 'itemId': { "$regex": query, "$options": "i" }}
-            ]
-        }
-
-        return this.find(searchData)
+        return this.find({})
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)
