@@ -103,10 +103,13 @@ export class LoginComponent implements OnInit {
 
             this.usersService
                 .loginUserByPin(this.pin)
-                .pipe(
-                    switchMap(() => this.router.navigateByUrl(this.url))
-                )
-                .subscribe(null, () => (this.hasError = true));
+                .pipe(switchMap(() => this.router.navigateByUrl(this.url)))
+                // We set the error state no matter the result, this is to catch
+                // when the navigateByUrl goes to a page the user is the wrong
+                // type for and set back to login. This results in the login
+                // component not being destroyed so will look to the user as
+                // frozen unless set.
+                .subscribe(() => (this.hasError = true), () => (this.hasError = true));
         }
     }
 }

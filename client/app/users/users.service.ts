@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { UserViewModel, User } from './user.model';
+import { User, UserViewModel } from './user.model';
 
 /**
  * User service to interact with users API endpoint..
@@ -13,7 +13,7 @@ export class UsersService {
     /**
      * The current sessions user.
      */
-    currentUser = null;
+    currentUser: User = null;
 
     /**
      * Construct the service importing deps.
@@ -27,20 +27,32 @@ export class UsersService {
      * @param id The users pin it.
      */
     loginUserByPin(pin: string) {
-        return this.httpClient.post<UserViewModel>(
-            environment.apiUrl + 'users/login',
-            { pin: pin }
-        );
+        return this.httpClient
+            .post<UserViewModel>(environment.apiUrl + 'users/login', {
+                pin: pin
+            })
+            .pipe(
+                tap(response => {
+                    this.currentUser = response.user;
+                })
+            );
     }
 
     /**
      * Log a user out.
      */
     logoutUser() {
-        this.currentUser = null;
+        this.clearUser();
         this.router.navigate(['/login'], {
             queryParams: { redirectTo: this.router.url }
         });
+    }
+
+    /**
+     * Clear the current logged in user.
+     */
+    clearUser() {
+        this.clearUser = null;
     }
 
     /**

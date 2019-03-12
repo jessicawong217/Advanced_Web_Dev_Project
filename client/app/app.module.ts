@@ -9,13 +9,14 @@ import { AppComponent } from './app.component';
 import { CounterSortPipe } from './counter/counter-sort.pipe';
 import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
+import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { OrderService } from './shared/order.service';
+import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
-import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,7 @@ import { MenuSelectionComponent } from './menu/selection/menu-selection.componen
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService, OrderService, UsersService],
+    providers: [WaiterService, OrderService, UsersService, UsersIdGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
