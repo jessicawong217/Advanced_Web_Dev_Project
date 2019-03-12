@@ -85,6 +85,16 @@ html, body {
   border: none;
 }
 
+/* The button used to open the sidebar */
+.logoutbtn {
+  font-size: 0.5em;
+  cursor: pointer;
+  background-color: grey;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+}
+
 .openbtn:hover {
   background-color: #444;
 }

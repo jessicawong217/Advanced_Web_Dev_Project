@@ -20,6 +20,11 @@ router
     .post(orderCtrl.complete);
 
 router
+    .route('/:id')
+    /** PATCH /api/orders/:id - Add items to an order*/
+    .patch(orderCtrl.update);
+
+router
     .route('/:id/items/complete')
     .post(orderCtrl.completeAllItems);
 
@@ -30,7 +35,7 @@ router
 
 router
     .route('/seed')
-    /** GET /api/orders/seed - Add dummy data */
+    /** POST /api/orders/seed - Add dummy data */
     .post(orderCtrl.seed);
 
 module.exports = router;

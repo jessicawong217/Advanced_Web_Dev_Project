@@ -7,6 +7,7 @@ const PROXY_CONFIG = {
         "pathRewrite": {
             "^/api": ""
         },
+        "headers": { "Content-Type": "application/json" }
     }
 };
 

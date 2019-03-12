@@ -11,8 +11,11 @@ import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
 import { OrderPanelComponent } from './order-panel/order-panel.component';
 import { OrderService } from './shared/order.service';
+import { LoginComponent } from './users/login/login.component';
+import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
 
 @NgModule({
@@ -22,7 +25,9 @@ import { WaiterService } from './waiter/waiter.service';
         CounterComponent,
         OrderPanelComponent,
         CounterSortPipe,
-        KitchenComponent
+        KitchenComponent,
+        MenuSelectionComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +38,7 @@ import { WaiterService } from './waiter/waiter.service';
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService, OrderService],
+    providers: [WaiterService, OrderService, UsersService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

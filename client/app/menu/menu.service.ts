@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { environment } from '../../environments/environment';
 import { MenuItem, MenuItemViewModel } from './menu.model';
 
@@ -10,22 +11,26 @@ import { MenuItem, MenuItemViewModel } from './menu.model';
     providedIn: 'root'
 })
 export class MenuService {
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient) { }
 
     /**
      * Get paged list of menu items.
      */
-    getMenu(page = 1, perpage = 50) {
-        var skip = 0;
+    getMenu(page = 1, perpage = 50, query: string = null) {
+        let queryParams = { skip: 0 + '', limit: perpage + '' } as {
+            [param: string]: string;
+        };
+
         if (page > 1) {
-            skip = page * perpage;
+            queryParams.skip = page * perpage + '';
+        }
+
+        if (!!query) {
+            queryParams.query = query;
         }
 
         return this.httpClient.get<MenuItem[]>(environment.apiUrl + 'menu', {
-            params: {
-                skip: skip + '',
-                limit: perpage + ''
-            }
+            params: queryParams
         });
     }
 

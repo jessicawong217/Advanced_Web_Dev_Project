@@ -8,6 +8,8 @@ import { WaiterService } from './waiter.service';
 import { Order } from '../shared/order.model';
 import { OrderService } from '../shared/order.service';
 import { OrderSocketService } from '../socket/order-socket.service';
+import { OrderItem } from '../shared/order-item.model';
+import { UsersService } from '../users/users.service';
 
 
 @Component({
@@ -54,11 +56,46 @@ export class WaiterComponent implements OnInit, OnDestroy {
         }
     ];
 
+    public menu = [
+        {
+            catergory: 'Starter',
+            id: '1001',
+            name: 'Chicken Soup',
+            price: '4.00'
+        },
+        {
+            catergory: 'Main',
+            id: '1002',
+            name: 'Hunters Chicken',
+            price: '4.00'
+        },
+        {
+            catergory: 'Side',
+            id: '1003',
+            name: 'Chips',
+            price: '£4.00'
+        },
+        {
+            catergory: 'Dessert',
+            id: '1004',
+            name: 'Eton Mess',
+            price: '4.00'
+        },
+        {
+            catergory: 'Drinks',
+            id: '1005',
+            name: 'Lemonade',
+            price: '4.00'
+        }
+    ];
+
+
     constructor(
         private waiterService: WaiterService,
         private orderSocket: OrderSocketService,
         private menuService: MenuService,
-        protected orderSerice: OrderService
+        protected orderSerice: OrderService,
+        private usersService: UsersService
     ) { }
 
     ngOnInit() {
@@ -91,6 +128,13 @@ export class WaiterComponent implements OnInit, OnDestroy {
         document.getElementById("menuBar").style.display = "none";
         document.getElementById("menuMain").style.visibility = "visible";
         document.getElementById("summary").style.marginLeft = "0";
+    }
+
+    /**
+     * Log the current user out.
+     */
+    logoutClick() {
+        this.usersService.logoutUser();
     }
 
 

@@ -2,6 +2,7 @@
   <!-- https://getbootstrap.com/docs/4.3/layout/overview/ and
     https://ng-bootstrap.github.io/#/components/
     for more ui designs -->
+    <button class="logoutbtn" (click)='logoutClick()'>logout</button>
   <hr>
   <div class="row">
     <div id="menuBar" class="col-sm-6 sidebar pl-0">
@@ -10,8 +11,7 @@
 
         <div class="tables">
           <div *ngFor="let table of tables">
-            id : {{table.id}}
-            status: {{table.openOrder}}
+              <hr>
             <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
           </div>
         </div>
@@ -51,9 +51,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of menu">
-                  <td class="menuName" contenteditable="true">{{ item.name }}</td>
-                  <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+                <tr *ngFor="let menu of menu">
+                  <td class="menuName" contenteditable="true">{{ menu.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ menu.price }}</td>
                   <td><button class="addbtn">Add</button></td>
                 </tr>
               </tbody>
