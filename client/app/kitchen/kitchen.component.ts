@@ -14,7 +14,7 @@ import { KitchenItem } from './kitchen-item.model';
     styleUrls: ['./kitchen.component.css']
 })
 export class KitchenComponent implements OnInit, OnDestroy {
-    items: any[];
+    items: KitchenItem[];
 
     constructor(
         private orderService: OrderService,
@@ -71,7 +71,7 @@ export class KitchenComponent implements OnInit, OnDestroy {
                     order.items
                         .filter(i => i.status == 'InProgress')
                         .map(i => {
-                                let kitchenItem = this.mapToKitchenItem(i, order);
+                            let kitchenItem = this.mapToKitchenItem(i, order);
 
                             let filteredItems = this.items.filter(item => item._id === kitchenItem._id);
                             if(filteredItems.length > 0) {
