@@ -35,7 +35,7 @@ export class MenuService {
     }
 
     /**
-    //  * Get a single menu item.
+     * Get a single menu item.
      * @param id Id of item.
      */
     getById(id: string) {

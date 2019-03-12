@@ -185,7 +185,6 @@ export class OrderPanelComponent implements OnInit {
      * @param index item index in orders array.
      */
     removeItem(index: number) {
-        console.log(index);
         this.order.items.splice(index, 1);
         this.calculateTotal();
     }
