@@ -1,0 +1,27 @@
+<div class="login d-flex flex-column justify-content-center align-items-center">
+    <div
+        class="login-input d-flex justify-content-center"
+        [ngClass]="{ 'login-input--error': hasError }"
+    >
+        <div
+            class="login-input-pin login-input-pin--hidden"
+            *ngIf="splitPin.length == 0"
+        ></div>
+        <div class="login-input-pin" *ngFor="let pins of splitPin"></div>
+    </div>
+
+    <div class="login-keypad">
+        <a class="btn-keypad" (click)="addKey('1')">1</a>
+        <a class="btn-keypad" (click)="addKey('2')">2</a>
+        <a class="btn-keypad" (click)="addKey('3')">3</a>
+        <a class="btn-keypad" (click)="addKey('4')">4</a>
+        <a class="btn-keypad" (click)="addKey('5')">5</a>
+        <a class="btn-keypad" (click)="addKey('6')">6</a>
+        <a class="btn-keypad" (click)="addKey('7')">7</a>
+        <a class="btn-keypad" (click)="addKey('8')">8</a>
+        <a class="btn-keypad" (click)="addKey('9')">9</a>
+        <a class="btn-keypad" [ngClass]="{'btn-keypad--hidden': !pin}" (click)="removeClick()">&larr;</a>
+        <a class="btn-keypad" (click)="addKey('0')">0</a>
+        <a class="btn-keypad" [ngClass]="{'btn-keypad--hidden': !pin}" (click)="submitClick()">&rarr;</a>
+    </div>
+</div>
