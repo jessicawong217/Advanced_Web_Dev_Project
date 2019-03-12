@@ -28,7 +28,7 @@ html, body {
 
 /* The sidebar menu */
 .sidebar {
-  height: 60vh;
+  height: 95vh;
   width: 0px;
   position: fixed;
   z-index: 1;
@@ -97,7 +97,7 @@ html, body {
 .content {
   transition: margin-left .5s;
   padding: 15px;
-  height: 50vh;
+  height:85vh;
 }
 
 .sideScroll {
@@ -107,7 +107,7 @@ html, body {
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 100px;
-  height: 50vh;
+  height: 85vh;
   overflow-x: hidden;
   font-size: 1em;
 }
@@ -193,8 +193,9 @@ html, body {
  .tabcontent {
    color: white;
    display: none;
-   padding: 100px 20px;
+   padding: 50px 20px;
    height: 100%;
+   width: 100%;
  }
 
  #Starter {background-color: grey;}
