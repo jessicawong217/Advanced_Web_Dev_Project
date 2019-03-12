@@ -15,6 +15,7 @@ import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MenuSelectionComponent } from './menu/selection/menu-selection.componen
         CounterSortPipe,
         KitchenComponent,
         MenuSelectionComponent,
-        LoginComponent
+        LoginComponent,
+        WaitingTimeComponent
     ],
     imports: [
         BrowserModule,
