@@ -6,19 +6,22 @@ import { OrderSocketService } from "../socket/order-socket.service";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";
 import { untilDestroyed } from "ngx-take-until-destroy";
+import { KitchenItem } from './kitchen-item.model';
 
 @Component({
-  selector: 'app-kitchen',
-  templateUrl: './kitchen.component.html',
-  styleUrls: ['./kitchen.component.css']
+    selector: 'app-kitchen',
+    templateUrl: './kitchen.component.html',
+    styleUrls: ['./kitchen.component.css']
 })
 export class KitchenComponent implements OnInit, OnDestroy {
-
     orders: Order[];
 
-    constructor(private orderService: OrderService,
-                private orderSocket: OrderSocketService) {
-    }
+    items: [];
+
+    constructor(
+        private orderService: OrderService,
+        private orderSocket: OrderSocketService
+    ) {}
 
     ngOnInit() {
         this.getInProgressOrders();
@@ -30,7 +33,18 @@ export class KitchenComponent implements OnInit, OnDestroy {
      * Maps response to Order array
      */
     getInProgressOrders(): void {
-        this.orderService.getInProgressOrders().subscribe(response => this.orders = response);
+        this.orderService.getInProgressOrders().subscribe(response => {
+            this.items = response.reduce(
+                (acc, order) => {
+                    var incompleteItems = this
+                        .getIncompleteItems(order);
+
+                    acc.push(...incompleteItems);
+                    return acc;
+                },
+                [] as KitchenItem[]
+            );
+        });
     }
 
     /**
@@ -39,8 +53,10 @@ export class KitchenComponent implements OnInit, OnDestroy {
      * @param item The order item to be completed
      */
     completeItem(orderId: string, item: OrderItem) {
-        if (item.status === "InProgress") {
-            this.orderService.completeItem(orderId, item._id).subscribe(() => item.status = "Completed");
+        if (item.status === 'InProgress') {
+            this.orderService
+                .completeItem(orderId, item._id)
+                .subscribe(() => (item.status = 'Completed'));
         }
     }
 
@@ -53,24 +69,38 @@ export class KitchenComponent implements OnInit, OnDestroy {
 
         merge(openedSub$, updatedSub$)
             .pipe(
-                tap((order) => {
+                tap(order => {
                     //check if order already exists
-                    let filteredOrders = this.orders.filter(o => o._id === order._id);
-                    if (filteredOrders.length > 0) {
-                        //if order exists, replace it's items with the updated orders items
-                        let existingOrder = filteredOrders[0];
-                        existingOrder.items = order.items;
-                    } else {
-                        //if order didn't already exist, add to orders list
-                        this.orders.push(order);
-                    }
+                    var items = order.items
+                        // .filter(i => i.status == 'InProgress')
+                        .map(i =>
+                            this.mapToKitchenItem(i, order)
+                        );;
+
+                    // TODO check if the item exists in the array, if not add it.
+                    // If it does update its status.
                 }),
                 untilDestroyed(this)
             )
             .subscribe();
     }
 
+    getIncompleteItems(order: Order) {
+        return order.items
+            .filter(i => i.status == 'InProgress')
+            .map(i =>
+                this.mapToKitchenItem(i, order)
+            );
+    }
+
+    mapToKitchenItem(item: any, order: Order) {
+        var kitchenItem = item as KitchenItem;
+        kitchenItem.orderId = order._id;
+        kitchenItem.tableId = order.tableId;
+        return kitchenItem;
+    }
+
     // Method needs to exist for untilDestroyed to work as expected in prod
     // builds.
-    ngOnDestroy() { }
+    ngOnDestroy() {}
 }
