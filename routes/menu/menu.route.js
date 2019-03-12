@@ -14,9 +14,4 @@ router
     .put(menuCtrl.update)
     .get(menuCtrl.get);
 
-router
-  .route('/seed')
-  /** GET /api/menu/seed - Add dummy data */
-  .post(menuCtrl.seed);
-
 module.exports = router;

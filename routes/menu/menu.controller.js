@@ -62,23 +62,8 @@ function update(req, res, next) {
         .catch(e => next(e));
 }
 
-/**
- * Seed the menu item db with static menu data.
- * @param {*} req The express request object.
- * @param {*} res The express result object.
- * @param {*} next Next match route handler.
- */
-function seed(req, res, next) {
-    var dummyArray = require('./menu-seed');
-
-    Menu.insertMany(dummyArray)
-        .then(() => res.json({ ok: true }))
-        .catch(e => next(e));
-}
-
 module.exports = {
     list,
-    seed,
     get,
     create,
     update

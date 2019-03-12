@@ -1,12 +1,12 @@
 [
     {
         "name": "Test User",
-        "category": "Waiter",
+        "type": "Waiter",
         "pin": "1111"
     },
     {
         "name": "Test Admin",
-        "category": "Admin",
+        "type": "Admin",
         "pin": "999"
     }
 ]
