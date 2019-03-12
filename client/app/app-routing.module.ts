@@ -5,6 +5,7 @@ import { CounterComponent } from './counter/counter.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { KitchenComponent } from "./kitchen/kitchen.component";
 
+
 const routes: Routes = [
     {
         path: 'waiter',
