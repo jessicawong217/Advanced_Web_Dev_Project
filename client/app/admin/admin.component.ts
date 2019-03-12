@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
+import { MenuItemCategory } from '../menu/menu.model';
 
 @Component({
     selector: 'app-admin',
@@ -9,6 +11,18 @@ import { MenuService } from '../menu/menu.service';
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+    item : {
+        id: number,
+        name: string,
+        price: number,
+        category: MenuItemCategory
+    };
+
+    public newItem = new MenuItem;
+    public itemName = new FormControl('itemName');
+    itemPrice = new FormControl('itemPrice');
+    itemCategory = new FormControl('itemCategory');
 
     public menu = [];
 
@@ -61,7 +75,8 @@ export class AdminComponent implements OnInit {
 
     constructor(
         protected adminService: AdminService,
-        private menuService: MenuService
+        private menuService: MenuService,
+        private formControl: FormControl
     ) { }
 
     ngOnInit() {
@@ -87,14 +102,19 @@ export class AdminComponent implements OnInit {
     }
 
     addItem() {
-        var itemName = this.removeBrackets(document.getElementById("itemName").innerHTML);
-        var itemPrice = this.removeBrackets(document.getElementById("itemPrice").innerHTML);
-        var itemCategory = <HTMLInputElement>(document.getElementById("menuCategorySelect").value);
-        console.log(itemName + " : " + itemPrice + " : " + itemCategory);
-        if (this.isNumeric(itemPrice)) {
+        //var itemName = this.removeBrackets(document.getElementById("itemName").innerHTML);
+        //var itemPrice = this.removeBrackets(document.getElementById("itemPrice").innerHTML);
+        //var itemCategory = <HTMLInputElement>(document.getElementById("menuCategorySelect").value);
 
+        console.log(this.itemName + " : " + this.itemPrice + " : " + this.itemCategory);
+        if (this.isNumeric(this.itemPrice)) {
+            var newItem = this.item;
             var newId = (Math.max.apply(Math, this.menu.map(function(o) { return o.id; }))) + 1;
-            var newItem = { id: parseInt(newId), name: String(itemName), price: parseInt(itemPrice), category: String(itemCategory) };
+            newItem.id = newId;
+            newItem.name = this.itemName;
+            newItem.price = this.itemPrice;
+            newItem.category = this.itemCategory;
+            //var newItem = { id: this.newId, name: this.itemName, price: this.itemPrice, category: this.itemCategory };
             this.menuService.create(newItem);
             this.getMenu();
         } else {
