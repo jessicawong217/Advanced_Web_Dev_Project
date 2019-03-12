@@ -29,10 +29,20 @@ export class LoginComponent implements OnInit {
      */
     url = '/';
 
+    /**
+     * Array at the length of pin so that it can be looped in view.
+     */
     get splitPin() {
         return new Array(this.pin.length);
     }
 
+    /**
+     * Construct the login component.
+     * @param usersService Users api service.
+     * @param route Current route details.
+     * @param router The router service, used to navigate back on successful
+     * login.
+     */
     constructor(
         private usersService: UsersService,
         private route: ActivatedRoute,
