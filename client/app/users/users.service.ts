@@ -3,8 +3,11 @@ import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { UserViewModel } from './user.model';
+import { UserViewModel, User } from './user.model';
 
+/**
+ * User service to interact with users API endpoint..
+ */
 @Injectable()
 export class UsersService {
     /**
@@ -12,6 +15,11 @@ export class UsersService {
      */
     currentUser = null;
 
+    /**
+     * Construct the service importing deps.
+     * @param httpClient The angular http client.
+     * @param router Router object.
+     */
     constructor(private httpClient: HttpClient, private router: Router) {}
 
     /**
@@ -33,5 +41,27 @@ export class UsersService {
         this.router.navigate(['/login'], {
             queryParams: { redirectTo: this.router.url }
         });
+    }
+
+    /**
+     * Create a new user.
+     * @param user The new user data.
+     */
+    create(user: User) {
+        return this.httpClient.post<UserViewModel>(
+            environment.apiUrl + 'users',
+            { user: user }
+        );
+    }
+
+    /**
+     * Create a new user.
+     * @param user The new user data.
+     */
+    update(id: string, user: User) {
+        return this.httpClient.put<UserViewModel>(
+            environment.apiUrl + 'users/' + id,
+            { user: user }
+        );
     }
 }
