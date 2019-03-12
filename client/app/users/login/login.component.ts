@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
      * Get the redirection url from the query params.
      */
     ngOnInit() {
-        this.route.paramMap
+        this.route.queryParamMap
             .pipe(
                 filter(pm => pm.has('redirectTo')),
                 map(pm => pm.get('redirectTo'))
