@@ -35,7 +35,7 @@ router
 
 router
     .route('/seed')
-    /** GET /api/orders/seed - Add dummy data */
+    /** POST /api/orders/seed - Add dummy data */
     .post(orderCtrl.seed);
 
 module.exports = router;

@@ -4,6 +4,7 @@ export class OrderItem {
         public menuItemId: string,
         public name: string,
         public price: number,
-        public status: string
+        public status: string,
+        public createdAt: Date
     ) { }
 }
