@@ -1,10 +1,12 @@
-export enum MenuItemCategory {
-    Starter,
-    Main,
-    Side,
-    Dessert,
-    Drink
-}
+// export enum MenuItemCategory {
+//     ,
+//     ,
+//     ,
+//     ,
+//     Drink
+// }
+
+export type MenuItemCategory = 'Starter' | 'Main' | 'Side' | 'Dessert' | 'Drink';
 
 export interface MenuItem {
     id: number;

@@ -27,23 +27,30 @@
           </tbody>
         </table>
         <div>
+          <form [formGroup]="newMenuForm" (submit)="addItem()">
           <table class="table table-hover table-sm">
             <label class="text-info">Add an item</label>
             <tr>
-              <td class="menuName border" id="itemName" contenteditable="true" [formControl]="itemName"></td>
-              <td class="menuPrice border" id="itemPrice" contenteditable="true" [formControl]="itemPrice"></td>
+              <td class="menuName border">
+                <input type="text" formControlName="name">
+              </td>
+              <td class="menuPrice border">
+                <input type="text" formControlName="price">
+
+              </td>
               <td class="menuCategory border">
-                <select class="menuCategorySelect" id="menuCategorySelect" [formControl]="itemCategory">
+                <select class="menuCategorySelect" id="menuCategorySelect" formControlName="category">
                   <option value="Starter">Starter</option>
                   <option value="Main">Main</option>
                   <option value="Side">Side</option>
                   <option value="Dessert">Dessert</option>
                   <option value="Drink">Drink</option>
                 </select>
-                <button type="button" class="btnAdd btn btn-light btn-sm" (click)="addItem()">+</button>
+                <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
               </td>
             </tr>
           </table>
+          </form>
         </div>
       </div>
     </div>

@@ -43,11 +43,21 @@ function get(req, res, next) {
 function create(req, res, next) {
     const newItem = req.body.item;
 
-    Menu.create(newItem)
-        .then(menuItem => res.json({
-            item: menuItem
-        }))
-        .catch(e => next(e));
+     Menu.findOne({}, {}, { sort: { 'id': -1 } })
+        .then((lastItem) => {
+            let lastId = 1;
+            if (lastItem != null && !!lastItem.id) {
+                lastId = lastItem.id + 1;
+            }
+            newItem.id = lastId;
+            return Menu.create(newItem);
+                
+        })
+         .then(menuItem => res.json({
+             item: menuItem
+         }))
+         .catch(e => next(e));
+    
 }
 
 /**

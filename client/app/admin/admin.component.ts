@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
-import { MenuItemCategory } from '../menu/menu.model';
+import { MenuItemCategory, MenuItem } from '../menu/menu.model';
 
 @Component({
     selector: 'app-admin',
@@ -11,18 +11,11 @@ import { MenuItemCategory } from '../menu/menu.model';
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
-    item : {
-        id: number,
-        name: string,
-        price: number,
-        category: MenuItemCategory
-    };
-
-    public newItem = new MenuItem;
-    public itemName = new FormControl('itemName');
-    itemPrice = new FormControl('itemPrice');
-    itemCategory = new FormControl('itemCategory');
+    newMenuForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        price: [0, Validators.required],
+        category: ['Main']
+    });
 
     public menu = [];
 
@@ -76,8 +69,8 @@ export class AdminComponent implements OnInit {
     constructor(
         protected adminService: AdminService,
         private menuService: MenuService,
-        private formControl: FormControl
-    ) { }
+        private formBuilder: FormBuilder
+    ) {}
 
     ngOnInit() {
         this.getMenu();
@@ -86,7 +79,7 @@ export class AdminComponent implements OnInit {
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
             this.menu = result;
-        })
+        });
     }
 
     updateMenu() {
@@ -102,30 +95,24 @@ export class AdminComponent implements OnInit {
     }
 
     addItem() {
-        //var itemName = this.removeBrackets(document.getElementById("itemName").innerHTML);
-        //var itemPrice = this.removeBrackets(document.getElementById("itemPrice").innerHTML);
-        //var itemCategory = <HTMLInputElement>(document.getElementById("menuCategorySelect").value);
-
-        console.log(this.itemName + " : " + this.itemPrice + " : " + this.itemCategory);
-        if (this.isNumeric(this.itemPrice)) {
-            var newItem = this.item;
-            var newId = (Math.max.apply(Math, this.menu.map(function(o) { return o.id; }))) + 1;
-            newItem.id = newId;
-            newItem.name = this.itemName;
-            newItem.price = this.itemPrice;
-            newItem.category = this.itemCategory;
-            //var newItem = { id: this.newId, name: this.itemName, price: this.itemPrice, category: this.itemCategory };
-            this.menuService.create(newItem);
-            this.getMenu();
-        } else {
-            alert("Item price is not a valid number. Try again and add to menu.");
+        if (this.newMenuForm.valid) {
+            var newItem = this.newMenuForm.value;
+            console.log(newItem);
+            this.menuService.create(newItem)
+                .subscribe((data) => {
+                    console.log('item created');
+                    console.log(data.item)
+                }, () => {
+                    console.log('failed');
+                });
         }
+       
     }
 
     removeItem(id_) {
         var element = document.getElementById(id_);
         element.remove();
-        this.menuItem.remove(id_);
+        // this.menuItem.remove(id_);
     }
 
     removeBrackets(string) {
