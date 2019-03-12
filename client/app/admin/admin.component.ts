@@ -36,7 +36,22 @@ export class AdminComponent implements OnInit {
         {
             firstname: 'Lucy',
             surname: 'McCabe',
-            role: 'Chef'
+            role: 'Kitchen'
+        },
+        {
+            firstname: 'James',
+            surname: 'Peter',
+            role: 'Kitchen'
+        },
+        {
+            firstname: 'Amanda',
+            surname: 'Hogen',
+            role: 'Waiter'
+        },
+        {
+            firstname: 'Lewis',
+            surname: 'Marino',
+            role: 'Waiter'
         }
     ];
 
@@ -57,13 +72,17 @@ export class AdminComponent implements OnInit {
         this.menuService.getMenu().subscribe(result => {
             this.menu = result;
         })
-        //console.log(Math.max(this.menu.id))
-        console.log(Math.max.apply(Math, this.menu.map(function(o) { return o.id; })));
-
-
     }
 
-    updateMenu(itemId, menuItem) {
+    updateMenu() {
+        var table = document.getElementById("menu tr");
+        for (var i = 1, row; row = table[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            for (var j = 0, col; col = row[j]; j++) {
+                console.log(col[j]);
+            }
+        }
         //this.menuService.update(itemId, menuItem);
     }
 
@@ -71,32 +90,29 @@ export class AdminComponent implements OnInit {
         var itemName = this.removeBrackets(document.getElementById("itemName").innerHTML);
         var itemPrice = this.removeBrackets(document.getElementById("itemPrice").innerHTML);
         var itemCategory = <HTMLInputElement>(document.getElementById("menuCategorySelect").value);
-        console.log(itemName);
-        console.log(itemPrice);
-        console.log(itemCategory);
+        console.log(itemName + " : " + itemPrice + " : " + itemCategory);
         if (this.isNumeric(itemPrice)) {
-            var newItem = { id: 20, name: itemName, price: itemPrice, category: itemCategory };
-            //this.menuService.create(newItem);
-            //this.getMenu();
-            //console.log("ok");
+
+            var newId = (Math.max.apply(Math, this.menu.map(function(o) { return o.id; }))) + 1;
+            var newItem = { id: parseInt(newId), name: String(itemName), price: parseInt(itemPrice), category: String(itemCategory) };
+            this.menuService.create(newItem);
+            this.getMenu();
         } else {
             alert("Item price is not a valid number. Try again and add to menu.");
         }
     }
 
     removeItem(id_) {
-        console.log(id_);
         var element = document.getElementById(id_);
         element.remove();
+        this.menuItem.remove(id_);
     }
 
     removeBrackets(string) {
-        var replaced = string.replace(/\<[^\>]*\>/, '');
-        return replaced;
+        return string.replace(/\<[^\>]*\>/, '');
     }
 
     isNumeric(num) {
-        console.log(!isNaN(num));
         return !isNaN(num);
     }
 

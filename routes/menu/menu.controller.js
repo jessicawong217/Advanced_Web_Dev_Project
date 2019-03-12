@@ -75,6 +75,21 @@ function update(req, res, next) {
 }
 
 /**
+ * Delete a menu item by its id.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function remove(req, res, next) {
+    const id = req.params.id;
+    Menu.findOneAndRemove({_id: id})
+    .then(() => res.json({
+        status: 204
+    }))
+        .catch(e => next(e));
+}
+
+/**
  * Seed the menu item db with static menu data.
  * @param {*} req The express request object.
  * @param {*} res The express result object.
@@ -95,5 +110,6 @@ module.exports = {
     seed,
     get,
     create,
-    update
+    update,
+    remove
 };

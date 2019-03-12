@@ -4,10 +4,10 @@ const menuCtrl = require('./menu.controller');
 const router = express.Router();
 
 router
-  .route('/')
-  /** GET /api/menu - Get list of menu */
-  .get(menuCtrl.list)
-  .post(menuCtrl.create);
+    .route('/')
+    /** GET /api/menu - Get list of menu */
+    .get(menuCtrl.list)
+    .post(menuCtrl.create);
 
 router
     .route('/:id')
@@ -15,12 +15,12 @@ router
     .get(menuCtrl.get);
 
 router
-  .route('/seed')
-  /** GET /api/menu/seed - Add dummy data */
-  .post(menuCtrl.seed);
+    .route('/seed')
+    /** GET /api/menu/seed - Add dummy data */
+    .post(menuCtrl.seed);
 
-//router
-//  .route('/remove')
-//  .delete(menuCtrl.delete);
+router
+    .route('/:id/delete')
+    .delete(menuCtrl.remove);
 
 module.exports = router;
