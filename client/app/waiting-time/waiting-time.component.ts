@@ -8,13 +8,26 @@ import { timer } from 'rxjs';
 })
 export class WaitingTimeComponent implements OnInit {
 
+    /**
+     * Time elapsed since created time
+     */
     waitingTime: string;
+
+    /**
+     * Flags whether more than 15 minutes have passed since created time
+     */
     excessiveWaitingTime: boolean = false;
 
+    /**
+     * Timestamp of created time
+     */
     @Input() createdTime: string;
 
+    /**
+     * Creates and subscribes to an Observable timer to update waiting time
+     * every second
+     */
     ngOnInit(){
-        //timer set to call get waiting time every second
         timer(0,1000).subscribe(() => this.getWaitingTime());
     }
 
@@ -25,18 +38,18 @@ export class WaitingTimeComponent implements OnInit {
         let createdTime = new Date(this.createdTime).getTime();
         let currentTime = new Date().getTime();
 
-        let secondsDifference = (currentTime - createdTime) / 1000;
+        let diff = (currentTime - createdTime) / 1000;
 
         //check if time is over 15 minutes
-        if(secondsDifference > 900) {
+        if(diff > 900) {
             this.excessiveWaitingTime = true;
         }
-
-        let date = new Date(null);
-        date.setSeconds(secondsDifference);
+        
+        let minutes = ('0' + Math.floor(diff / 60)).slice(-2);
+        let second = ('0' + Math.floor(diff % 60)).slice(-2);
 
         //format time to mm:ss
-        this.waitingTime = date.toISOString().substr(14, 5);
+        this.waitingTime = `${minutes}:${second}`;
     }
 
 }
