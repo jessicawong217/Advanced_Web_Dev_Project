@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
             this.clearOnNext = true;
 
             this.usersService
-                .loginUserById(this.pin)
+                .loginUserByPin(this.pin)
                 .pipe(
                     switchMap(() => this.router.navigateByUrl(this.url))
                 )
