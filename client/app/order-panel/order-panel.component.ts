@@ -67,11 +67,11 @@ export class OrderPanelComponent implements OnInit {
      * Calculate the total of all prices. Item price * quantity
      */
     calculateTotal() {
-        this.totalNoDiscount = this.order.items.reduce(
-            (accumulator, element) =>
-                element.price + accumulator,
-            0
-        );
+        //this.totalNoDiscount = this.order.items.reduce(
+        //    (accumulator, element) =>
+        //        element.price + accumulator,
+        //    0
+        //);
         this.addPromo();
     }
 

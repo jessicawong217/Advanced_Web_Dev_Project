@@ -27,7 +27,6 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     public sidebarOrder = null;
 
-    public firstname = "Paul";
 
     /**
      * Array of tables within the restaurant.
@@ -47,10 +46,19 @@ export class WaiterComponent implements OnInit, OnDestroy {
         { id: 12, openOrder: false, orderId: null }
     ];
 
+    public staff = [
+        {
+            firstname: 'Klaus',
+            surname: 'Logan',
+            role: 'Waiter'
+        }
+    ];
+
     constructor(
         private waiterService: WaiterService,
         private orderSocket: OrderSocketService,
-        private menuService: MenuService
+        private menuService: MenuService,
+        protected orderSerice: OrderService
     ) { }
 
     ngOnInit() {
@@ -67,6 +75,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+
 
 
     openMenuNav() {
@@ -133,11 +143,6 @@ show(val: boolean) {
 
 
 
-
-
-
-
-//-----------------------------------------------------------------------------------------------
 openPage(pageName, elmnt, color) {
   // Hide all elements with class="tabcontent" by default */
   var i, tabcontent, tablinks;
