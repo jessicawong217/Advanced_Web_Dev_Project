@@ -14,9 +14,7 @@ import { KitchenItem } from './kitchen-item.model';
     styleUrls: ['./kitchen.component.css']
 })
 export class KitchenComponent implements OnInit, OnDestroy {
-    orders: Order[];
-
-    items: [];
+    items: any[];
 
     constructor(
         private orderService: OrderService,
@@ -70,15 +68,18 @@ export class KitchenComponent implements OnInit, OnDestroy {
         merge(openedSub$, updatedSub$)
             .pipe(
                 tap(order => {
-                    //check if order already exists
-                    var items = order.items
-                        // .filter(i => i.status == 'InProgress')
-                        .map(i =>
-                            this.mapToKitchenItem(i, order)
-                        );;
+                    order.items
+                        .filter(i => i.status == 'InProgress')
+                        .map(i => {
+                                let kitchenItem = this.mapToKitchenItem(i, order);
 
-                    // TODO check if the item exists in the array, if not add it.
-                    // If it does update its status.
+                            let filteredItems = this.items.filter(item => item._id === kitchenItem._id);
+                            if(filteredItems.length > 0) {
+                                filteredItems[0].status = kitchenItem.status;
+                            } else {
+                                this.items.push(kitchenItem);
+                            }
+                        })
                 }),
                 untilDestroyed(this)
             )

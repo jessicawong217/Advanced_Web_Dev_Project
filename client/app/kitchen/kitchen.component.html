@@ -17,7 +17,7 @@
               <th scope="row">{{ item.tableId }}</th>
               <td>{{ item.name }}</td>
               <td>{{ item.createdAt | date: 'HH:mm' }}</td>
-              <td [ngClass]="{ 'table-warning': item.status === 'InProgress' }">
+              <td [ngClass]="'table-warning'">
                 {{ item.status }}
               </td>
               <td>
