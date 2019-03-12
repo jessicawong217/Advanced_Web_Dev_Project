@@ -8,7 +8,11 @@
         <small>Waiter ID: {{waiterId}}</small>
 
         <hr>
+
     </div>
+    
+    <app-menu-selection (itemAdded)="addItem($event)"></app-menu-selection>
+
 
     <div class="menu-list" [ngSwitch]="order.items?.length > 0">
 
@@ -27,13 +31,20 @@
                 </div>
             </div>
             <hr>
-            <div class="row" *ngFor="let item of order.items">
+
+            <div class="row" *ngFor="let item of order.items; let i = index">
                 <div class="col-3">
+
                     {{item.name}}
                 </div>
 
                 <div class="col-1">
                     £{{item.price}}
+                </div>
+
+                <div class="col-2" *ngIf="order.status != 'Completed'">
+                    <a class="btn" (click)="duplicateItem(item)">Duplicate</a>
+                    <a *ngIf="item._id == null" class="btn" (click)="removeItem(i)">Remove</a>
                 </div>
             </div>
 

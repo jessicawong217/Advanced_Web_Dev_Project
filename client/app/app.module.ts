@@ -15,6 +15,7 @@ import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { WaiterService } from './waiter/waiter.service';
         OrderPanelComponent,
         CounterSortPipe,
         KitchenComponent,
+        MenuSelectionComponent,
         LoginComponent
     ],
     imports: [

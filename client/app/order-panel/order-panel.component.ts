@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
 import { Order } from '../shared/order.model';
+import { OrderItem } from '../shared/order-item.model';
 import { OrderService } from '../shared/order.service';
 
 export type PanelType = 'waiter' | 'counter';
@@ -156,6 +157,39 @@ export class OrderPanelComponent implements OnInit {
     }
 
     /**
+     * Add a new item to the order.
+     * @param item The new item.
+     */
+    addItem(item: OrderItem) {
+        this.order.items.push(item);
+        this.calculateTotal();
+    }
+
+    /**
+     * Duplicate an order item and add it to the order.
+     * @param item Existing order item.
+     */
+    duplicateItem(item: OrderItem) {
+        const newItem = {
+            name: item.name,
+            price: item.price,
+            menuItemId: item.menuItemId
+        } as OrderItem;
+
+        this.order.items.push(newItem);
+        this.calculateTotal();
+    }
+
+    /**
+     * Remove a new item from the order.
+     * @param index item index in orders array.
+     */
+    removeItem(index: number) {
+        this.order.items.splice(index, 1);
+        this.calculateTotal();
+    }
+
+    /*
      * Close side view
      */
     closeClick() {

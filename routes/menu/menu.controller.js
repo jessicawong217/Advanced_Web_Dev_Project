@@ -7,8 +7,8 @@ const Menu = require('./menu.model');
  * @param {*} next Next match route handler.
  */
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    Menu.list({ limit, skip })
+    const { limit = 50, skip = 0, query = null } = req.query;
+    Menu.list({ limit, skip, query })
         .then(users => res.json(users))
         .catch(e => next(e));
 }

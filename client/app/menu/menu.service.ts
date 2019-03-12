@@ -16,17 +16,21 @@ export class MenuService {
     /**
      * Get paged list of menu items.
      */
-    getMenu(page = 1, perpage = 50) {
-        let skip = 0;
+    getMenu(page = 1, perpage = 50, query: string = null) {
+        let queryParams = { skip: 0 + '', limit: perpage + '' } as {
+            [param: string]: string;
+        };
+
         if (page > 1) {
-            skip = page * perpage;
+            queryParams.skip = page * perpage + '';
+        }
+
+        if (!!query) {
+            queryParams.query = query;
         }
 
         return this.httpClient.get<MenuItem[]>(environment.apiUrl + 'menu', {
-            params: {
-                skip: skip + '',
-                limit: perpage + ''
-            }
+            params: queryParams
         });
     }
 
