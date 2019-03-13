@@ -6,6 +6,9 @@ import { tap } from 'rxjs/operators';
 import { MenuService } from '../menu/menu.service';
 import { OrderSocketService } from '../socket/order-socket.service';
 import { WaiterService } from './waiter.service';
+import { Order } from '../shared/order.model';
+import { OrderItem } from '../shared/order-item.model';
+import { UsersService } from '../users/users.service';
 
 @Component({
     selector: 'app-waiter',
@@ -36,7 +39,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
     constructor(
         private waiterService: WaiterService,
         private orderSocket: OrderSocketService,
-        private menuService: MenuService
+        private menuService: MenuService,
+        private usersService: UsersService,
     ) { }
 
     ngOnInit() {
@@ -83,8 +87,8 @@ export class WaiterComponent implements OnInit, OnDestroy {
     startOrderClick(table) {
         const newOrder = {
             tableId: table.id,
-            orderItems: []
-        };
+            items: []
+        } as Order;
 
         this.sidebarOrder = newOrder;
     }
@@ -93,6 +97,13 @@ export class WaiterComponent implements OnInit, OnDestroy {
     // if a table is selected
     show(val: boolean) {
         this.showView = val;
+    }
+    
+    /**
+     * Log the current user out.
+     */
+    logoutClick() {
+        this.usersService.logoutUser();
     }
 
     // Method needs to exist for untilDestroyed to work as expected in prod
