@@ -43,7 +43,11 @@ function get(req, res, next) {
 function create(req, res, next) {
     const newItem = req.body.item;
 
-     Menu.findOne({}, {}, { sort: { 'id': -1 } })
+    Menu.findOne({}, {}, {
+            sort: {
+                'id': -1
+            }
+        })
         .then((lastItem) => {
             let lastId = 1;
             if (lastItem != null && !!lastItem.id) {
@@ -51,13 +55,13 @@ function create(req, res, next) {
             }
             newItem.id = lastId;
             return Menu.create(newItem);
-                
+
         })
-         .then(menuItem => res.json({
-             item: menuItem
-         }))
-         .catch(e => next(e));
-    
+        .then(menuItem => res.json({
+            item: menuItem
+        }))
+        .catch(e => next(e));
+
 }
 
 /**
@@ -72,7 +76,6 @@ function update(req, res, next) {
 
     Menu.get(id)
         .then(menuItem => {
-            menuItem.id = modifiedItem.id;
             menuItem.name = modifiedItem.name;
             menuItem.price = modifiedItem.price;
             menuItem.category = modifiedItem.category;
@@ -90,12 +93,23 @@ function update(req, res, next) {
  * @param {*} res The express result object.
  * @param {*} next Next match route handler.
  */
-function remove(req, res, next) {
+// function remove(req, res, next) {
+//     const id = req.params.id;
+//     Menu.findOneAndRemove({
+//             _id: id
+//         })
+//         .then(() => res.json({
+//             status: 204
+//         }))
+//         .catch(e => next(e));
+// }
+
+function remove(req, res) {
     const id = req.params.id;
-    Menu.findOneAndRemove({_id: id})
-    .then(() => res.json({
-        status: 204
-    }))
+    Menu.findByIdAndRemove(id)
+        .then(() => res.json({
+            status: 204
+        }))
         .catch(e => next(e));
 }
 

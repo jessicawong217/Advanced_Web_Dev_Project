@@ -17,11 +17,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of menu" [attr.id]="item.id">
-              <td class="menuName">{{ item.name }}</td>
+            <tr *ngFor="let item of menu">
+              <td [attr.id]="item._id" class="menuName">{{ item.name }}</td>
               <td class="menuPrice">£{{ item.price }}</td>
               <td class="menuCategory">{{ item.category }}
-                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs" (click)="removeItem(item.id)">-</button>
+                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs" (click)="removeItem(item._id)">-</button>
               </td>
             </tr>
           </tbody>

@@ -67,7 +67,7 @@ export class MenuService {
     }
 
     delete(id: string) {
-        return this.httpClient.delete<MenuItemViewModel>(
+        return this.httpClient.get<MenuItemViewModel>(
             environment.apiUrl + 'menu/' + id
         );
     }

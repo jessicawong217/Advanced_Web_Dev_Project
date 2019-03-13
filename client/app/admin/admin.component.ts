@@ -70,7 +70,7 @@ export class AdminComponent implements OnInit {
         protected adminService: AdminService,
         private menuService: MenuService,
         private formBuilder: FormBuilder
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.getMenu();
@@ -106,13 +106,18 @@ export class AdminComponent implements OnInit {
                     console.log('failed');
                 });
         }
-       
+
     }
 
-    removeItem(id_) {
-        var element = document.getElementById(id_);
+    removeItem(id) {
+      console.log(id);
+        var element = document.getElementById(id).parentElement;
+        console.log(element.innerHTML);
         element.remove();
-        // this.menuItem.remove(id_);
+        this.menuService.delete(id)
+            .subscribe(res => {
+                console.log(res);
+            });
     }
 
     removeBrackets(string) {
