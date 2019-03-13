@@ -70,6 +70,10 @@ export class MenuService {
         );
     }
 
+    /**
+     * Delete a menu item.
+     * @param  id Menu item id
+     */
     delete(id: string) {
         return this.httpClient.delete<MenuItemViewModel>(
             environment.apiUrl + 'menu/' + id
