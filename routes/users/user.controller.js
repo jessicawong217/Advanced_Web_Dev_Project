@@ -31,7 +31,7 @@ function login(req, res, next) {
     User.findOne({ pin: pin })
         .then(user => {
             if (user == null) {
-                return Promise.reject(new Error('No user exists with that pin.'));
+                return Promise.reject(new Error('Pin not recognised'));
             }
             res.json({ user: user })
         })

@@ -98,6 +98,9 @@ export class UsersService {
         );
     }
 
+    /**
+     * Delete a user
+     */
     delete(id: string) {
         return this.httpClient.delete<UserViewModel>(
             environment.apiUrl + 'users/' + id
