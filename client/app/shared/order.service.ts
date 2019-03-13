@@ -4,6 +4,8 @@ import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { OrderViewModel } from './order-view.model';
+import { OrderItem } from './order-item.model';
+import { Order } from './order.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +18,8 @@ export class OrderService {
     /**
      * Calls API endpoint to get all orders in progress
      */
-    getInProgressOrders(): Observable<any> {
-        return this.http.get('/api/orders/in-progress')
+    getInProgressOrders() {
+        return this.http.get<Order[]>('/api/orders/in-progress')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -26,8 +28,8 @@ export class OrderService {
     /**
      * Calls API endpoint to get all orders
      */
-    getAllOrders(): Observable<any> {
-        return this.http.get('/api/orders')
+    getAllOrders() {
+        return this.http.get<Order[]>('/api/orders')
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -46,8 +48,8 @@ export class OrderService {
     /**
      * Calls API endpoint to update an order
      */
-    updateOrder(orderId: string, items: any): Observable<any> {
-        return this.http.patch('/api/orders/' + orderId, items)
+    updateOrder(orderId: string, items: OrderItem[]): Observable<any> {
+        return this.http.patch<OrderViewModel>('/api/orders/' + orderId, {items})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );

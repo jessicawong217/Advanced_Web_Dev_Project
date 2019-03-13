@@ -21,7 +21,8 @@ export class OrderPanelComponent implements OnInit {
     // Then set the discount to 0 and calculate total
     @Input()
     public set setOrder(order: Order) {
-        this.order = order;
+        // Lazymans deep clone.
+        this.order = JSON.parse(JSON.stringify(order));
         this.setDiscountToZero();
         this.calculateTotal();
     }
@@ -42,8 +43,6 @@ export class OrderPanelComponent implements OnInit {
 
     public errorMessage: string;
 
-    public newOrderItems: Array<OrderItem>;
-
     /**
      * Order Panel Comoponent Constructor
      *
@@ -61,8 +60,6 @@ export class OrderPanelComponent implements OnInit {
     ngOnInit() {
         this.createForm();
         this.calculateTotal();
-
-        this.newOrderItems = [];
     }
 
     /**
@@ -155,19 +152,18 @@ export class OrderPanelComponent implements OnInit {
             }
         ];
 
-        this.newOrderItems.forEach(element => {
-            element.status = 'InProgress';
-        });
-
-        console.log(this.newOrderItems);
-        // this.orderService
-        //     .updateOrder(
-        //         order._id,
-        //         JSON.stringify({ items: itemsDummy }
-        //         )
-        //     ).subscribe(error => {
-        //         this.errorMessage = 'Cannot update order.';
-        //     });
+        var newItems = this.order.items.filter(i => i._id == null);
+        
+        console.log(newItems);
+        this.orderService
+            .updateOrder(order._id, newItems)
+            .subscribe(
+                (updatedOrder) => {
+                    this.setOrder = updatedOrder.order;
+                },
+                (error) => {
+                    this.errorMessage = 'Cannot update order.';
+                });
     }
 
     /**
@@ -175,8 +171,6 @@ export class OrderPanelComponent implements OnInit {
      * @param item The new item.
      */
     addItem(item: OrderItem) {
-        this.newOrderItems.push(item);
-        console.log(this.newOrderItems);
         this.order.items.push(item);
         this.calculateTotal();
     }
@@ -192,8 +186,6 @@ export class OrderPanelComponent implements OnInit {
             menuItemId: item.menuItemId
         } as OrderItem;
 
-        this.newOrderItems.push(newItem);
-        console.log(this.newOrderItems);
         this.order.items.push(newItem);
         this.calculateTotal();
     }
@@ -204,8 +196,6 @@ export class OrderPanelComponent implements OnInit {
      */
     removeItem(index: number) {
         this.order.items.splice(index, 1);
-        this.newOrderItems.splice(index, 1);
-        console.log(this.newOrderItems);
         this.calculateTotal();
     }
 

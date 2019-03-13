@@ -6,12 +6,13 @@ import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
 import { LoginComponent } from './users/login/login.component';
 import { WaiterComponent } from './waiter/waiter.component';
+import { UsersIdGuard } from './users/guards/users-id-guard.service';
 
 const routes: Routes = [
     {
         path: 'waiter',
         component: WaiterComponent,
-        // canActivate: [UsersIdGuard]
+        canActivate: [UsersIdGuard]
     },
     {
         path: '',
@@ -21,7 +22,7 @@ const routes: Routes = [
     {
         path: 'counter',
         component: CounterComponent,
-        // canActivate: [UsersIdGuard]
+        canActivate: [UsersIdGuard]
     },
     {
         path: 'admin',
