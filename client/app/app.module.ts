@@ -20,6 +20,7 @@ import { WaiterService } from './waiter/waiter.service';
 import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 
+
 @NgModule({
     declarations: [
         AppComponent,
