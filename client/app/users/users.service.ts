@@ -20,7 +20,27 @@ export class UsersService {
      * @param httpClient The angular http client.
      * @param router Router object.
      */
-    constructor(private httpClient: HttpClient, private router: Router) {}
+    constructor(private httpClient: HttpClient, private router: Router) { }
+
+    /**
+     * Get paged list of users.
+     */
+    getUsers(page = 1, perpage = 50, query: string = null) {
+        let queryParams = { skip: 0 + '', limit: perpage + '' } as {
+            [param: string]: string;
+        };
+
+        if (page > 1) {
+            queryParams.skip = page * perpage + '';
+        }
+
+        if (!!query) {
+            queryParams.query = query;
+        }
+        return this.httpClient.get<User[]>(environment.apiUrl + 'users', {
+            params: queryParams
+        });
+    }
 
     /**
      * Get a user by their pin id. Stores the session user within the service.
@@ -74,6 +94,12 @@ export class UsersService {
         return this.httpClient.put<UserViewModel>(
             environment.apiUrl + 'users/' + id,
             { user: user }
+        );
+    }
+
+    delete(id: string) {
+        return this.httpClient.delete<UserViewModel>(
+            environment.apiUrl + 'users/' + id
         );
     }
 }

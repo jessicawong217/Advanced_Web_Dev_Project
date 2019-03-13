@@ -88,17 +88,6 @@ function update(req, res, next) {
  * @param {*} res The express result object.
  * @param {*} next Next match route handler.
  */
-// function remove(req, res, next) {
-//     const id = req.params.id;
-//     Menu.findOneAndRemove({
-//             _id: id
-//         })
-//         .then(() => res.json({
-//             status: 204
-//         }))
-//         .catch(e => next(e));
-// }
-
 function remove(req, res) {
     const id = req.params.id;
     Menu.findByIdAndRemove(id)
@@ -129,5 +118,6 @@ module.exports = {
     get,
     create,
     update,
-    remove
+    remove,
+    seed
 };

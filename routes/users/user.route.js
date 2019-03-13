@@ -8,7 +8,7 @@ router
     /** GET /api/users - Get a list of users */
     .get(userCtrl.list)
     /** POST /api/users - Create a new user */
-    .post(userCtrl.create);
+    .post(userCtrl.create)
 
 router
     .route('/login')
@@ -18,6 +18,7 @@ router
 router
     .route('/:id')
     /** PUT /api/users/:id - Mark all order item as completed */
-    .put(userCtrl.update);
+    .put(userCtrl.update)
+    .delete(userCtrl.remove);
 
 module.exports = router;

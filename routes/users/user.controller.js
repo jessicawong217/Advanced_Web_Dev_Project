@@ -72,14 +72,29 @@ function update(req, res, next) {
         .then(user => {
             user.name = updatedUser.name;
             user.type = updatedUser.type;
-            user.type = updatedUser.type;
             return user.save();
         })
+}
+
+/**
+ * Delete a user by its id.
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function remove(req, res) {
+    const id = req.params.id;
+    User.findByIdAndRemove(id)
+        .then(() => res.json({
+            status: 204
+        }))
+        .catch(e => next(e));
 }
 
 module.exports = {
     list,
     login,
     create,
-    update
+    update,
+    remove
 };

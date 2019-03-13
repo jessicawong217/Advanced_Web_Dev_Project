@@ -4,6 +4,7 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuItemCategory, MenuItem } from '../menu/menu.model';
+import { UsersService } from '../users/users.service';
 
 @Component({
     selector: 'app-admin',
@@ -17,50 +18,15 @@ export class AdminComponent implements OnInit {
         category: ['Main']
     });
 
+    newUserForm = this.formBuilder.group({
+        name: ['', [Validators.required]],
+        type: ['Waiter', [Validators.required]],
+        pin: ['', [Validators.required, Validators.pattern('[0-9]{4}')]]
+    });
+
     public menu = [];
 
-    public staff = [
-        {
-            firstname: 'Klaus',
-            surname: 'Logan',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Susanne',
-            surname: 'Smith',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Joanne',
-            surname: 'Lee',
-            role: 'Manager'
-        },
-        {
-            firstname: 'John',
-            surname: 'McGregor',
-            role: 'Manager'
-        },
-        {
-            firstname: 'Lucy',
-            surname: 'McCabe',
-            role: 'Kitchen'
-        },
-        {
-            firstname: 'James',
-            surname: 'Peter',
-            role: 'Kitchen'
-        },
-        {
-            firstname: 'Amanda',
-            surname: 'Hogen',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Lewis',
-            surname: 'Marino',
-            role: 'Waiter'
-        }
-    ];
+    public users = [];
 
     private displayOrdersTodayBool;
     private displayOrdersWeekBool;
@@ -69,11 +35,13 @@ export class AdminComponent implements OnInit {
     constructor(
         protected adminService: AdminService,
         private menuService: MenuService,
+        private usersService: UsersService,
         private formBuilder: FormBuilder
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.getMenu();
+        this.getUsers();
     }
 
     getMenu() {
@@ -82,7 +50,17 @@ export class AdminComponent implements OnInit {
         });
     }
 
-    identify(index, item) {
+    getUsers() {
+        this.usersService.getUsers().subscribe(result => {
+            this.users = result;
+        });
+    }
+
+    identifyMenu(index, item) {
+        return index;
+    }
+
+    identifyUsers(index, item) {
         return index;
     }
 
@@ -90,14 +68,18 @@ export class AdminComponent implements OnInit {
         if (this.newMenuForm.valid) {
             var newItem = this.newMenuForm.value;
             console.log(newItem);
-            this.menuService.create(newItem)
-                .subscribe((data) => {
+            this.menuService.create(newItem).subscribe(
+                data => {
                     console.log('item created');
-                    console.log(data.item)
-                }, () => {
+                    console.log(data.item);
+
+                    // Reload the menu after the item is added.
+                    this.getMenu();
+                },
+                () => {
                     console.log('failed');
-                });
-                this.getMenu();
+                }
+            );
         }
     }
 
@@ -107,6 +89,34 @@ export class AdminComponent implements OnInit {
         console.log(element.innerHTML);
         element.remove();
         this.menuService.delete(id)
+            .subscribe(res => {
+                console.log(res);
+            });
+    }
+
+    addUser() {
+        if (this.newUserForm.valid) {
+            var newUser = this.newUserForm.value;
+            console.log(newUser);
+            this.usersService.create(newUser)
+                .subscribe((data) => {
+                    console.log('item created');
+                    console.log(data.user)
+
+                    // Reload the users after the user is added
+                    this.getUsers();
+                }, () => {
+                    console.log('failed');
+                });
+        }
+    }
+
+    removeUser(id) {
+        console.log(id);
+        var element = document.getElementById(id).parentElement;
+        console.log(element.innerHTML);
+        element.remove();
+        this.usersService.delete(id)
             .subscribe(res => {
                 console.log(res);
             });
