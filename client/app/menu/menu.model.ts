@@ -1,7 +1,12 @@
-export enum MenuItemCategory {
-    Food,
-    Drink
-}
+// export enum MenuItemCategory {
+//     ,
+//     ,
+//     ,
+//     ,
+//     Drink
+// }
+
+export type MenuItemCategory = 'Starter' | 'Main' | 'Side' | 'Dessert' | 'Drink';
 
 export class MenuItem {
     constructor(
@@ -10,6 +15,7 @@ export class MenuItem {
         public price: number,
         public category: MenuItemCategory
     ) { }
+
 }
 
 export interface MenuItemViewModel {

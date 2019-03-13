@@ -28,7 +28,6 @@ export class MenuService {
         if (!!query) {
             queryParams.query = query;
         }
-
         return this.httpClient.get<MenuItem[]>(environment.apiUrl + 'menu', {
             params: queryParams
         });
@@ -68,6 +67,12 @@ export class MenuService {
             {
                 item: item
             }
+        );
+    }
+
+    delete(id: string) {
+        return this.httpClient.delete<MenuItemViewModel>(
+            environment.apiUrl + 'menu/' + id
         );
     }
 }

@@ -26,16 +26,12 @@ router
 
 router
     .route('/:id/items/complete')
+    /** POST /api/orders/:id/items/complete - Mark all order item as completed */
     .post(orderCtrl.completeAllItems);
 
 router
     .route('/:id/items/:itemId/complete')
     /** POST /api/orders/:id/items/:itemId/complete - Mark an order item as completed */
     .post(orderCtrl.completeItem);
-
-router
-    .route('/seed')
-    /** POST /api/orders/seed - Add dummy data */
-    .post(orderCtrl.seed);
 
 module.exports = router;
