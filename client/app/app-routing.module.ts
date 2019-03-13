@@ -4,13 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
 import { WaiterComponent } from './waiter/waiter.component';
-<<<<<<< HEAD
 import { AdminComponent } from './admin/admin.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
-=======
 import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
->>>>>>> f289149939e27f8e4767b1e005b8db2e16f962ad
 
 const routes: Routes = [
     {
@@ -35,13 +32,10 @@ const routes: Routes = [
     {
         path: 'kitchen',
         component: KitchenComponent
-<<<<<<< HEAD
-=======
     },
     {
         path: 'login',
         component: LoginComponent
->>>>>>> f289149939e27f8e4767b1e005b8db2e16f962ad
     }
 ];
 

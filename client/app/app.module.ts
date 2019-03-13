@@ -15,12 +15,9 @@ import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
-<<<<<<< HEAD
 import { AdminComponent } from './admin/admin.component';
-=======
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
->>>>>>> f289149939e27f8e4767b1e005b8db2e16f962ad
 
 @NgModule({
     declarations: [
