@@ -5,6 +5,7 @@ import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuItemCategory, MenuItem } from '../menu/menu.model';
 import { UsersService } from '../users/users.service';
+import { OrderService } from '../shared/order.service';
 
 @Component({
     selector: 'app-admin',
@@ -28,6 +29,8 @@ export class AdminComponent implements OnInit {
 
     public users = [];
 
+    public orders = [];
+
     private displayOrdersTodayBool;
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
@@ -36,12 +39,14 @@ export class AdminComponent implements OnInit {
         protected adminService: AdminService,
         private menuService: MenuService,
         private usersService: UsersService,
+        private orderService: OrderService,
         private formBuilder: FormBuilder
     ) {}
 
     ngOnInit() {
         this.getMenu();
         this.getUsers();
+        this.getOrders();
     }
 
     getMenu() {
@@ -54,6 +59,13 @@ export class AdminComponent implements OnInit {
         this.usersService.getUsers().subscribe(result => {
             this.users = result;
         });
+    }
+
+    getOrders() {
+      this.orderService.getAllOrders().subscribe(result => {
+          this.orders = result;
+          console.log(this.orders);
+      });
     }
 
     identifyMenu(index, item) {
@@ -163,6 +175,7 @@ export class AdminComponent implements OnInit {
         if (this.displayOrdersTodayBool) {
             document.getElementById("summaryToday").style.display = "none";
             document.getElementById("summaryDetailsToday").style.display = "block";
+            this.adminService.filterOrdersToday(this.orders);
         } else {
             document.getElementById("summaryToday").style.display = "block";
             document.getElementById("summaryDetailsToday").style.display = "none";

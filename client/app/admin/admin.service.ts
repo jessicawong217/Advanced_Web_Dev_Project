@@ -19,4 +19,19 @@ export class AdminService {
                 catchError((error: any) => observableThrowError(error))
             );
     }
+
+    filterOrdersToday(orders) {
+        orders.forEach(function(element) {
+            console.log(element);
+            console.log(element.getDate());
+        });
+    }
+
+    filterOrdersWeek() {
+
+    }
+
+    filterOrdersMonth() {
+
+    }
 }
