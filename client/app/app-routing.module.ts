@@ -5,10 +5,8 @@ import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { AdminComponent } from './admin/admin.component';
-import { KitchenComponent } from './kitchen/kitchen.component';
 import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
-
 
 // Example of requireing a specific type of user for the route. Needed for admin
 // view.

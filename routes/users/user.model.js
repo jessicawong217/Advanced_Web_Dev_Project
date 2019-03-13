@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['Waiter', 'Manager', 'Admin'],
+        enum: ['Waiter', 'Manager', 'Kitchen', 'Admin'],
         required: true
     },
     pin: {
@@ -32,7 +32,7 @@ UserSchema.statics = {
                 if (user) {
                     return user;
                 }
-                
+
                 return Promise.reject(new Error('No user item found'));
             });
     },

@@ -7,7 +7,7 @@
       <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
 
       <div class="sideScroll">
-        <table class="menu table table-hover table-sm" width="100%">
+        <table class="table table-hover table-sm" width="100%">
           <thead>
             <tr>
               <th>Item</th>
@@ -16,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of menu; trackBy:identify">
+            <tr *ngFor="let item of menu; trackBy:identifyMenu">
               <td [attr.id]="item._id" class="menuName">{{ item.name }}</td>
               <td class="menuPrice">£{{ item.price }}</td>
               <td class="menuCategory">{{ item.category }}
@@ -31,13 +31,13 @@
               <label class="text-info">Add an item</label>
               <tr>
                 <td class="menuName border">
-                  <input type="text" formControlName="name">
+                  <input type="text" formControlName="itemName" placeholder="Name">
                 </td>
                 <td class="menuPrice border">
-                  <input type="text" formControlName="price">
+                  <input type="text" formControlName="itemPrice">
                 </td>
                 <td class="menuCategory border">
-                  <select class="menuCategorySelect" id="menuCategorySelect" formControlName="category">
+                  <select class="selectBox" id="menuCategorySelect" formControlName="itemCategory">
                     <option value="Starter">Starter</option>
                     <option value="Main">Main</option>
                     <option value="Side">Side</option>
@@ -109,25 +109,49 @@
 
   <div class="row half">
     <div id="staffBar" class="col-3 sidebar pl-0">
-      <button type="button" class="btn savebtn" (click)="saveMenu()">Save</button>
+      <!--<button type="button" class="btn savebtn" (click)="saveUsers()">Save</button>-->
       <button type="button" class="btn closebtn" (click)="closeStaffNav()">Edit Staff -</button>
       <div class="sideScroll">
         <table class="table table-hover table-sm" width="100%">
           <thead>
             <tr>
-              <th>First name</th>
-              <th>Surname</th>
-              <th>Role</th>
+              <th>Name</th>
+              <th>Type</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let person of staff">
-              <td contenteditable="true">{{ person.firstname }}</td>
-              <td contenteditable="true">{{ person.surname }}</td>
-              <td contenteditable="true">{{ person.role }}</td>
+            <tr *ngFor="let user of users; trackBy:identifyUsers">
+              <td [attr.id]="user._id" class="userName">{{ user.name }}</td>
+              <td class="userType">{{ user.type }}
+                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs" (click)="removeUser(user._id)">-</button>
+              </td>
             </tr>
           </tbody>
         </table>
+        <div>
+          <form [formGroup]="newUserForm" (submit)="addUser()">
+            <table class="table table-hover table-sm">
+              <label class="text-info">Add an item</label>
+              <tr>
+                <td class="userName border">
+                  <input type="text" formControlName="userName" placeholder="Name">
+                </td>
+                <td class="userPin border">
+                  <select class="selectBox" id="userTypeSelect" formControlName="userType">
+                    <option value="Waiter">Waiter</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                </td>
+                <td class="userPin border">
+                  <input type="password" class="form-control" id="userPin" placeholder="Pin" formControlName="userPin">
+                  <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
       </div>
     </div>
 

@@ -37,6 +37,14 @@ html, body {
   background-color: lightgrey;
 }
 
+#menuBar {
+  border-bottom: 0.4px solid white;
+}
+
+#staffBar {
+  border-top: 0.4px solid white;
+}
+
 /* The sidebar links */
 .sidebar a {
   text-decoration: none;
@@ -144,17 +152,40 @@ html, body {
   width: 40%
 }
 
-.menuCategorySelect {
+.selectBox {
   border: none;
   background-color: transparent;
 }
 
+.userName {
+  width: 40%;
+}
+
+.userType {
+  width: 30%;
+}
+
+.userPin {
+  width: 30%
+}
+
+#userPin {
+  width: 3vw;
+  display: inline-block;
+}
+
 td input {
   width: 100%;
+  vertical-align: middle;
+}
+
+td select {
+  vertical-align: middle;
 }
 
 .btnAdd {
   float: right;
+  display: inline-block;
 }
 
 .data {

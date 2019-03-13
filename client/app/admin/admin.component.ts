@@ -4,7 +4,7 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuItemCategory, MenuItem } from '../menu/menu.model';
-import { UsersService } from '../users.service';
+import { UsersService } from '../users/users.service';
 
 @Component({
     selector: 'app-admin',
@@ -13,55 +13,20 @@ import { UsersService } from '../users.service';
 })
 export class AdminComponent implements OnInit {
     newMenuForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        price: [0, Validators.required],
-        category: ['Main']
+        itemName: ['', Validators.required],
+        itemPrice: [0, Validators.required],
+        itemCategory: ['Main']
+    });
+
+    newUserForm = this.formBuilder.group({
+        userName: ['', Validators.required],
+        userType: ['Waiter', Validators.required],
+        userPin: ['', [Validators.required, Validators.pattern('^\d{4}$')]]
     });
 
     public menu = [];
 
-    public staff = [
-        {
-            firstname: 'Klaus',
-            surname: 'Logan',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Susanne',
-            surname: 'Smith',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Joanne',
-            surname: 'Lee',
-            role: 'Manager'
-        },
-        {
-            firstname: 'John',
-            surname: 'McGregor',
-            role: 'Manager'
-        },
-        {
-            firstname: 'Lucy',
-            surname: 'McCabe',
-            role: 'Kitchen'
-        },
-        {
-            firstname: 'James',
-            surname: 'Peter',
-            role: 'Kitchen'
-        },
-        {
-            firstname: 'Amanda',
-            surname: 'Hogen',
-            role: 'Waiter'
-        },
-        {
-            firstname: 'Lewis',
-            surname: 'Marino',
-            role: 'Waiter'
-        }
-    ];
+    public users = [];
 
     private displayOrdersTodayBool;
     private displayOrdersWeekBool;
@@ -70,11 +35,13 @@ export class AdminComponent implements OnInit {
     constructor(
         protected adminService: AdminService,
         private menuService: MenuService,
+        private usersService: UsersService,
         private formBuilder: FormBuilder
     ) { }
 
     ngOnInit() {
         this.getMenu();
+        this.getUsers();
     }
 
     getMenu() {
@@ -83,7 +50,17 @@ export class AdminComponent implements OnInit {
         });
     }
 
-    identify(index, item) {
+    getUsers() {
+        this.usersService.getUsers().subscribe(result => {
+          this.users = result;
+        })
+    }
+
+    identifyMenu(index, item) {
+        return index;
+    }
+
+    identifyUsers(index, item) {
         return index;
     }
 
@@ -108,6 +85,32 @@ export class AdminComponent implements OnInit {
         console.log(element.innerHTML);
         element.remove();
         this.menuService.delete(id)
+            .subscribe(res => {
+                console.log(res);
+            });
+    }
+
+    addUser() {
+        if (this.newUserForm.valid) {
+            var newUser = this.newUserForm.value;
+            console.log(newUser);
+            this.usersService.create(newUser)
+                .subscribe((data) => {
+                    console.log('item created');
+                    console.log(data.user)
+                }, () => {
+                    console.log('failed');
+                });
+                this.getMenu();
+        }
+    }
+
+    removeUser(id) {
+        console.log(id);
+        var element = document.getElementById(id).parentElement;
+        console.log(element.innerHTML);
+        element.remove();
+        this.usersService.delete(id)
             .subscribe(res => {
                 console.log(res);
             });
