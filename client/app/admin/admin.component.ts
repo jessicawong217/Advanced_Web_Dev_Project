@@ -19,9 +19,9 @@ export class AdminComponent implements OnInit {
     });
 
     newUserForm = this.formBuilder.group({
-        userName: ['', Validators.required],
-        userType: ['Waiter', Validators.required],
-        userPin: ['', [Validators.required, Validators.pattern('^\d{4}$')]]
+        name: ['', [Validators.required]],
+        type: ['Waiter', [Validators.required]],
+        pin: ['', [Validators.required, Validators.pattern('[0-9]{4}')]]
     });
 
     public menu = [];
@@ -37,7 +37,7 @@ export class AdminComponent implements OnInit {
         private menuService: MenuService,
         private usersService: UsersService,
         private formBuilder: FormBuilder
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.getMenu();
@@ -52,8 +52,8 @@ export class AdminComponent implements OnInit {
 
     getUsers() {
         this.usersService.getUsers().subscribe(result => {
-          this.users = result;
-        })
+            this.users = result;
+        });
     }
 
     identifyMenu(index, item) {
@@ -68,14 +68,18 @@ export class AdminComponent implements OnInit {
         if (this.newMenuForm.valid) {
             var newItem = this.newMenuForm.value;
             console.log(newItem);
-            this.menuService.create(newItem)
-                .subscribe((data) => {
+            this.menuService.create(newItem).subscribe(
+                data => {
                     console.log('item created');
-                    console.log(data.item)
-                }, () => {
+                    console.log(data.item);
+
+                    // Reload the menu after the item is added.
+                    this.getMenu();
+                },
+                () => {
                     console.log('failed');
-                });
-                this.getMenu();
+                }
+            );
         }
     }
 
@@ -98,10 +102,12 @@ export class AdminComponent implements OnInit {
                 .subscribe((data) => {
                     console.log('item created');
                     console.log(data.user)
+
+                    // Reload the users after the user is added
+                    this.getUsers();
                 }, () => {
                     console.log('failed');
                 });
-                this.getMenu();
         }
     }
 
