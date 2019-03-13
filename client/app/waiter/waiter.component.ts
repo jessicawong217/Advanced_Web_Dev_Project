@@ -20,6 +20,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class WaiterComponent implements OnInit, OnDestroy {
     // Dummy data to pass into order panel component
+    public waiterType = 'waiter';
+
     public tableId = 2;
 
     public waiterId = 1;
@@ -54,15 +56,6 @@ export class WaiterComponent implements OnInit, OnDestroy {
             firstname: 'Klaus',
             surname: 'Logan',
             role: 'Waiter'
-        }
-    ];
-
-    public menu = [
-        {
-            catergory: 'Starter',
-            id: '1001',
-            name: 'Chicken Soup',
-            price: '4.00'
         }
     ];
 
@@ -116,77 +109,75 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
 
 
+  /**
+   * Listen for both the open and close methods to update table status on
+   * completion.
+   */
+  configureSockets() {
+      var openSub$ = this.orderSocket.getOrdersOpened();
+      var closedSub$ = this.orderSocket.getOrdersCompleted();
 
-
-/**
- * Listen for both the open and close methods to update table status on
- * completion.
- */
-configureSockets() {
-    var openSub$ = this.orderSocket.getOrdersOpened();
-    var closedSub$ = this.orderSocket.getOrdersCompleted();
-
-    merge(openSub$, closedSub$)
-        .pipe(
-            tap(order => this.handleOrderEvent(order)),
-            untilDestroyed(this)
-        )
-        .subscribe();
-}
-
-/**
- * Handle locking a table when a order is added and unlocking when it is
- * completed.
- */
-handleOrderEvent(order) {
-    var openOrder = order.status == 'InProgress';
-    var table = this.tables.filter(t => t.id == order.tableId)[0];
-
-    table.openOrder = openOrder;
-    table.orderId = order.id;
-}
-
-startOrderClick(table) {
-    var newOrder = {
-        tableId: table.id,
-        orderItems: []
-    };
-
-    this.sidebarOrder = newOrder;
-}
-
-// TODO: change this to show the order panel
-// if a table is selected
-show(val: boolean) {
-    this.showView = val;
-}
-
-
-
-
-openPage(pageName, elmnt, color) {
-  // Hide all elements with class="tabcontent" by default */
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+      merge(openSub$, closedSub$)
+          .pipe(
+              tap(order => this.handleOrderEvent(order)),
+              untilDestroyed(this)
+          )
+          .subscribe();
   }
 
-  // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].style.backgroundColor = "";
+  /**
+   * Handle locking a table when a order is added and unlocking when it is
+   * completed.
+   */
+  handleOrderEvent(order) {
+      var openOrder = order.status == 'InProgress';
+      var table = this.tables.filter(t => t.id == order.tableId)[0];
+
+      table.openOrder = openOrder;
+      table.orderId = order.id;
   }
 
-  // Show the specific tab content
-  document.getElementById(pageName).style.display = "block";
+  startOrderClick(table) {
+      var newOrder = {
+          tableId: table.id,
+          items: []
+      };
+
+      this.sidebarOrder = newOrder;
+  }
+
+  // TODO: change this to show the order panel
+  // if a table is selected
+  show(val: boolean) {
+      this.showView = val;
+  }
 
 
 
-}
 
-// Method needs to exist for untilDestroyed to work as expected in prod
-// builds.
-ngOnDestroy() { }
+  openPage(pageName, elmnt, color) {
+    // Hide all elements with class="tabcontent" by default */
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
 
-}
+    // Remove the background color of all tablinks/buttons
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.backgroundColor = "";
+    }
+
+    // Show the specific tab content
+    document.getElementById(pageName).style.display = "block";
+
+
+
+  }
+
+  // Method needs to exist for untilDestroyed to work as expected in prod
+  // builds.
+  ngOnDestroy() { }
+
+  }
