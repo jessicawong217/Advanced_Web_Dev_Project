@@ -62,30 +62,6 @@ export class WaiterComponent implements OnInit, OnDestroy {
             id: '1001',
             name: 'Chicken Soup',
             price: '4.00'
-        },
-        {
-            catergory: 'Main',
-            id: '1002',
-            name: 'Hunters Chicken',
-            price: '4.00'
-        },
-        {
-            catergory: 'Side',
-            id: '1003',
-            name: 'Chips',
-            price: '£4.00'
-        },
-        {
-            catergory: 'Dessert',
-            id: '1004',
-            name: 'Eton Mess',
-            price: '4.00'
-        },
-        {
-            catergory: 'Drinks',
-            id: '1005',
-            name: 'Lemonade',
-            price: '4.00'
         }
     ];
 

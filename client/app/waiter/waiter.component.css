@@ -28,7 +28,7 @@ html, body {
 
 /* The sidebar menu */
 .sidebar {
-  height: 95vh;
+  height:40vh;
   width: 0px;
   position: fixed;
   z-index: 1;
@@ -87,7 +87,7 @@ html, body {
 
 /* The button used to open the sidebar */
 .logoutbtn {
-  font-size: 0.5em;
+  font-size: 0.8em;
   cursor: pointer;
   background-color: grey;
   color: white;
@@ -117,7 +117,7 @@ html, body {
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 100px;
-  height: 85vh;
+  height: 30vh;
   overflow-x: hidden;
   font-size: 1em;
 }
@@ -215,6 +215,22 @@ html, body {
  #Drink {background-color: grey;}
 
 /* ------------------------------------------------------------------------------------------------------*/
+
+ #main {
+  width: 60%;
+  height: 100%;
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#main div {
+  width: 12vh;
+  height: 25vh;
+}
+
+
 
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

@@ -2,37 +2,50 @@
   <!-- https://getbootstrap.com/docs/4.3/layout/overview/ and
     https://ng-bootstrap.github.io/#/components/
     for more ui designs -->
-    <button class="logoutbtn" (click)='logoutClick()'>logout</button>
   <hr>
   <div class="row">
     <div id="menuBar" class="col-sm-6 sidebar pl-0">
       <button class="closebtn" (click)="closeMenuNav()">Close -</button>
       <div class="sideScroll">
-
-        <div class="tables">
-          <div *ngFor="let table of tables">
-              <hr>
-            <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
-          </div>
+        <div *ngFor="let staff of staff">
+          <h3>Name: </h3>
+          <h4>{{staff.firstname}} {{staff.surname}}</h4>
+          <hr>
         </div>
+        <h5>Possible space for progress?</h5>
+        <hr>
+        <button class="logoutbtn" (click)='logoutClick()'>logout</button>
       </div>
     </div>
 
     <div id="menuMain" class="main w-10 pl-0">
-      <button class="openbtn" (click)="openMenuNav()">Tables</button>
+      <button class="openbtn" (click)="openMenuNav()">Waiter Info</button>
     </div>
 
     <div class="col content pr-0" id="summary">
       <div class="row">
         <div *ngFor="let staff of staff">
           <h3>Waiter View- {{staff.firstname}}</h3>
-          <hr>
         </div>
+      </div>
+      <div class="row">
+        <div id="main" class="tables">
+          <div *ngFor="let table of tables">
+            <hr>
+            <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
+          <app-order-panel [waiterId]="waiterId" [type]="counterType" [setOrder]="sidebarOrder" (close)="sidebarOrder = null">
+          </app-order-panel>
+        </div>
+      </div>
 
 
+      <!----------------------------------------------------------------------------------->
 
 
-
+      <!--
         <div class="row">
           <button class="tablink" (click)="openPage('Starter', this, 'grey')">Starter</button>
           <button class="tablink" (click)="openPage('Main', this, 'grey')">Main</button>
@@ -142,7 +155,4 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
-      <app-order-panel [waiterId]="waiterId" [setOrder]="sidebarOrder" (close)="sidebarOrder = null"></app-order-panel>
-    </div>
-  </div>
+    -->
