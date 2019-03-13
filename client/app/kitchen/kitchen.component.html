@@ -6,8 +6,8 @@
           <tr>
             <th scope="col">Table Number</th>
             <th scope="col">Item</th>
-            <th scope="col">Time</th>
             <th scope="col">Status</th>
+            <th scope="col">Customer Waiting Time</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -16,10 +16,10 @@
             <tr *ngIf="item.status === 'InProgress'">
               <th scope="row">{{ item.tableId }}</th>
               <td>{{ item.name }}</td>
-              <td>{{ item.createdAt | date: 'HH:mm' }}</td>
               <td class="'table-warning'">
                 {{ item.status }}
               </td>
+              <td><app-waiting-time [createdTime]="item.createdAt"></app-waiting-time></td>
               <td>
                 <button (click)="completeItem(item.orderId, item)">
                   Complete
