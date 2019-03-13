@@ -1,4 +1,5 @@
-[{
+[
+  {
     "name": "Klaus",
     "type": "Admin",
     "pin": "1000"
@@ -37,5 +38,10 @@
     "name": "Lewis",
     "type": "Waiter",
     "pin": "1007"
+  },
+  {
+    "name": "Bob",
+    "type": "Admin",
+    "pin": "9999"
   }
 ]
