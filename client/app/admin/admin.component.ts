@@ -13,9 +13,9 @@ import { UsersService } from '../users/users.service';
 })
 export class AdminComponent implements OnInit {
     newMenuForm = this.formBuilder.group({
-        itemName: ['', Validators.required],
-        itemPrice: [0, Validators.required],
-        itemCategory: ['Main']
+        name: ['', Validators.required],
+        price: [0, Validators.required],
+        category: ['Main']
     });
 
     newUserForm = this.formBuilder.group({
