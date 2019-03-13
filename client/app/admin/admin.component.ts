@@ -4,6 +4,7 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuItemCategory, MenuItem } from '../menu/menu.model';
+import { UsersService } from '../users.service';
 
 @Component({
     selector: 'app-admin',
