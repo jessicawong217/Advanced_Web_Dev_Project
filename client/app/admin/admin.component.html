@@ -4,7 +4,6 @@
     <div id="menuBar" class="col-3 sidebar pl-0">
 
       <button type="button" class="btn savebtn" (click)="updateMenu()">Save</button>
-
       <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
 
       <div class="sideScroll">
@@ -17,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of menu">
+            <tr *ngFor="let item of menu; trackBy:identify">
               <td [attr.id]="item._id" class="menuName">{{ item.name }}</td>
               <td class="menuPrice">£{{ item.price }}</td>
               <td class="menuCategory">{{ item.category }}
@@ -28,28 +27,27 @@
         </table>
         <div>
           <form [formGroup]="newMenuForm" (submit)="addItem()">
-          <table class="table table-hover table-sm">
-            <label class="text-info">Add an item</label>
-            <tr>
-              <td class="menuName border">
-                <input type="text" formControlName="name">
-              </td>
-              <td class="menuPrice border">
-                <input type="text" formControlName="price">
-
-              </td>
-              <td class="menuCategory border">
-                <select class="menuCategorySelect" id="menuCategorySelect" formControlName="category">
-                  <option value="Starter">Starter</option>
-                  <option value="Main">Main</option>
-                  <option value="Side">Side</option>
-                  <option value="Dessert">Dessert</option>
-                  <option value="Drink">Drink</option>
-                </select>
-                <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
-              </td>
-            </tr>
-          </table>
+            <table class="table table-hover table-sm">
+              <label class="text-info">Add an item</label>
+              <tr>
+                <td class="menuName border">
+                  <input type="text" formControlName="name">
+                </td>
+                <td class="menuPrice border">
+                  <input type="text" formControlName="price">
+                </td>
+                <td class="menuCategory border">
+                  <select class="menuCategorySelect" id="menuCategorySelect" formControlName="category">
+                    <option value="Starter">Starter</option>
+                    <option value="Main">Main</option>
+                    <option value="Side">Side</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Drink">Drink</option>
+                  </select>
+                  <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
+                </td>
+              </tr>
+            </table>
           </form>
         </div>
       </div>

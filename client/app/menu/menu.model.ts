@@ -10,6 +10,7 @@ export type MenuItemCategory = 'Starter' | 'Main' | 'Side' | 'Dessert' | 'Drink'
 
 export interface MenuItem {
     _id: number;
+    id: number;
     name: string;
     price: number;
     category: MenuItemCategory;

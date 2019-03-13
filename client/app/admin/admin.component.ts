@@ -82,16 +82,8 @@ export class AdminComponent implements OnInit {
         });
     }
 
-    updateMenu() {
-        var table = document.getElementById("menu tr");
-        for (var i = 1, row; row = table[i]; i++) {
-            //iterate through rows
-            //rows would be accessed using the "row" variable assigned in the for loop
-            for (var j = 0, col; col = row[j]; j++) {
-                console.log(col[j]);
-            }
-        }
-        //this.menuService.update(itemId, menuItem);
+    identify(index, item) {
+        return index;
     }
 
     addItem() {
@@ -105,12 +97,12 @@ export class AdminComponent implements OnInit {
                 }, () => {
                     console.log('failed');
                 });
+                this.getMenu();
         }
-
     }
 
     removeItem(id) {
-      console.log(id);
+        console.log(id);
         var element = document.getElementById(id).parentElement;
         console.log(element.innerHTML);
         element.remove();
@@ -189,5 +181,4 @@ export class AdminComponent implements OnInit {
             document.getElementById("summaryDetailsMonth").style.display = "none";
         }
     }
-
 }

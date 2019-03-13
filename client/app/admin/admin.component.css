@@ -118,7 +118,8 @@ html, body {
   margin-right: 15px;
   margin-bottom: 100px;
   height: calc(100% - 55px);
-  overflow-x: hidden;
+  overflow-x: scroll;
+  overflow-y: scroll;
   font-size: 1em;
 }
 
