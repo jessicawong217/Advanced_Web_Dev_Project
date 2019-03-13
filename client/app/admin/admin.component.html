@@ -1,0 +1,177 @@
+<div class="container-fluid fill-height p-0">
+
+  <div class="row half">
+    <div id="menuBar" class="col-3 sidebar pl-0">
+
+      <button type="button" class="btn savebtn" (click)="updateMenu()">Save</button>
+      <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
+
+      <div class="sideScroll">
+        <table class="menu table table-hover table-sm" width="100%">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of menu; trackBy:identify">
+              <td [attr.id]="item._id" class="menuName">{{ item.name }}</td>
+              <td class="menuPrice">£{{ item.price }}</td>
+              <td class="menuCategory">{{ item.category }}
+                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs" (click)="removeItem(item._id)">-</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <form [formGroup]="newMenuForm" (submit)="addItem()">
+            <table class="table table-hover table-sm">
+              <label class="text-info">Add an item</label>
+              <tr>
+                <td class="menuName border">
+                  <input type="text" formControlName="name">
+                </td>
+                <td class="menuPrice border">
+                  <input type="text" formControlName="price">
+                </td>
+                <td class="menuCategory border">
+                  <select class="menuCategorySelect" id="menuCategorySelect" formControlName="category">
+                    <option value="Starter">Starter</option>
+                    <option value="Main">Main</option>
+                    <option value="Side">Side</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Drink">Drink</option>
+                  </select>
+                  <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="menuMain" class="main w-10 pl-0">
+      <button type="button" class="btn openbtn" (click)="openMenuNav()">Edit Menu +</button>
+    </div>
+    <div class="col content pr-0" id="summary">
+      <h3>Income Summary</h3>
+      <hr>
+      <div class="row data">
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersToday()">
+          <div class="display" id="summaryToday">
+            <div class="displayValue text-secondary">
+              £837.35
+            </div>
+            <div class="displayText text-secondary">
+              Today
+            </div>
+          </div>
+
+          <div class="summaryDetails" id="summaryDetailsToday">
+            <p>Placeholder</p>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersWeek()">
+          <div class="display" id="summaryWeek">
+            <div class="displayValue text-secondary">
+              £12,245.95
+            </div>
+            <div class="displayText text-secondary">
+              This week
+            </div>
+          </div>
+
+          <div class="summaryDetails" id="summaryDetailsWeek">
+            <p>Placeholder</p>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersMonth()">
+          <div class="display" id="summaryMonth">
+            <div class="displayValue text-secondary">
+              £64,565.55
+            </div>
+            <div class="displayText text-secondary">
+              This month
+            </div>
+          </div>
+          <div class="summaryDetails" id="summaryDetailsMonth">
+            <p>Placeholder</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row half">
+    <div id="staffBar" class="col-3 sidebar pl-0">
+      <button type="button" class="btn savebtn" (click)="saveMenu()">Save</button>
+      <button type="button" class="btn closebtn" (click)="closeStaffNav()">Edit Staff -</button>
+      <div class="sideScroll">
+        <table class="table table-hover table-sm" width="100%">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Surname</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let person of staff">
+              <td contenteditable="true">{{ person.firstname }}</td>
+              <td contenteditable="true">{{ person.surname }}</td>
+              <td contenteditable="true">{{ person.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="staffMain" class="main w-10 pl-0">
+      <button type="button" class="btn openbtn" (click)="openStaffNav()">Edit Staff +</button>
+    </div>
+    <div class="col content pr-0" id="analytics">
+      <h3>Analytics</h3>
+      <hr>
+      <div class="row data">
+        <div class="col displayBox displayBoxLink m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              104
+            </div>
+            <div class="displayText text-secondary">
+              Orders average/day
+            </div>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              £10,864,25
+            </div>
+            <div class="displayText text-secondary">
+              Revenue average/week
+            </div>
+          </div>
+        </div>
+
+        <div class="col displayBox displayBoxLink m-4">
+          <div class="display">
+            <div class="displayValue text-secondary">
+              £60,667.05
+            </div>
+            <div class="displayText text-secondary">
+              Revenue average/month
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

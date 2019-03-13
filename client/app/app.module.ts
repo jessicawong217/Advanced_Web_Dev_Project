@@ -17,6 +17,8 @@ import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { AdminComponent } from './admin/admin.component';
+import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 
 @NgModule({
     declarations: [
@@ -24,10 +26,13 @@ import { WaiterService } from './waiter/waiter.service';
         WaiterComponent,
         CounterComponent,
         OrderPanelComponent,
+        KitchenComponent,
+        AdminComponent,
         CounterSortPipe,
         KitchenComponent,
         MenuSelectionComponent,
-        LoginComponent
+        LoginComponent,
+        WaitingTimeComponent
     ],
     imports: [
         BrowserModule,
