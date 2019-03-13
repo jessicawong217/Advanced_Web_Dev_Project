@@ -8,8 +8,7 @@ router
     /** GET /api/users - Get a list of users */
     .get(userCtrl.list)
     /** POST /api/users - Create a new user */
-    .post(userCtrl.create)
-    .delete(userCtrl.remove);
+    .post(userCtrl.create);
 
 router
     .route('/login')
@@ -19,7 +18,9 @@ router
 router
     .route('/:id')
     /** PUT /api/users/:id - Mark all order item as completed */
-    .put(userCtrl.update);
+    .put(userCtrl.update)
+    /** DELETE /api/users/:id - Delete a user */
+    .delete(userCtrl.remove);
 
 router
     .route('/seed')

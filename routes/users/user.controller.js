@@ -84,7 +84,7 @@ function update(req, res, next) {
  */
 function remove(req, res) {
     const id = req.params.id;
-    Menu.findByIdAndRemove(id)
+    User.findByIdAndRemove(id)
         .then(() => res.json({
             status: 204
         }))
