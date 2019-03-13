@@ -4,11 +4,10 @@ import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { MenuService } from '../menu/menu.service';
-import { OrderSocketService } from '../socket/order-socket.service';
-import { WaiterService } from './waiter.service';
 import { Order } from '../shared/order.model';
-import { OrderItem } from '../shared/order-item.model';
+import { OrderSocketService } from '../socket/order-socket.service';
 import { UsersService } from '../users/users.service';
+import { WaiterService } from './waiter.service';
 
 @Component({
     selector: 'app-waiter',
@@ -98,7 +97,7 @@ export class WaiterComponent implements OnInit, OnDestroy {
     show(val: boolean) {
         this.showView = val;
     }
-    
+
     /**
      * Log the current user out.
      */

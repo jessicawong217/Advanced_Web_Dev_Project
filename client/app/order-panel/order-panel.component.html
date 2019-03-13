@@ -1,18 +1,25 @@
-<div class="nav-side-menu d-flex flex-column p-1" *ngIf="order">
+<div class="nav-side-menu d-flex flex-column p-3" *ngIf="order">
     <div class="nav-side-menu-header">
-        <h3>
-            Order - <i>Table {{order.tableId}}</i>
-            <i class="fas fa-times-circle" (click)="closeClick()"></i>
-        </h3>
+        <div class="row">
+            <div class="col-3">
+                <h3>
+                    Order - <i>Table {{order.tableId}}</i>
+                </h3>
+            </div>
+            <div class="col-1">
+                <h3><i class="fas fa-times-circle" (click)="closeClick()"></i></h3>
+            </div>
+        </div>
 
         <small>Waiter ID: {{waiterId}}</small>
 
         <hr>
 
     </div>
-    
-    <app-menu-selection (itemAdded)="addItem($event)"></app-menu-selection>
 
+    <div *ngIf="order.status != 'Completed'">
+        <app-menu-selection (itemAdded)="addItem($event)"></app-menu-selection>
+    </div>
 
     <div class="menu-list" [ngSwitch]="order.items?.length > 0">
 
@@ -22,29 +29,37 @@
 
         <div id="menu-content" class="menu-content collapse out" *ngSwitchCase="true">
             <div class="row">
-                <div class="col-sm col-md-3 col-lg-3">
+                <div class="col-sm col-md-2 col-lg-2" [ngClass]="{
+                    'col-md-3 col-lg-3': order.status === 'Completed'
+                  }">
                     <b>Item</b>
                 </div>
 
-                <div class="col-sm col-md-1 col-lg-1">
+                <div class="col-sm col-md-1 col-lg-1" [ngClass]="{
+                    'col-md-2 col-lg-2': order.status === 'Completed'
+                  }">
                     <b>Price</b>
                 </div>
             </div>
             <hr>
 
             <div class="row" *ngFor="let item of order.items; let i = index">
-                <div class="col-3">
-
+                <div class="col-2" [ngClass]="{
+                    'col-3': order.status === 'Completed'
+                  }">
                     {{item.name}}
                 </div>
 
-                <div class="col-1">
+                <div class="col-1" [ngClass]="{
+                    'col-2': order.status === 'Completed'
+                  }">
                     £{{item.price}}
                 </div>
-
                 <div class="col-2" *ngIf="order.status != 'Completed'">
-                    <a class="btn" (click)="duplicateItem(item)">Duplicate</a>
-                    <a *ngIf="item._id == null" class="btn" (click)="removeItem(i)">Remove</a>
+                    <i class="fas fa-clone" (click)="duplicateItem(item)"></i>&nbsp;
+                    <i class="fas fa-times-circle" (click)="removeItem(i)" *ngIf="item.status != 'Completed'"></i>
+                    <i class="fas fa-check-circle" *ngIf="item.status == 'Completed'" style="color: green;
+                    text-shadow: 1px 1px 1px darkgreen;"></i>
                 </div>
             </div>
 
@@ -109,4 +124,7 @@
             </ng-container>
         </div>
     </div>
+    <p>
+        <ngb-alert *ngIf="errorMessage != null" type="danger" [dismissible]="true">{{ errorMessage }}</ngb-alert>
+    </p>
 </div>

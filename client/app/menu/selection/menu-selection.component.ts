@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { OrderItem } from 'client/app/shared/order-item.model';
-import { MenuService } from '../menu.service';
-import { MenuItem } from '../menu.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
+
+import { MenuItem } from '../menu.model';
+import { MenuService } from '../menu.service';
 
 @Component({
     selector: 'app-menu-selection',
@@ -27,7 +28,7 @@ export class MenuSelectionComponent implements OnInit {
      */
     searchSubject$ = new Subject<string>();
 
-    constructor(private menuService: MenuService) {}
+    constructor(private menuService: MenuService) { }
 
     /**
      * Configure the subscribe to the search subjext and load the intial list of

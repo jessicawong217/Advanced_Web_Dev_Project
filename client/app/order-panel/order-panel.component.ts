@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
-import { Order } from '../shared/order.model';
 import { OrderItem } from '../shared/order-item.model';
+import { Order } from '../shared/order.model';
 import { OrderService } from '../shared/order.service';
 
 export type PanelType = 'waiter' | 'counter';
@@ -15,8 +15,10 @@ export type PanelType = 'waiter' | 'counter';
 })
 export class OrderPanelComponent implements OnInit {
 
-    @Input() waiterId: any;
+    @Input() waiterId: number;
 
+    // Set the order to the one from the input
+    // Then set the discount to 0 and calculate total
     @Input()
     public set setOrder(order: Order) {
         this.order = order;
@@ -38,8 +40,12 @@ export class OrderPanelComponent implements OnInit {
 
     public discountForm: FormGroup;
 
+    public errorMessage: string;
+
+    public newOrderItems: Array<OrderItem>;
+
     /**
-     * Counter Comoponent Constructor
+     * Order Panel Comoponent Constructor
      *
      * @param counterService Counter Service
      * @param formBuilder Form Builder
@@ -49,13 +55,18 @@ export class OrderPanelComponent implements OnInit {
         private orderService: OrderService,
     ) { }
 
+    /**
+     * Runs when page initialises
+     */
     ngOnInit() {
         this.createForm();
         this.calculateTotal();
+
+        this.newOrderItems = [];
     }
 
     /**
-     * Creates the form
+     * Creates the form and set the validation rules
      */
     createForm(): void {
         this.discountForm = this.formBuilder.group({
@@ -68,7 +79,7 @@ export class OrderPanelComponent implements OnInit {
     }
 
     /**
-     * Calculate the total of all prices. Item price * quantity
+     * Calculate the total of all prices.
      */
     calculateTotal() {
         this.totalNoDiscount = this.order.items.reduce(
@@ -103,13 +114,14 @@ export class OrderPanelComponent implements OnInit {
         if (this.discountForm === undefined) {
             return;
         }
+
         this.discountForm.controls.discount.patchValue(0);
     }
 
     /**
      * Completes the order
      *
-     * @param order Order
+     * @param order Order Model
      */
     completeOrder(order: Order) {
         this.orderService
@@ -117,10 +129,8 @@ export class OrderPanelComponent implements OnInit {
                 order._id,
                 JSON.stringify({ discountedValue: this.order.discount }
                 )
-            ).subscribe(data => {
-                console.log(data);
-            }, (error) => {
-                console.log(error);
+            ).subscribe(error => {
+                this.errorMessage = 'Cannot complete order.';
             });
     }
 
@@ -144,16 +154,20 @@ export class OrderPanelComponent implements OnInit {
                 status: 'InProgress'
             }
         ];
-        this.orderService
-            .updateOrder(
-                order._id,
-                JSON.stringify({ items: itemsDummy }
-                )
-            ).subscribe(data => {
-                console.log(data);
-            }, (error) => {
-                console.log(error);
-            });
+
+        this.newOrderItems.forEach(element => {
+            element.status = 'InProgress';
+        });
+
+        console.log(this.newOrderItems);
+        // this.orderService
+        //     .updateOrder(
+        //         order._id,
+        //         JSON.stringify({ items: itemsDummy }
+        //         )
+        //     ).subscribe(error => {
+        //         this.errorMessage = 'Cannot update order.';
+        //     });
     }
 
     /**
@@ -161,6 +175,8 @@ export class OrderPanelComponent implements OnInit {
      * @param item The new item.
      */
     addItem(item: OrderItem) {
+        this.newOrderItems.push(item);
+        console.log(this.newOrderItems);
         this.order.items.push(item);
         this.calculateTotal();
     }
@@ -176,6 +192,8 @@ export class OrderPanelComponent implements OnInit {
             menuItemId: item.menuItemId
         } as OrderItem;
 
+        this.newOrderItems.push(newItem);
+        console.log(this.newOrderItems);
         this.order.items.push(newItem);
         this.calculateTotal();
     }
@@ -186,6 +204,8 @@ export class OrderPanelComponent implements OnInit {
      */
     removeItem(index: number) {
         this.order.items.splice(index, 1);
+        this.newOrderItems.splice(index, 1);
+        console.log(this.newOrderItems);
         this.calculateTotal();
     }
 
