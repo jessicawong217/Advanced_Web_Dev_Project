@@ -15,6 +15,7 @@ import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
+import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuSelectionComponent } from './menu/selection/menu-selection.component';
 
@@ -24,6 +25,8 @@ import { MenuSelectionComponent } from './menu/selection/menu-selection.componen
         WaiterComponent,
         CounterComponent,
         OrderPanelComponent,
+        KitchenComponent,
+        AdminComponent,
         CounterSortPipe,
         KitchenComponent,
         MenuSelectionComponent,
