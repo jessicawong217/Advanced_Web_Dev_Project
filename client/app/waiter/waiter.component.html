@@ -32,7 +32,7 @@
         <div id="main" class="tables">
           <div *ngFor="let table of tables">
             <hr>
-            <button [ngClass]=“{‘btn-danger’: table.order != null}” type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
+            <button [ngClass]="{'btn-danger': table.order != null}" type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
