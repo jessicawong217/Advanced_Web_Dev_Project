@@ -26,21 +26,6 @@ function listInProgress(req, res, next) {
 }
 
 /**
- * Seed the orders db with static data.
- * TODO: use a json file to import.
- * @param {*} req The express request object.
- * @param {*} res The express result object.
- * @param {*} next Next match route handler.
- */
-function seed(req, res, next) {
-    var dummyArray = require('./order-seed');
-
-    Order.insertMany(dummyArray)
-        .then(() => res.json({ ok: true }))
-        .catch(e => next(e));
-}
-
-/**
  * Handle completing an existing order.
  * TODO: validate there is no pending order items?
  * @param {*} req The express request object.
@@ -151,7 +136,6 @@ function create(req, res, next) {
 module.exports = {
     list,
     listInProgress,
-    seed,
     create,
     complete,
     update,

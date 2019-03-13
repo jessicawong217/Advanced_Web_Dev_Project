@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Test User",
+        "type": "Waiter",
+        "pin": "1111"
+    },
+    {
+        "name": "Test Admin",
+        "type": "Admin",
+        "pin": "999"
+    }
+]

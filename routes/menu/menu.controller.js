@@ -126,7 +126,6 @@ function seed(req, res, next) {
 
 module.exports = {
     list,
-    seed,
     get,
     create,
     update,

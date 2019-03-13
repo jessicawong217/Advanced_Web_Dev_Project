@@ -2,24 +2,28 @@ const mongoose = require('mongoose');
 
 var OrderItemsSchema = new mongoose.Schema({
     menuItemId: {
-        type: String
+        type: String,
+        required: true
     },
     name: {
-        type: String
+        type: String,
+        required: true
     },
     price: {
-        type: Number
+        type: Number,
+        required: true
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     finishedAt: {
         type: Date
     },
     status: {
         type: String,
-        enum: ['InProgress', 'Completed']
+        enum: ['InProgress', 'Completed'],
+        required: true
     }
 });
 
@@ -30,7 +34,8 @@ const OrderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['InProgress', 'Completed']
+        enum: ['InProgress', 'Completed'],
+        required: true
     },
     discount: {
         type: Number,
