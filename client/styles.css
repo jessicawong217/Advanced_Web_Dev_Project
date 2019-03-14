@@ -35,3 +35,8 @@
 .navbar-nav .user-details {
     margin-left: auto;
 }
+
+.main {
+  padding: 4rem 1.5rem;
+  max-width: inherit;
+}

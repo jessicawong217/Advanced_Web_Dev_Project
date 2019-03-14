@@ -101,122 +101,19 @@ html, body {
   transition: margin-left .5s;
 }
 
-.content {
-  transition: margin-left .5s;
-  padding: 15px;
-  height:85vh;
-}
-
-.sideScroll {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 50px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 100px;
-  height: 30vh;
-  overflow-x: hidden;
-  font-size: 1em;
-}
-
-.table td {
-  text-decoration-line: underline;
-}
-
-.data {
-  white-space: nowrap;
-}
-
-.display {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.displayValue {
-  font-size: 2.8em;
-  color: grey;
-}
-
-.displayText {
-  font-size: 1.4em;
-  color: grey;
-}
-
-.row {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.displayBox {
-  border: 2px solid lightblue;
-  border-radius: 20px;
-  height: 30vh;
-  white-space: nowrap;
-}
-
-.displayBoxLink {
-  cursor: pointer;
-}
-
-.displayBoxLink:hover {
-  border: 4px solid gray;
-}
-
-.summaryDetails {
-  display: none;
-  text-align: center;
-  margin: 5%;
-}
  /* ------------------------------------------------------------------------------------------ */
- * Set height of body and the document to 100% to enable "full page tabs" */
+ /* Set height of body and the document to 100% to enable "full page tabs" */
  body, html {
    height: 100%;
    margin: 0;
    font-family: Arial;
  }
 
- /* Style tab links */
- .tablink {
-   background-color: #555;
-   color: white;
-   float: left;
-   border: none;
-   outline: none;
-   cursor: pointer;
-   padding: 14px 16px;
-   font-size: 17px;
-   width: 20%;
- }
-
- .tablink:hover {
-   background-color: #777;
- }
-
- /* Style the tab content (and add height:100% for full page content) */
- .tabcontent {
-   color: white;
-   display: none;
-   padding: 50px 20px;
-   height: 290%;
-   width: 100%;
- }
-
- #Starter {background-color: grey;}
- #Main {background-color: grey;}
- #Dessert {background-color: grey;}
- #Side {background-color: grey;}
- #Drink {background-color: grey;}
-
 /* ------------------------------------------------------------------------------------------------------*/
 
  #main {
-  width: 60%;
-  height: 100%;
+
+  /* height: 100%; */
   display: -webkit-flex;
   -webkit-flex-wrap: wrap;
   display: flex;
@@ -224,19 +121,19 @@ html, body {
 }
 
 #main div {
-  width: 12vh;
-  height: 25vh;
+  width: 50%;
+  padding: 0 5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#main div button {
+  margin: 25px 0;
 }
 
 
-
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar {
-    padding-top: 15px;
-  }
-
-  .sidebar a {
-    font-size: 18px;
-  }
+@media screen and (min-width: 767px) {
+  #main div {
+    width: 25%;
+  }  
 }
