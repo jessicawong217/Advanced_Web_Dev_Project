@@ -16,8 +16,8 @@ export class TableService {
     /**
      * Calls API endpoint to get all tables
      */
-    getTables(): Observable<any> {
-        return this.http.get(`${environment.apiUrl}tables`)
+    getTables() {
+        return this.http.get<Table[]>(`${environment.apiUrl}tables`)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -28,7 +28,7 @@ export class TableService {
      * @param table The new table
      */
     addTable(table: Table) {
-        return this.http.post(`${environment.apiUrl}tables`, { table })
+        return this.http.post<Table>(`${environment.apiUrl}tables`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -39,7 +39,7 @@ export class TableService {
      * @param  id table id
      */
     deleteTable(id: string) {
-        return this.http.delete(`${environment.apiUrl}tables/${id}`)
+        return this.http.delete<Table>(`${environment.apiUrl}tables/${id}`)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );;
@@ -48,8 +48,8 @@ export class TableService {
     /**
      * Calls API endpoint to update a table
      */
-    updateTable(tableId: string, table: Table): Observable<any> {
-        return this.http.put(`${environment.apiUrl}tables/${tableId}`, { table })
+    updateTable(tableId: string, table: Table) {
+        return this.http.put<Table>(`${environment.apiUrl}tables/${tableId}`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
