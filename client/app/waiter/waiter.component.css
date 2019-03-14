@@ -1,0 +1,50 @@
+html, body {
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  white-space: nowrap;
+  font-size: 1em;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+.main {
+  transition: margin-left .5s;
+}
+
+ /* ------------------------------------------------------------------------------------------ */
+ /* Set height of body and the document to 100% to enable "full page tabs" */
+ body, html {
+   height: 100%;
+   margin: 0;
+   font-family: Arial;
+ }
+
+/* ------------------------------------------------------------------------------------------------------*/
+
+ #main {
+
+  /* height: 100%; */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#main div {
+  width: 50%;
+  padding: 0 5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#main div button {
+  margin: 25px 0;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (min-width: 767px) {
+  #main div {
+    width: 25%;
+  }  
+}

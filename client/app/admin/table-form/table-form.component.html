@@ -1,0 +1,20 @@
+<form>
+  <div class="form-group">
+    <input type="number" class="form-control number"
+           placeholder="Table number"
+           [(ngModel)]="table.id" name="id"
+           [disabled]="tableEditing != table._id">
+    <input type="number" class="form-control capacity"
+           placeholder="Capacity"
+           [(ngModel)]="table.capacity" name="capacity"
+           [disabled]="tableEditing != table._id">
+    <ng-container *ngIf="formType === 'Add'">
+      <button  class="btn btn-success" (click)="addTable(table)">Add</button>
+    </ng-container>
+    <ng-container *ngIf="formType === 'Edit'">
+      <button class="btn btn-primary" *ngIf="tableEditing != table._id" (click)="enableEditing(table._id)">Edit</button>
+      <button class="btn btn-success" *ngIf="tableEditing == table._id" (click)="updateTable(table)">Save</button>
+      <button class="btn btn-danger" (click)="removeTable(table._id)">Delete</button>
+    </ng-container>
+  </div>
+</form>

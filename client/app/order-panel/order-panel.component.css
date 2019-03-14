@@ -1,0 +1,117 @@
+.nav-side-menu {
+    overflow: auto;
+    font-family: verdana;
+    font-size: 12px;
+    font-weight: 200;
+    background-color: #2e353d;
+    position: fixed;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    color: #e1ffff;
+    transition: 0.3s transform ease-in-out;
+    width: 100%;
+}
+
+.nav-side-menu-header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: #293038;
+}
+
+.nav-side-menu-header h1 {
+  font-size: 20px;
+}
+
+.nav-side-menu-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-side-menu-controls .btn {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.nav-side-menu-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 41px;
+  /* flex-shrink: 0; */
+}
+
+.nav-side-menu-section-content {
+  display: none;
+  overflow-y: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.nav-side-menu-section {
+  border-bottom: 1px solid #262D35;
+}
+
+.nav-side-menu-section--expand .nav-side-menu-section-content {
+  display: block;
+}
+
+.nav-side-menu-section--expand .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.nav-side-menu-total  {
+  padding-top: 15px;
+  color: #212529;
+}
+
+.nav-side-menu-footer {
+  background: #fafafa;
+}
+
+.nav-side-menu-section--expand {
+
+}
+
+.nav-side-menu-controls > .row > div {
+  padding: 0 2px;
+}
+
+.nav-side-menu-section-heading {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  transition: all .4s;
+  cursor: pointer;
+  min-height: 41px;
+}
+
+.nav-side-menu-section-heading:hover {
+  background: #1F262E;
+}
+
+.nav-side-menu-section-heading h2 {
+  margin: 0 0 0 10px;
+  font-size: 18px;
+  flex-grow: 1;
+}
+
+.nav-side-menu-section-heading .item-count {
+  font-size: 10px;
+  color: #D2F0F0;
+}
+
+.nav-side-menu-section-message {
+  padding: 4px 0;
+}
+
+.menu-row {
+    margin-bottom: 3px;
+}
+
+
+@media (min-width: 767px) {
+  .nav-side-menu {
+    width: 30%;
+  }
+}

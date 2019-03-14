@@ -1,0 +1,23 @@
+.form-control {
+    display: inline-block;
+}
+
+.price {
+    width: 5rem;
+}
+
+.category {
+    width: 6rem;
+}
+
+.name {
+    width: 13rem;
+}
+
+.buttonsShow {
+  display: inline-block;
+}
+
+.buttonsHide {
+  display: hidden;
+}

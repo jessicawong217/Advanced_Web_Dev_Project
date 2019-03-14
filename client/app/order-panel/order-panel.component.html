@@ -1,0 +1,150 @@
+<div class="nav-side-menu d-flex flex-column" *ngIf="order">
+    <div class="nav-side-menu-header container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <h1>
+                    Order - <i>Table {{order.tableId}}</i>
+                </h1>
+            </div>
+            <div class="col-2">
+                <i class="fas fa-times-circle" (click)="closeClick()"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="nav-side-menu-container">
+
+        <div class="nav-side-menu-section" *ngIf="order.status != 'Completed'"
+            [ngClass]="{'nav-side-menu-section--expand': selectedTab == 'menu'}">
+            <a class="nav-side-menu-section-heading" (click)="setSelectedTab('menu')">
+                <div>
+                    <i class="fas fa-fw fa-chevron-down"></i>
+                </div>
+                <h2>Menu</h2>
+            </a>
+
+            <app-menu-selection class="nav-side-menu-section-content container-fluid" (itemAdded)="addItem($event)">
+            </app-menu-selection>
+        </div>
+
+        <div class="nav-side-menu-section" [ngClass]="{'nav-side-menu-section--expand': selectedTab == 'order'}">
+            <a class="nav-side-menu-section-heading" (click)="setSelectedTab('order')">
+                <div>
+                    <i class="fas fa-fw fa-chevron-down"></i>
+                </div>
+                <h2>Order Items</h2>
+                <span class="item-count" *ngIf="order.items?.length > 0">{{order.items?.length}}
+                    {{order.items?.length > 1 ? 'Items': 'Item'}}</span>
+            </a>
+
+            <div class="nav-side-menu-section-content container-fluid" [ngSwitch]="order.items?.length > 0">
+                <div class="nav-side-menu-section-message" *ngSwitchDefault>
+                    No items added to the order.
+                </div>
+
+                <div class="menu-list" *ngSwitchCase="true">
+                    <div class="row menu-row" *ngFor="let item of order.items; let i = index">
+                        <div class="col-2">
+                            {{item.menuItemId}}
+                        </div>
+                        <div class="col-4">
+                            {{item.name}}
+                        </div>
+
+                        <div class="col-4">
+                            £{{item.price}}
+                        </div>
+
+                        <div class="col-2" *ngIf="order.status != 'Completed'">
+                            <i class="fas fa-clone" (click)="duplicateItem(item)"></i>&nbsp;
+                            <i class="fas fa-times-circle" (click)="removeItem(i)" *ngIf="item._id == null"></i>
+                            <i class="fas fa-check-circle" *ngIf="item.status == 'Completed'" style="color: green;
+                        text-shadow: 1px 1px 1px darkgreen;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-side-menu-section" *ngIf="type == 'counter' && order.status != 'Completed'"
+            [ngClass]="{'nav-side-menu-section--expand': selectedTab == 'discount'}">
+            <a class="nav-side-menu-section-heading" (click)="setSelectedTab('discount')">
+                <div>
+                    <i class="fas fa-fw fa-chevron-down"></i>
+                </div>
+                <h2>Discount</h2>
+            </a>
+
+            <form name="addDiscount" [formGroup]="discountForm" class="nav-side-menu-section-content container-fluid">
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" value="0" formControlName="discount"
+                        (ngModelChange)="calculateTotal()">
+                    <div class="input-group-append">
+                        <span class="input-group-text">% Discount</span>
+                    </div>
+                </div>
+
+                <div class="nav-side-menu-section-message">
+                    Discount is saved to the order on completion.
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="nav-side-menu-footer">
+        <div class="nav-side-menu-total container-fluid">
+            <ng-container *ngIf="!!order.discount">
+                <div class="row" *ngIf="totalNoDiscount">
+                    <div class="col-6">
+                        <b>SubTotal:</b>
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+                        <b>{{totalNoDiscount.toFixed(2)}}</b>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <b>Discount:</b>
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+                        <b>- &#163;{{order.discount.toFixed(2)}}</b>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Total:</h3>
+                </div>
+                <div class="col-6" style="text-align: right;" *ngIf="totalWithDiscount">
+                    <h4>&#163;{{totalWithDiscount.toFixed(2)}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-side-menu-controls container-fluid">
+            <div class="row no-gutters">
+                <div class="col-4" *ngIf="order.status != 'Completed'">
+                    <button type="button" class="btn btn-block btn-warning" *ngIf="!order._id">Start</button>
+                    <button type="button" class="btn btn-block btn-warning" *ngIf="!!order._id"
+                        (click)="updateOrder(order)">Update</button>
+                </div>
+                <ng-container *ngIf="type == 'counter'">
+                    <div class="col-4" *ngIf="order.status != 'Completed'">
+                        <button type="button" class="btn btn-block btn-success"
+                            (click)="completeOrder(order)">Complete</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" (click)="printReceipt()" class="btn btn-block btn-info">Print</button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="nav-side-menu-error container-fluid" *ngIf="message != null">
+            <ngb-alert [type]="messageType" [dismissible]="false">{{ message }}</ngb-alert>
+        </div>
+    </div>
+</div>

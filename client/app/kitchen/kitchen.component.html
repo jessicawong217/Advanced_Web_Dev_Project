@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Table</th>
+          <th scope="col">Item</th>
+          <th scope="col">Wait Time</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of (items | orderBy: 'createdAt')">
+          <tr *ngIf="item.status === 'InProgress'">
+            <th scope="row">{{ item.tableId }}</th>
+            <td>{{ item.name }}</td>
+            <td><app-waiting-time [createdTime]="item.createdAt"></app-waiting-time></td>
+            <td>
+              <button (click)="completeItem(item.orderId, item)" class="btn btn-success btn-sm">Complete item</button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

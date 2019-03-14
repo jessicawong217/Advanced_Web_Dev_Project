@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Klaus",
+    "type": "Admin",
+    "pin": "1000"
+  },
+  {
+    "name": "Susanne",
+    "type": "Waiter",
+    "pin": "1001"
+  },
+  {
+    "name": "Joanne",
+    "type": "Manager",
+    "pin": "1002"
+  },
+  {
+    "name": "John",
+    "type": "Manager",
+    "pin": "1003"
+  },
+  {
+    "name": "Lucy",
+    "type": "Kitchen",
+    "pin": "1004"
+  },
+  {
+    "name": "James",
+    "type": "Kitchen",
+    "pin": "1005"
+  },
+  {
+    "name": "Amanda",
+    "type": "Waiter",
+    "pin": "1006"
+  },
+  {
+    "name": "Lewis",
+    "type": "Waiter",
+    "pin": "1007"
+  },
+  {
+    "name": "Bob",
+    "type": "Admin",
+    "pin": "9999"
+  }
+]

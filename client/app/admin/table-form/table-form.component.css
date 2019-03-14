@@ -1,0 +1,11 @@
+.form-control {
+    display: inline-block;
+}
+
+.number {
+    width: 10rem;
+}
+
+.capacity {
+    width: 10rem;
+}
