@@ -3,7 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon ./bin/www",
+        "start": "concurrently \"npm:start-node\" \"npm:start-ng\"",
+        "start-node": "nodemon ./bin/www",
         "ng": "ng",
         "start-ng": "ng serve --proxy-config proxy.conf.js",
         "build": "ng build",
@@ -51,6 +52,7 @@
         "@types/jspdf": "^1.2.2",
         "@types/node": "~8.9.4",
         "codelyzer": "~4.5.0",
+        "concurrently": "^4.1.0",
         "jasmine-core": "~2.99.1",
         "jasmine-spec-reporter": "~4.2.1",
         "karma": "~3.1.1",
