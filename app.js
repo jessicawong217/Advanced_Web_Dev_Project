@@ -44,15 +44,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 
-// Order routes.
+// ROUTES
+app.use('/', indexRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/orders', ordersRouter);
-
-// Counter routes
 app.use('/api/counter', counterRouter);
-
 app.use('/api/users', usersRouter);
 
 // catch 404 and forward to error handler

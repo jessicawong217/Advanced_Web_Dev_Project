@@ -1,0 +1,19 @@
+.menu-categories {
+    margin-bottom: 15px;
+}
+
+.menu-category {
+    background: #262D35;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+.menu-category:hover {
+    background: #171E26;
+}
+
+a.menu-category.menu-category--selected {
+    background: #fafafa;
+    color: #262D35;
+}
