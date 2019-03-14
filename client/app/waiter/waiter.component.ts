@@ -77,8 +77,10 @@ export class WaiterComponent implements OnInit, OnDestroy {
         var openOrder = order.status == 'InProgress';
         var table = this.tables.filter(t => t.id == order.tableId)[0];
 
-        table.orderId = openOrder ? order._id : null;
-        table.order = openOrder ? order : null;
+        if (table != null) {
+             table.orderId = openOrder ? order._id : null;
+            table.order = openOrder ? order : null;
+        }
     }
 
     startOrderClick(table) {
