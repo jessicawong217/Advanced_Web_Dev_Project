@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
-import { Order } from '../shared/order.model';
-import { OrderItem } from '../shared/order-item.model';
+import { Order } from '../shared/models/order.model';
+import { OrderItem } from '../shared/models/order-item.model';
 import { OrderService } from '../shared/order.service';
 
 export type PanelType = 'waiter' | 'counter';

@@ -3,7 +3,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { Order } from '../shared/order.model';
+import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
 import { OrderSocketService } from '../socket/order-socket.service';
 

@@ -5,10 +5,10 @@ import { tap } from 'rxjs/operators';
 
 import { MenuService } from '../menu/menu.service';
 import { WaiterService } from './waiter.service';
-import { Order } from '../shared/order.model';
+import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
 import { OrderSocketService } from '../socket/order-socket.service';
-import { OrderItem } from '../shared/order-item.model';
+import { OrderItem } from '../shared/models/order-item.model';
 import { UsersService } from '../users/users.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

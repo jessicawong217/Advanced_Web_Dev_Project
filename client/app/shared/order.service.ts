@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { OrderViewModel } from './order-view.model';
+import { OrderViewModel } from './models/order-view.model';
 
 @Injectable({
     providedIn: 'root'

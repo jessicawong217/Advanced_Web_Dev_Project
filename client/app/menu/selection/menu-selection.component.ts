@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { OrderItem } from 'client/app/shared/order-item.model';
+import { OrderItem } from 'client/app/shared/models/order-item.model';
 import { MenuService } from '../menu.service';
 import { MenuItem } from '../menu.model';
 import { BehaviorSubject, Subject } from 'rxjs';

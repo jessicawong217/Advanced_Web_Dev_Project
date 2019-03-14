@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MenuItem } from "../../menu/menu.model";
 import { User } from "../../users/user.model";
 
 @Component({
@@ -21,16 +20,16 @@ export class StaffFormComponent implements OnInit {
 
     userEditing: number;
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
     addUser(user: User) {
         this.userAdded.emit(user);
     }
 
-    updateItem(user: User) {
+    updateUser(user: User) {
         this.userUpdated.emit(user);
         this.userEditing = null;
     }
