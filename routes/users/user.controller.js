@@ -46,14 +46,8 @@ function login(req, res, next) {
  */
 function create(req, res, next) {
     var newUser = req.body.user;
-    User.findOne({ pin: newUser.pin })
-        .then(user => {
-            if (user != null) {
-                return Promise.reject(new Error('User exists with that pin.'));
-            }
 
-            return User.create(newUser);
-        })
+    return User.create(newUser)
         .then(createdUser => res.json({ user: createdUser }))
         .catch(e => next(e));
 }
@@ -74,6 +68,8 @@ function update(req, res, next) {
             user.type = updatedUser.type;
             return user.save();
         })
+        .then(updatedUser => res.json({ user: updatedUser }))
+        .catch(e => next(e));
 }
 
 /**
