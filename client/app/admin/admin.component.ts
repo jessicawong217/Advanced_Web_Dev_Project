@@ -17,7 +17,7 @@ import { User } from "../users/user.model";
 })
 export class AdminComponent implements OnInit {
 
-    newItem: MenuItem = new MenuItem(null, null, null, null);
+    newItem: MenuItem = new MenuItem(null, null, null, null, null);
     newUser: User = new User(null, null, null, null);
 
     editMenu = false;
@@ -72,7 +72,7 @@ export class AdminComponent implements OnInit {
             this.users = result;
         });
     }
-  
+
     openMenuEdit() {
         this.editMenu = true;
         this.editStaff = false;
