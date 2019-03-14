@@ -73,24 +73,37 @@ export class AdminComponent implements OnInit {
         });
     }
 
+    /**
+     * Open Menu nav bar
+     */
     openMenuEdit() {
         this.editMenu = true;
         this.editStaff = false;
         this.menuOpen = true;
     }
 
+    /**
+     * Open Staff nav bar
+     */
     openStaffEdit() {
         this.editStaff = true;
         this.editMenu = false;
         this.menuOpen = true;
     }
 
+    /**
+     * Close Menu nav bar
+     */
     closeMenu() {
         this.menuOpen = false;
         this.editStaff = false;
         this.editMenu = false;
     }
 
+    /**
+     * Add item to menu
+     * @param  item New menu item
+     */
     addItem(item: MenuItem) {
         console.log(item);
         this.menuService.create(item)
@@ -104,6 +117,10 @@ export class AdminComponent implements OnInit {
             );
     }
 
+    /**
+     * Remove item from the menu
+     * @param  id Menu item id to be removed
+     */
     removeItem(id: string) {
 
         this.menuService.delete(id)
@@ -112,11 +129,19 @@ export class AdminComponent implements OnInit {
             });
     }
 
+    /**
+     * Update menu item with new info
+     * @param  item Menu item to be edited
+     */
     updateItem(item: MenuItem) {
         this.menuService.update(item._id, item).subscribe(() => {
         });
     }
 
+    /**
+     * Add new user
+     * @param  user New user to be added
+     */
     addUser(user: User) {
         this.usersService.create(user)
             .subscribe(() => {
@@ -127,6 +152,10 @@ export class AdminComponent implements OnInit {
             });
     }
 
+    /**
+     * Remove existing user
+     * @param  id User's id to be removed
+     */
     removeUser(id: string) {
         this.usersService.delete(id)
             .subscribe(() => {
@@ -134,6 +163,10 @@ export class AdminComponent implements OnInit {
             });
     }
 
+    /**
+     * Update user with new info
+     * @param  user User to be updated
+     */
     updateUser(user: User) {
         this.usersService.update(user._id, user).subscribe(() => {
         });
