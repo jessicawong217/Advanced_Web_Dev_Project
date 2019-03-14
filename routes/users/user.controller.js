@@ -72,6 +72,7 @@ function update(req, res, next) {
         .then(user => {
             user.name = updatedUser.name;
             user.type = updatedUser.type;
+            user.pin = updatedUser.pin;
             return user.save();
         })
         .then(updatedUser => res.json({ user: updatedUser }))
