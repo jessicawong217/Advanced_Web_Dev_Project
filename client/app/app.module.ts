@@ -21,6 +21,7 @@ import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuFormComponent } from './admin/menu-form/menu-form.component';
 import { StaffFormComponent } from './admin/staff-form/staff-form.component';
+import { UserInfoComponent } from './users/info/user-info.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { StaffFormComponent } from './admin/staff-form/staff-form.component';
         LoginComponent,
         WaitingTimeComponent,
         MenuFormComponent,
-        StaffFormComponent
+        StaffFormComponent,
+        UserInfoComponent
     ],
     imports: [
         BrowserModule,
