@@ -22,7 +22,6 @@ export class OrderPanelComponent implements OnInit {
     // Then set the discount to 0 and calculate total
     @Input()
     public set setOrder(order: Order) {
-        console.log(order);
         // Lazymans deep clone.
         this.order = JSON.parse(JSON.stringify(order));
         this.setDiscountToZero();
@@ -125,7 +124,6 @@ export class OrderPanelComponent implements OnInit {
         }
 
         if (this.order.discount !== undefined && this.discountForm.invalid) {
-            console.log('here ' + this.totalNoDiscount);
             this.order.discount = 0;
             this.totalWithDiscount = this.totalNoDiscount;
         } else {
@@ -155,8 +153,6 @@ export class OrderPanelComponent implements OnInit {
         data.discount = this.order.discount;
         data.total = this.totalWithDiscount;
 
-        console.log(this.totalWithDiscount);
-
         this.orderService
             .completeOrder(
                 order._id,
@@ -177,21 +173,6 @@ export class OrderPanelComponent implements OnInit {
      * @param order Order
      */
     updateOrder(order: Order) {
-        const itemsDummy = [
-            {
-                menuItemId: 1,
-                name: 'Pork',
-                price: 20.99,
-                status: 'InProgress'
-            },
-            {
-                menuItemId: 2,
-                name: 'Fanta',
-                price: 3.50,
-                status: 'InProgress'
-            }
-        ];
-
         this.orderService
             .updateOrder(order._id, this.order.items.filter(i => i._id == null))
             .subscribe(
