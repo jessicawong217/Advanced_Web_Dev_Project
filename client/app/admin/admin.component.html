@@ -33,10 +33,10 @@
                             [user]="newUser"
                             (userAdded)="addUser($event)">
             </app-staff-form>
-            <!--TODO: add userUpdated()-->
             <app-staff-form *ngFor="let user of users | orderBy: 'type'"
                             [formType]="'Edit'"
                             [user]="user"
+                            (userUpdated)="updateUser($event)"
                             (userRemoved)="removeUser($event)"
             ></app-staff-form>
         </div>

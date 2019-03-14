@@ -30,7 +30,7 @@ export class StaffFormComponent implements OnInit {
         this.userAdded.emit(user);
     }
 
-    updateItem(user: User) {
+    updateUser(user: User) {
         this.userUpdated.emit(user);
         this.userEditing = null;
     }
