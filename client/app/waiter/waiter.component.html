@@ -12,26 +12,28 @@
 
 <div class="container-fluid main">
   <div class="row">
-    <div id="main" class="tables">
-      <div *ngFor="let table of tables">
-        <button
-          [ngClass]="{ 'btn-danger': table.order != null }"
-          type="button"
-          class="btn btn-secondary btn-lg btn-block"
-          (click)="startOrderClick(table)"
-        >
-          Table {{ table.id }}
-        </button>
-        <small>Capacity {{table.capacity}}</small>
+    <div class="col-sm-12 col-md-8 col-lg-8">
+      <div id="main" class="tables">
+        <div *ngFor="let table of tables">
+          <button
+            [ngClass]="{ 'btn-danger': table.order != null }"
+            type="button"
+            class="btn btn-secondary btn-lg btn-block"
+            (click)="startOrderClick(table)"
+          >
+            Table {{ table.id }}
+          </button>
+          <small>Capacity {{table.capacity}}</small>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
-      <app-order-panel
-        [type]="waiterType"
-        [setOrder]="sidebarOrder"
-        (close)="sidebarOrder = null"
-      >
-      </app-order-panel>
+      <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
+        <app-order-panel
+          [type]="waiterType"
+          [setOrder]="sidebarOrder"
+          (close)="sidebarOrder = null"
+        >
+        </app-order-panel>
+      </div>
     </div>
   </div>
 </div>
