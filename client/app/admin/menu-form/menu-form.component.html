@@ -1,16 +1,8 @@
 <form>
   <div class="form-group">
-    <input type="text" class="form-control name"
-           placeholder="Item name"
-           [(ngModel)]="item.name" name="name"
-           [disabled]="itemEditing != item.id">
-    <input type="text" class="form-control price"
-           placeholder="Price"
-           [(ngModel)]="item.price" name="price"
-           [disabled]="itemEditing != item.id">
-    <select class="form-control category"
-            [(ngModel)]="item.category" name="category"
-            [disabled]="itemEditing != item.id">
+    <input type="text" class="form-control name" placeholder="Item name" [(ngModel)]="item.name" name="name" [disabled]="itemEditing != item.id">
+    <input type="text" class="form-control price" placeholder="Price" [(ngModel)]="item.price" name="price" [disabled]="itemEditing != item.id">
+    <select class="form-control category" [(ngModel)]="item.category" name="category" [disabled]="itemEditing != item.id">
       <option value="Starter">Starter</option>
       <option value="Main">Main</option>
       <option value="Dessert">Dessert</option>
@@ -18,7 +10,7 @@
       <option value="Drink">Drink</option>
     </select>
     <ng-container *ngIf="formType === 'Add'">
-      <button  class="btn btn-outline-success" (click)="addItem(item)">Add</button>
+      <button class="btn btn-outline-success" (click)="addItem(item)">Add</button>
     </ng-container>
     <ng-container *ngIf="formType === 'Edit'">
       <button class="btn btn-outline-primary" *ngIf="itemEditing != item.id" (click)="enableEditing(item.id)">Edit</button>
