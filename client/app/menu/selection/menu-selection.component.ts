@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { OrderItem } from 'client/app/shared/order-item.model';
+import { OrderItem } from 'client/app/shared/models/order-item.model';
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
 

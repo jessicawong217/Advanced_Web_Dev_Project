@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
-import { OrderItem } from '../shared/order-item.model';
-import { Order } from '../shared/order.model';
+import { OrderItem } from '../shared/models/order-item.model';
+import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 export type PanelType = 'waiter' | 'counter';
 
@@ -93,7 +92,7 @@ export class OrderPanelComponent implements OnInit {
      */
     setSelectedTab(name: string) {
         if (this.selectedTab == name) {
-            this.selectedTab = null; 
+            this.selectedTab = null;
             return;
         }
         this.selectedTab = name;
@@ -153,7 +152,7 @@ export class OrderPanelComponent implements OnInit {
             .subscribe(response => {
                 this.setOrder = response.order;
                 this.setAlertMessage('Successfully completed order.', 'success');
-                }, 
+                },
                 () => {
                     this.setAlertMessage('Cannot complete order.', 'success');
                 });
