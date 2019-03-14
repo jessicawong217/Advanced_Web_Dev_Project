@@ -19,6 +19,8 @@ import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
+import { MenuFormComponent } from './admin/menu-form/menu-form.component';
+import { StaffFormComponent } from './admin/staff-form/staff-form.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
         KitchenComponent,
         MenuSelectionComponent,
         LoginComponent,
-        WaitingTimeComponent
+        WaitingTimeComponent,
+        MenuFormComponent,
+        StaffFormComponent
     ],
     imports: [
         BrowserModule,

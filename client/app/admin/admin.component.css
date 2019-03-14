@@ -14,47 +14,48 @@ html, body {
   height: 10vh;
 }
 
-.fill-height {
-  min-height: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
 .half {
   height: 50%;
 }
 
-/* The sidebar menu */
 .sidebar {
-  height: 50vh;
-  width: 0px;
   position: fixed;
-  z-index: 1;
+  top:3rem;
+  bottom: 0;
   left: 0;
-  transition: 0.5s;
-  display: none;
-  background-color: lightgrey;
-}
-
-#menuBar {
-  border-bottom: 0.4px solid white;
-}
-
-#staffBar {
-  border-top: 0.4px solid white;
-}
-
-/* The sidebar links */
-.sidebar a {
-  text-decoration: none;
+  z-index: 1000;
   display: block;
-  transition: 0.3s;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidebar a:hover {
-  color: grey;
+.navbar {
+  z-index: 9999;
+  background-color: #7ba8ca;
+  position: fixed;
+  right: 0;
+  left: 0;
+}
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+.navbar-nav li {
+  margin-right: 1rem;
+  padding: 0.5rem 0;
+}
+
+.navbar-nav li a {
+  color: #fff;
+  font-weight: bold;
+}
+
+.navbar-nav li a:hover {
+  text-decoration: none;
 }
 
 /* Position and style the close button (top right corner) */
@@ -69,6 +70,7 @@ html, body {
   cursor: pointer;
   border: none;
 }
+<<<<<<< HEAD
 
 .savebtn {
   position: absolute;
@@ -114,6 +116,16 @@ html, body {
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 .main {
   transition: margin-left .5s;
+=======
+.main {
+  padding: 4rem 1.5rem;
+  max-width: inherit;
+}
+
+.menuOpen {
+  margin-left: 37%;
+  max-width: 66.6%;
+>>>>>>> 064b5872d1843d3b15338743391e31d1ddd9da2f
 }
 
 .content {
@@ -122,6 +134,7 @@ html, body {
   height: 50vh;
 }
 
+<<<<<<< HEAD
 .sideScroll {
   padding-left: 15px;
   padding-right: 15px;
@@ -192,6 +205,8 @@ td select {
   display: inline-block;
 }
 
+=======
+>>>>>>> 064b5872d1843d3b15338743391e31d1ddd9da2f
 .data {
   white-space: nowrap;
 }
