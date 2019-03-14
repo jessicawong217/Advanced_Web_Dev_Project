@@ -28,10 +28,10 @@ export class TableService {
      * @param table The new table
      */
     addTable(table: Table) {
-        return this.http.post(`${environment.apiUrl}tables`, table)
+        return this.http.post(`${environment.apiUrl}tables`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
-            );;
+            );
     }
 
     /**
@@ -49,7 +49,7 @@ export class TableService {
      * Calls API endpoint to update a table
      */
     updateTable(tableId: string, table: Table): Observable<any> {
-        return this.http.put(`${environment.apiUrl}tables/${tableId}`, table)
+        return this.http.put(`${environment.apiUrl}tables/${tableId}`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
