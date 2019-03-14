@@ -31,9 +31,11 @@ function login(req, res, next) {
     User.findOne({ pin: pin })
         .then(user => {
             if (user == null) {
-                return Promise.reject(new Error('No user exists with that pin.'));
+                return Promise.reject(
+                    new Error('No user exists with that pin.')
+                );
             }
-            res.json({ user: user })
+            res.json({ user: user });
         })
         .catch(e => next(e));
 }
@@ -62,6 +64,10 @@ function update(req, res, next) {
     var userId = req.params.id;
     var updatedUser = req.body.user;
 
+    if (updatedUser == null) {
+        throw new Error('No user data passed');
+    }
+
     return User.get(userId)
         .then(user => {
             user.name = updatedUser.name;
@@ -81,9 +87,11 @@ function update(req, res, next) {
 function remove(req, res) {
     const id = req.params.id;
     User.findByIdAndRemove(id)
-        .then(() => res.json({
-            status: 204
-        }))
+        .then(() =>
+            res.json({
+                status: 204
+            })
+        )
         .catch(e => next(e));
 }
 

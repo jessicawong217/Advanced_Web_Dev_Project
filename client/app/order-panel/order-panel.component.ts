@@ -5,6 +5,7 @@ import * as jsPDF from 'jspdf';
 import { OrderItem } from '../shared/models/order-item.model';
 import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
+import { UsersService } from '../users/users.service';
 
 export type PanelType = 'waiter' | 'counter';
 
@@ -15,8 +16,6 @@ export type PanelType = 'waiter' | 'counter';
     encapsulation: ViewEncapsulation.None
 })
 export class OrderPanelComponent implements OnInit {
-
-    @Input() waiterId: number;
 
     // Set the order to the one from the input
     // Then set the discount to 0 and calculate total
@@ -77,6 +76,7 @@ export class OrderPanelComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private orderService: OrderService,
+        private usersService: UsersService
     ) { }
 
     /**

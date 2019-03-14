@@ -61,6 +61,10 @@ function complete(req, res, next) {
     var dicountedValue = req.body.discount;
     var total = req.body.total;
 
+    if (dicountedValue == null) {
+        throw new Error('No discount data passed');
+    }
+
     return Order.getById(orderId)
         .then(order => {
             order.complete(dicountedValue, total);
@@ -84,6 +88,10 @@ function complete(req, res, next) {
 function update(req, res, next) {
     var orderId = req.params.id;
     var items = req.body.items;
+    
+    if (items == null || items.length < 1) {
+        throw new Error('No discount data passed');
+    }
 
     return Order.addItems(orderId, items)
         .then(updateOrder => {
@@ -141,13 +149,16 @@ function completeAllItems(req, res, next) {
 
 /**
  * Handle creating a new order.
- * TODO: validate request body.
  * @param {*} req The express request object.
  * @param {*} res The express result object.
  * @param {*} next Next match route handler.
  */
 function create(req, res, next) {
     const order = req.body.order;
+
+    if (order == null) {
+        throw new Error('No order data passed');
+    }
 
     return Order.create(order)
         .then(createdOrder => {

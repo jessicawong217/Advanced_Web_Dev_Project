@@ -10,7 +10,7 @@
     </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container main">
     <div class="row no-gutters" *ngIf="orders">
         <div class="col-sm-12 col-md-8 col-lg-8" [ngClass]="{
             'col-md-12 col-lg-12': !sidebarOrder
@@ -18,6 +18,7 @@
             <ngb-alert *ngIf="errorMessage != null" type="danger" [dismissible]="true">
                 {{ errorMessage }}
             </ngb-alert>
+            <div class="table-responsive"></div>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -48,8 +49,7 @@
             </table>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
-            <app-order-panel [waiterId]="waiterId" [type]="counterType" [setOrder]="sidebarOrder"
-                (close)="sidebarOrder = null">
+            <app-order-panel [type]="counterType" [setOrder]="sidebarOrder" (close)="sidebarOrder = null">
             </app-order-panel>
         </div>
     </div>
