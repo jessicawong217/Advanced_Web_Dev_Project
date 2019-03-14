@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
-
 import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
 import { MenuItemCategory, MenuItem } from '../menu/menu.model';
 import { UsersService } from '../users/users.service';
 
+/**
+ * Class to build admin view
+ * @param  selector admin app
+ * @param  templateUrl HTML page
+ * @param  styleUrls   CSS stylesheet
+ */
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
@@ -32,38 +37,70 @@ export class AdminComponent implements OnInit {
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
 
+/**
+ * Constructor to pass services and modules
+ * @param protectedadminService
+ * @param menuService
+ * @param usersService
+ * @param formBuilder
+ */
     constructor(
         protected adminService: AdminService,
         private menuService: MenuService,
         private usersService: UsersService,
         private formBuilder: FormBuilder
-    ) {}
+    ) { }
 
+/**
+ * Get data on load
+ */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
     }
 
+    /**
+     * Get all items from the menu
+     * @return menu[]
+     */
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
             this.menu = result;
         });
     }
 
+    /**
+     * Get all users
+     * @return users[]
+     */
     getUsers() {
         this.usersService.getUsers().subscribe(result => {
             this.users = result;
         });
     }
 
+    /**
+     * Track this.menu[] data and update
+     * @param  index index of items
+     * @param  item  each item of menu
+     */
     identifyMenu(index, item) {
         return index;
     }
 
+    /**
+     * Track this.users[] data and update
+     * @param  index index of users
+     * @param  item  each user
+     */
     identifyUsers(index, item) {
         return index;
     }
 
+    /**
+     * Add new item to menu
+     * @return Item created or failed to do so
+     */
     addItem() {
         if (this.newMenuForm.valid) {
             var newItem = this.newMenuForm.value;
@@ -72,7 +109,6 @@ export class AdminComponent implements OnInit {
                 data => {
                     console.log('item created');
                     console.log(data.item);
-
                     // Reload the menu after the item is added.
                     this.getMenu();
                 },
@@ -83,6 +119,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Remove an item from the menu database and list
+     * @param  id
+     */
     removeItem(id) {
         console.log(id);
         var element = document.getElementById(id).parentElement;
@@ -94,6 +134,9 @@ export class AdminComponent implements OnInit {
             });
     }
 
+    /**
+     * Add a user to database
+     */
     addUser() {
         if (this.newUserForm.valid) {
             var newUser = this.newUserForm.value;
@@ -111,6 +154,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Remove a user from the database and list
+     * @param  id
+     */
     removeUser(id) {
         console.log(id);
         var element = document.getElementById(id).parentElement;
@@ -122,14 +169,9 @@ export class AdminComponent implements OnInit {
             });
     }
 
-    removeBrackets(string) {
-        return string.replace(/\<[^\>]*\>/, '');
-    }
-
-    isNumeric(num) {
-        return !isNaN(num);
-    }
-
+    /**
+     * Open the menu side bar and adjust style
+     */
     openMenuNav() {
         document.getElementById("menuBar").style.width = "30%";
         document.getElementById("menuBar").style.display = "block";
@@ -137,6 +179,9 @@ export class AdminComponent implements OnInit {
         document.getElementById("summary").style.marginLeft = "20%";
     }
 
+    /**
+     * Close the menu side bar and adjust style
+     */
     closeMenuNav() {
         document.getElementById("menuBar").style.width = "0";
         document.getElementById("menuBar").style.display = "none";
@@ -144,6 +189,9 @@ export class AdminComponent implements OnInit {
         document.getElementById("summary").style.marginLeft = "0";
     }
 
+    /**
+     * Open the staff side bar and adjust style
+     */
     openStaffNav() {
         document.getElementById("staffBar").style.width = "30%";
         document.getElementById("staffBar").style.display = "block";
@@ -151,6 +199,9 @@ export class AdminComponent implements OnInit {
         document.getElementById("analytics").style.marginLeft = "20%";
     }
 
+    /**
+     * Close the staff side bar and adjust style
+     */
     closeStaffNav() {
         document.getElementById("staffBar").style.width = "0";
         document.getElementById("staffBar").style.display = "none";
@@ -158,6 +209,9 @@ export class AdminComponent implements OnInit {
         document.getElementById("analytics").style.marginLeft = "0";
     }
 
+    /**
+     * Display revenue from today
+     */
     displayOrdersToday() {
         this.displayOrdersTodayBool = !this.displayOrdersTodayBool;
         if (this.displayOrdersTodayBool) {
@@ -169,8 +223,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from week
+     */
     displayOrdersWeek() {
-
         this.displayOrdersWeekBool = !this.displayOrdersWeekBool;
         if (this.displayOrdersWeekBool) {
             document.getElementById("summaryWeek").style.display = "none";
@@ -181,6 +237,9 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from month
+     */
     displayOrdersMonth() {
         this.displayOrdersMonthBool = !this.displayOrdersMonthBool;
         if (this.displayOrdersMonthBool) {

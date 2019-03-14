@@ -12,12 +12,14 @@ router
 router
     .route('/:id')
     .put(menuCtrl.update)
+    /** PUT /api/menu/:id - Update by id*/
     .get(menuCtrl.get)
+    /** DELETE /api/menu/:id - Delete an item */
     .delete(menuCtrl.remove);
 
 router
     .route('/seed')
-    /** GET /api/menu/seed - Add dummy data */
+    /** POST /api/menu/seed - Add data */
     .post(menuCtrl.seed);
 
 module.exports = router;
