@@ -22,6 +22,7 @@ export class OrderPanelComponent implements OnInit {
     // Then set the discount to 0 and calculate total
     @Input()
     public set setOrder(order: Order) {
+        console.log(order);
         // Lazymans deep clone.
         this.order = JSON.parse(JSON.stringify(order));
         this.setDiscountToZero();
@@ -67,7 +68,7 @@ export class OrderPanelComponent implements OnInit {
     /**
      * The type of message to show in the alert.
      */
-    public messageType: "success" | "danger";
+    public messageType: 'success' | 'danger';
 
     /**
      * Order Panel Comoponent Constructor
@@ -91,7 +92,7 @@ export class OrderPanelComponent implements OnInit {
      * @param name Tab being selected.
      */
     setSelectedTab(name: string) {
-        if (this.selectedTab == name) {
+        if (this.selectedTab === name) {
             this.selectedTab = null;
             return;
         }
@@ -102,6 +103,11 @@ export class OrderPanelComponent implements OnInit {
      * Calculate the total of all prices.
      */
     calculateTotal() {
+        if (this.order.total !== undefined) {
+            this.totalWithDiscount = this.order.total;
+            return;
+        }
+
         this.totalNoDiscount = this.order.items.reduce(
             (accumulator, element) =>
                 element.price + accumulator,
@@ -119,6 +125,7 @@ export class OrderPanelComponent implements OnInit {
         }
 
         if (this.order.discount !== undefined && this.discountForm.invalid) {
+            console.log('here ' + this.totalNoDiscount);
             this.order.discount = 0;
             this.totalWithDiscount = this.totalNoDiscount;
         } else {
@@ -144,17 +151,23 @@ export class OrderPanelComponent implements OnInit {
      * @param order Order Model
      */
     completeOrder(order: Order) {
+        const data = { discount: null, total: null };
+        data.discount = this.order.discount;
+        data.total = this.totalWithDiscount;
+
+        console.log(this.totalWithDiscount);
+
         this.orderService
             .completeOrder(
                 order._id,
-                this.order.discount
+                data
             )
             .subscribe(response => {
                 this.setOrder = response.order;
                 this.setAlertMessage('Successfully completed order.', 'success');
-                },
+            },
                 () => {
-                    this.setAlertMessage('Cannot complete order.', 'success');
+                    this.setAlertMessage('Cannot complete order.', 'danger');
                 });
     }
 

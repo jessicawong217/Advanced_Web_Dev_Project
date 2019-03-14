@@ -58,11 +58,12 @@ function totalForTimePeriod(req, res, next) {
  */
 function complete(req, res, next) {
     var orderId = req.params.id;
-    var dicountedValue = req.body.discountedValue;
+    var dicountedValue = req.body.discount;
+    var total = req.body.total;
 
     return Order.getById(orderId)
         .then(order => {
-            order.complete(dicountedValue);
+            order.complete(dicountedValue, total);
             return order.save();
         })
         .then(completedOrder => {

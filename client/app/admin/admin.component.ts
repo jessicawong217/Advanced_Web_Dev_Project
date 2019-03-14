@@ -24,7 +24,7 @@ import { AdminService } from './admin.service';
 })
 export class AdminComponent implements OnInit {
 
-    newItem: MenuItem = new MenuItem(null, null, null, null, null);
+    newItem: MenuItem = new MenuItem(null, null, null, null);
     newUser: User = new User(null, null, null, null);
     newTable: Table = new Table(null, null, null);
 

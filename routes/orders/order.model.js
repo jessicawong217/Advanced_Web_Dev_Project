@@ -61,9 +61,10 @@ OrderSchema.method({
     /**
      * Mark the current order as completed.
      */
-    complete(dicountedValue) {
+    complete(dicountedValue, total) {
         this.status = 'Completed';
         this.discount = dicountedValue;
+        this.total = total;
         this.finishedAt = Date.now();
     },
 
