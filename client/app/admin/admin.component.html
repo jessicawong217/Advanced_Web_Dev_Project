@@ -4,6 +4,7 @@
             <ul class="nav navbar-nav">
                 <li><a (click)="openMenuEdit()">Edit Menu</a></li>
                 <li><a (click)="openStaffEdit()">Edit Staff</a></li>
+                <li><a (click)="openTableEdit()">Edit Tables</a></li>
                 <li class="user-details">
                     <app-user-info></app-user-info>
                 </li>
@@ -13,7 +14,6 @@
 </nav>
 
 <div class="container-fluid">
-
     <div class="col-sm- col-md-4.5 sidebar" *ngIf="menuOpen">
         <div *ngIf="editMenu">
             <button class="btn btn-primary" (click)="closeMenu()">Close</button>
@@ -42,6 +42,20 @@
                             (userUpdated)="updateUser($event)"
                             (userRemoved)="removeUser($event)"
             ></app-staff-form>
+        </div>
+        <div *ngIf="editTables">
+            <button class="btn btn-primary"  (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-table-form [formType]="'Add'"
+                            [table]="newTable"
+                            (tableAdded)="addTable($event)">
+            </app-table-form>
+            <app-table-form *ngFor="let table of tables | orderBy: '-id'"
+                            [formType]="'Edit'"
+                            [table]="table"
+                            (tableRemoved)="removeTable($event)"
+                            (tableUpdated)="updateTable($event)"
+            ></app-table-form>
         </div>
     </div>
 
