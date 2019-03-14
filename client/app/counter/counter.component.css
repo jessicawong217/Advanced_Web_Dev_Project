@@ -1,5 +1,36 @@
-
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 .main {
-  transition: margin-left .5s;
-}
+    transition: margin-left .5s;
+    padding: 4em 0rem 0 0rem;
+    overflow-x: hidden;
+   }
+   
+   /* On tablets */
+   @media (max-width: 768px) and (max-width: 991.98px) {
+    .main {
+      padding: 4rem 0 0 0;
+    }
+   
+    th {
+      font-size: 0.8rem;
+    }
+   
+    td {
+      font-size: 0.8rem;
+    }
+   }
+   
+   /* On smaller phone screens */
+   @media (min-width: 768px) and (max-width: 991.98px) {
+    .main {
+      padding: 4rem 0 0 0;
+    }
+   
+    th {
+      font-size: 0.8rem;
+    }
+   
+    td {
+      font-size: 0.8rem;
+    }
+   }
