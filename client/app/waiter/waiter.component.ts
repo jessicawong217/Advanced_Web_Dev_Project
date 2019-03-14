@@ -12,7 +12,6 @@ import { OrderItem } from '../shared/models/order-item.model';
 import { UsersService } from '../users/users.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
 @Component({
     selector: 'app-waiter',
     templateUrl: './waiter.component.html',

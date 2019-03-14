@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AdminComponent } from './admin/admin.component';
 import { CounterComponent } from './counter/counter.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
-import { WaiterComponent } from './waiter/waiter.component';
-import { AdminComponent } from './admin/admin.component';
-import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
+import { WaiterComponent } from './waiter/waiter.component';
+import { UsersIdGuard } from './users/guards/users-id-guard.service';
 
 
 const routes: Routes = [
@@ -45,4 +45,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

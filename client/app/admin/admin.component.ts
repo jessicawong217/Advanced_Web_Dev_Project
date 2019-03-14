@@ -19,16 +19,14 @@ import { TableService } from "../shared/table.service";
 })
 export class AdminComponent implements OnInit {
 
-    newItem: MenuItem = new MenuItem(null, null, null, null);
+    newItem: MenuItem = new MenuItem(null, null, null, null, null);
     newUser: User = new User(null, null, null, null);
     newTable: Table = new Table(null, null, null);
 
     editMenu = false;
-
     editStaff = false;
     editTables = false;
     menuOpen = false;
-
 
     menuItems: MenuItem[];
     tables: Table[];
@@ -38,21 +36,21 @@ export class AdminComponent implements OnInit {
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
 
-/**
- * Constructor to pass services and modules
- * @param menuService
- * @param usersService
- * @param tableService
- */
+    /**
+     * Constructor to pass services and modules
+     * @param menuService
+     * @param usersService
+     * @param tableService
+     */
     constructor(
         private menuService: MenuService,
         private usersService: UsersService,
         private tableService: TableService
     ) {}
 
-/**
- * Get data on load
- */
+    /**
+     * Get data on load
+     */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
@@ -88,7 +86,7 @@ export class AdminComponent implements OnInit {
             this.tables = result;
         });
     }
-  
+
     openMenuEdit() {
         this.editMenu = true;
         this.editStaff = false;
@@ -158,8 +156,10 @@ export class AdminComponent implements OnInit {
     }
 
     updateUser(user: User) {
-        //TODO: update user
-
+        this.usersService.update(user._id, user)
+            .subscribe(() => {
+                this.getUsers();
+        });
     }
 
     addTable(table: any) {

@@ -14,17 +14,7 @@ import { OrderSocketService } from '../socket/order-socket.service';
 })
 export class CounterComponent implements OnInit, OnDestroy {
 
-    /** Table Object */
-    // @Input() table: any;
-
     // @Input() waiterId: number;
-
-    // dummy data for input table
-    public table = {
-        id: 1,
-        table_number: 2
-
-    };
 
     public counterType = 'counter';
 
@@ -35,18 +25,7 @@ export class CounterComponent implements OnInit, OnDestroy {
 
     public sidebarOrder = null;
 
-    public dicountedValue: number;
-
-    public showView = true;
-
-    /**
-     * Array of tables within the restaurant.
-     */
-    public tables = [
-        { id: 1, openOrder: false, orderId: null },
-        { id: 2, openOrder: false, orderId: null },
-        { id: 3, openOrder: false, orderId: null }
-    ];
+    public errorMessage: string;
 
     /**
      * Counter Comoponent Constructor
@@ -59,11 +38,12 @@ export class CounterComponent implements OnInit, OnDestroy {
         private orderSocket: OrderSocketService
     ) { }
 
+    /**
+     * Runs when page initialises
+     */
     ngOnInit() {
         this.getAllOrders();
         this.configureSockets();
-
-        this.dicountedValue = 0;
     }
 
     /**
@@ -74,10 +54,11 @@ export class CounterComponent implements OnInit, OnDestroy {
             .getAllOrders()
             .subscribe((data) => {
                 this.orders = data;
-                this.sidebarOrder = data[0];
             }, (error) => {
+                this.errorMessage = 'Cannot get orders.';
             });
     }
+
     /**
      * Listen for both the open and close methods to update table status on
      * completion.
@@ -109,12 +90,15 @@ export class CounterComponent implements OnInit, OnDestroy {
         this.orders.push(order);
     }
 
-    selectedOrder(order) {
+    /**
+     * Send the selected order to the side bar
+     * @param order Order model
+     */
+    selectedOrder(order: Order) {
         this.sidebarOrder = order;
     }
 
     // Method needs to exist for untilDestroyed to work as expected in prod
     // builds.
     ngOnDestroy() { }
-
 }
