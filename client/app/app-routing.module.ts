@@ -8,6 +8,7 @@ import { LoginComponent } from './users/login/login.component';
 import { WaiterComponent } from './waiter/waiter.component';
 import { UsersIdGuard } from './users/guards/users-id-guard.service';
 
+
 const routes: Routes = [
     {
         path: 'waiter',

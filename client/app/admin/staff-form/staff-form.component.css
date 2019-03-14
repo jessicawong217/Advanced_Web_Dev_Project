@@ -1,0 +1,15 @@
+.form-control {
+    display: inline-block;
+}
+
+.name {
+    width: 13rem;
+}
+
+.type {
+    width: 6rem;
+}
+
+.pin {
+    width: 5rem;
+}

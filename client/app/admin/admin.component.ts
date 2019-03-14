@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
-
-import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
-import { MenuItemCategory, MenuItem } from '../menu/menu.model';
 import { UsersService } from '../users/users.service';
+import { MenuItem } from "../menu/menu.model";
+import { User } from "../users/user.model";
 
+/**
+ * Class to build admin view
+ * @param  selector admin app
+ * @param  templateUrl HTML page
+ * @param  styleUrls   CSS stylesheet
+ */
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-    newMenuForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        price: [0, Validators.required],
-        category: ['Main']
-    });
 
-    newUserForm = this.formBuilder.group({
-        name: ['', [Validators.required]],
-        type: ['Waiter', [Validators.required]],
-        pin: ['', [Validators.required, Validators.pattern('[0-9]{4}')]]
-    });
+    newItem: MenuItem = new MenuItem(null, null, null, null);
+    newUser: User = new User(null, null, null, null);
 
-    public menu = [];
+    editMenu = false;
+    editStaff = false;
+    menuOpen = false;
+
+    public menuItems = [];
 
     public users = [];
 
@@ -32,47 +32,69 @@ export class AdminComponent implements OnInit {
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
 
+/**
+ * Constructor to pass services and modules
+ * @param protectedadminService
+ * @param menuService
+ * @param usersService
+ * @param formBuilder
+ */
     constructor(
-        protected adminService: AdminService,
         private menuService: MenuService,
-        private usersService: UsersService,
-        private formBuilder: FormBuilder
+        private usersService: UsersService
     ) {}
 
+/**
+ * Get data on load
+ */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
     }
 
+    /**
+     * Get all items from the menu
+     * @return menu[]
+     */
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
-            this.menu = result;
+            this.menuItems = result;
+            console.log(this.menuItems)
         });
     }
 
+    /**
+     * Get all users
+     * @return users[]
+     */
     getUsers() {
         this.usersService.getUsers().subscribe(result => {
             this.users = result;
         });
     }
-
-    identifyMenu(index, item) {
-        return index;
+  
+    openMenuEdit() {
+        this.editMenu = true;
+        this.editStaff = false;
+        this.menuOpen = true;
     }
 
-    identifyUsers(index, item) {
-        return index;
+    openStaffEdit() {
+        this.editStaff = true;
+        this.editMenu = false;
+        this.menuOpen = true;
     }
 
-    addItem() {
-        if (this.newMenuForm.valid) {
-            var newItem = this.newMenuForm.value;
-            console.log(newItem);
-            this.menuService.create(newItem).subscribe(
-                data => {
-                    console.log('item created');
-                    console.log(data.item);
+    closeMenu() {
+        this.menuOpen = false;
+        this.editStaff = false;
+        this.editMenu = false;
+    }
 
+    addItem(item: MenuItem) {
+            console.log(item);
+            this.menuService.create(item)
+                .subscribe(() => {
                     // Reload the menu after the item is added.
                     this.getMenu();
                 },
@@ -80,84 +102,46 @@ export class AdminComponent implements OnInit {
                     console.log('failed');
                 }
             );
-        }
     }
 
-    removeItem(id) {
-        console.log(id);
-        var element = document.getElementById(id).parentElement;
-        console.log(element.innerHTML);
-        element.remove();
+    removeItem(id: string) {
+
         this.menuService.delete(id)
-            .subscribe(res => {
-                console.log(res);
+            .subscribe(() => {
+                this.getMenu();
             });
     }
 
-    addUser() {
-        if (this.newUserForm.valid) {
-            var newUser = this.newUserForm.value;
-            console.log(newUser);
-            this.usersService.create(newUser)
-                .subscribe((data) => {
-                    console.log('item created');
-                    console.log(data.user)
-
-                    // Reload the users after the user is added
-                    this.getUsers();
-                }, () => {
-                    console.log('failed');
-                });
-        }
+    updateItem(item: MenuItem) {
+        this.menuService.update(item._id, item).subscribe(() => {
+        });
     }
 
-    removeUser(id) {
-        console.log(id);
-        var element = document.getElementById(id).parentElement;
-        console.log(element.innerHTML);
-        element.remove();
+    addUser(user: User) {
+        this.usersService.create(user)
+            .subscribe(() => {
+                // Reload the users after the user is added
+                this.getUsers();
+            }, () => {
+                console.log('failed');
+            });
+    }
+
+    removeUser(id: string) {
         this.usersService.delete(id)
-            .subscribe(res => {
-                console.log(res);
+            .subscribe(() => {
+                this.getUsers();
             });
     }
 
-    removeBrackets(string) {
-        return string.replace(/\<[^\>]*\>/, '');
+    updateUser(user: User) {
+        //TODO: update user
+
     }
 
-    isNumeric(num) {
-        return !isNaN(num);
-    }
-
-    openMenuNav() {
-        document.getElementById("menuBar").style.width = "30%";
-        document.getElementById("menuBar").style.display = "block";
-        document.getElementById("menuMain").style.visibility = "hidden";
-        document.getElementById("summary").style.marginLeft = "20%";
-    }
-
-    closeMenuNav() {
-        document.getElementById("menuBar").style.width = "0";
-        document.getElementById("menuBar").style.display = "none";
-        document.getElementById("menuMain").style.visibility = "visible";
-        document.getElementById("summary").style.marginLeft = "0";
-    }
-
-    openStaffNav() {
-        document.getElementById("staffBar").style.width = "30%";
-        document.getElementById("staffBar").style.display = "block";
-        document.getElementById("staffMain").style.visibility = "hidden";
-        document.getElementById("analytics").style.marginLeft = "20%";
-    }
-
-    closeStaffNav() {
-        document.getElementById("staffBar").style.width = "0";
-        document.getElementById("staffBar").style.display = "none";
-        document.getElementById("staffMain").style.visibility = "visible";
-        document.getElementById("analytics").style.marginLeft = "0";
-    }
-
+    /**
+     * Display revenue from today
+     */
     displayOrdersToday() {
         this.displayOrdersTodayBool = !this.displayOrdersTodayBool;
         if (this.displayOrdersTodayBool) {
@@ -169,8 +153,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from week
+     */
     displayOrdersWeek() {
-
         this.displayOrdersWeekBool = !this.displayOrdersWeekBool;
         if (this.displayOrdersWeekBool) {
             document.getElementById("summaryWeek").style.display = "none";
@@ -181,6 +167,9 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from month
+     */
     displayOrdersMonth() {
         this.displayOrdersMonthBool = !this.displayOrdersMonthBool;
         if (this.displayOrdersMonthBool) {

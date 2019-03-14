@@ -1,23 +1,158 @@
 <div class="container-fluid">
-    <!-- https://getbootstrap.com/docs/4.3/layout/overview/ and 
+  <!-- https://getbootstrap.com/docs/4.3/layout/overview/ and
     https://ng-bootstrap.github.io/#/components/
     for more ui designs -->
-    <a (click)="logoutClick()">logout</a>
+  <hr>
+  <div class="row">
+    <div id="menuBar" class="col-sm-6 sidebar pl-0">
+      <button class="closebtn" (click)="closeMenuNav()">Close -</button>
+      <div class="sideScroll">
+        <div *ngFor="let staff of staff">
+          <h3>Name: </h3>
+          <h4>{{staff.firstname}} {{staff.surname}}</h4>
+          <hr>
+        </div>
+        <h5>Possible space for progress?</h5>
+        <hr>
+        <button class="logoutbtn" (click)='logoutClick()'>logout</button>
+      </div>
+    </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-md-8 col-lg-8">
-            <div class="tables">
-                <div *ngFor="let table of tables">
-                    id : {{table.id}}
-                    status: {{table.openOrder}}
+    <div id="menuMain" class="main w-10 pl-0">
+      <button class="openbtn" (click)="openMenuNav()">Waiter Info</button>
+    </div>
 
-                    <button class="btn" (click)="startOrderClick(table)">Start Order</button>
-                </div>
-            </div>
+    <div class="col content pr-0" id="summary">
+      <div class="row">
+        <div *ngFor="let staff of staff">
+          <h3>Waiter View- {{staff.firstname}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div id="main" class="tables">
+          <div *ngFor="let table of tables">
+            <hr>
+            <button [ngClass]="{'btn-danger': table.order != null}" type="button" class="btn btn-secondary btn-lg btn-block" (click)="startOrderClick(table)">Table {{table.id}}</button>
+          </div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4" *ngIf="!!sidebarOrder">
-            <app-order-panel [waiterId]="waiterId" [setOrder]="sidebarOrder" (close)="sidebarOrder = null">
-            </app-order-panel>
+          <app-order-panel [waiterId]="waiterId" [type]="waiterType" [setOrder]="sidebarOrder" (close)="sidebarOrder = null">
+          </app-order-panel>
         </div>
+      </div>
+
+
+      <!----------------------------------------------------------------------------------->
+
+
+      <!--
+        <div class="row">
+          <button class="tablink" (click)="openPage('Starter', this, 'grey')">Starter</button>
+          <button class="tablink" (click)="openPage('Main', this, 'grey')">Main</button>
+          <button class="tablink" (click)="openPage('Dessert', this, 'grey')">Dessert</button>
+          <button class="tablink" (click)="openPage('Side', this, 'grey')">Side</button>
+          <button class="tablink" (click)="openPage('Drink', this, 'grey')">Drink</button>
+
+          <div id="Starter" class="tabcontent">
+            <h3>Starter</h3>
+            <table class="table table-hover table-sm" width="100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Add to Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let menu of menu">
+                  <td class="menuName" contenteditable="true">{{ menu.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ menu.price }}</td>
+                  <td><button class="addbtn">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="Main" class="tabcontent">
+            <h3>Main</h3>
+            <table class="table table-hover table-sm" width="100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Add to Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of menu">
+                  <td class="menuName" contenteditable="true">{{ item.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+                  <td><button class="addbtn">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="Dessert" class="tabcontent">
+            <h3>Dessert</h3>
+            <table class="table table-hover table-sm" width="100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Add to Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of menu">
+                  <td class="menuName" contenteditable="true">{{ item.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+                  <td><button class="addbtn">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="Side" class="tabcontent">
+            <h3>Side</h3>
+            <table class="table table-hover table-sm" width="100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Add to Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of menu">
+                  <td class="menuName" contenteditable="true">{{ item.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+                  <td><button class="addbtn">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="Drink" class="tabcontent">
+            <h3>Drink</h3>
+            <table class="table table-hover table-sm" width="100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Price</th>
+                  <th>Add to Order</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of menu">
+                  <td class="menuName" contenteditable="true">{{ item.name }}</td>
+                  <td class="menuPrice" contenteditable="true">£{{ item.price }}</td>
+                  <td><button class="addbtn">Add</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+    -->

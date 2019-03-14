@@ -1,11 +1,3 @@
-// export enum MenuItemCategory {
-//     ,
-//     ,
-//     ,
-//     ,
-//     Drink
-// }
-
 export type MenuItemCategory = 'Starter' | 'Main' | 'Side' | 'Dessert' | 'Drink';
 
 export class MenuItem {
