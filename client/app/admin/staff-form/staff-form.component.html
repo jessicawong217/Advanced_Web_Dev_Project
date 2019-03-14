@@ -17,12 +17,12 @@
            [(ngModel)]="user.pin" name="price"
            [disabled]="userEditing != user._id">
     <ng-container *ngIf="formType === 'Add'">
-      <button  class="btn btn-success" (click)="addUser(user)">Add</button>
+      <button  class="btn btn-outline-success" (click)="addUser(user)">Add</button>
     </ng-container>
     <ng-container *ngIf="formType === 'Edit'">
-      <button class="btn btn-primary" *ngIf="userEditing != user._id" (click)="enableEditing(user._id)">Edit</button>
-      <button class="btn btn-success" *ngIf="userEditing == user._id" (click)="updateUser(user)">Save</button>
-      <button class="btn btn-danger" (click)="removeUser(user._id)">Delete</button>
+      <button class="btn btn-outline-primary" *ngIf="userEditing != user._id" (click)="enableEditing(user._id)">Edit</button>
+      <button class="btn btn-outline-success" *ngIf="userEditing == user._id" (click)="updateUser(user)">Save</button>
+      <button class="btn btn-outline-danger" (click)="removeUser(user._id)">Delete</button>
     </ng-container>
   </div>
 </form>
