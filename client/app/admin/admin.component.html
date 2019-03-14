@@ -3,8 +3,8 @@
   <div class="row half">
     <div id="menuBar" class="col-3 sidebar pl-0">
 
-      <button type="button" class="btn savebtn" (click)="updateMenu()">Save</button>
-      <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
+      <button type="button" class="btn savebtn btn-xs" (click)="updateMenu()">Save</button>
+      <button type="button" class="btn closebtn btn-xs" (click)="closeMenuNav()">Edit Menu -</button>
 
       <div class="sideScroll">
         <table class="table table-hover table-sm" width="100%">
@@ -26,9 +26,9 @@
           </tbody>
         </table>
         <div>
+          <label class="text-info">Add an item</label>
           <form [formGroup]="newMenuForm" (submit)="addItem()">
             <table class="table table-hover table-sm">
-              <label class="text-info">Add an item</label>
               <tr>
                 <td class="menuName border">
                   <input type="text" formControlName="name" placeholder="Name">
@@ -44,7 +44,7 @@
                     <option value="Dessert">Dessert</option>
                     <option value="Drink">Drink</option>
                   </select>
-                  <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
+                  <button type="submit" class="btnAdd btn btn-light btn-xs">+</button>
                 </td>
               </tr>
             </table>
@@ -54,7 +54,7 @@
     </div>
 
     <div id="menuMain" class="main w-10 pl-0">
-      <button type="button" class="btn openbtn" (click)="openMenuNav()">Edit Menu +</button>
+      <button type="button" class="btn openbtn btn-xs" (click)="openMenuNav()">Edit Menu +</button>
     </div>
     <div class="col content pr-0" id="summary">
       <h3>Income Summary</h3>
@@ -109,8 +109,8 @@
 
   <div class="row half">
     <div id="staffBar" class="col-3 sidebar pl-0">
-      <!--<button type="button" class="btn savebtn" (click)="saveUsers()">Save</button>-->
-      <button type="button" class="btn closebtn" (click)="closeStaffNav()">Edit Staff -</button>
+      <button type="button" class="btn savebtn btn-xs" (click)="saveUsers()">Save</button>
+      <button type="button" class="btn closebtn btn-xs" (click)="closeStaffNav()">Edit Staff -</button>
       <div class="sideScroll">
         <table class="table table-hover table-sm" width="100%">
           <thead>
@@ -129,9 +129,9 @@
           </tbody>
         </table>
         <div>
+          <label class="text-info">Add an item</label>
           <form [formGroup]="newUserForm" (submit)="addUser()">
             <table class="table table-hover table-sm">
-              <label class="text-info">Add an item</label>
               <tr>
                 <td class="userName border">
                   <input type="text" formControlName="name" placeholder="Name">
@@ -156,7 +156,7 @@
     </div>
 
     <div id="staffMain" class="main w-10 pl-0">
-      <button type="button" class="btn openbtn" (click)="openStaffNav()">Edit Staff +</button>
+      <button type="button" class="btn openbtn btn-xs" (click)="openStaffNav()">Edit Staff +</button>
     </div>
     <div class="col content pr-0" id="analytics">
       <h3>Analytics</h3>
@@ -197,5 +197,4 @@
       </div>
     </div>
   </div>
-
 </div>
