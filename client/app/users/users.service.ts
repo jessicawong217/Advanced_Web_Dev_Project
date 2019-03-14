@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+
 import { environment } from '../../environments/environment';
 import { User, UserViewModel } from './user.model';
 
@@ -26,7 +27,7 @@ export class UsersService {
      * Get paged list of users.
      */
     getUsers(page = 1, perpage = 50, query: string = null) {
-        let queryParams = { skip: 0 + '', limit: perpage + '' } as {
+        const queryParams = { skip: 0 + '', limit: perpage + '' } as {
             [param: string]: string;
         };
 

@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const MenuSchema = new mongoose.Schema({
     id: {
-      type: Number,
-      required: true,
+        type: Number,
+        required: true
     },
     name: {
         type: String,
@@ -40,12 +40,17 @@ MenuSchema.statics = {
     list({ skip = 0, limit = 50, query = null } = {}) {
         var searchData = {};
 
-        if (query !== null)  {
-            searchData.$or = [
-                { 'name': { "$regex": query, "$options": "i" }  },
-                // TODO add searching by id.
-                // { 'itemId': { "$regex": query, "$options": "i" }}
-            ]
+        if (query !== null) {
+            var int = parseInt(query);
+
+            searchData.$or = [{ name: { $regex: query, $options: 'i' } }];
+
+            if (int != NaN) {
+                // Need to add a where query in order to query partial numbers.
+                searchData.$or.push({
+                    $where: `function() { return this.id.toString().match(/${int}/) != null; }`
+                });
+            }
         }
 
         return this.find(searchData)
