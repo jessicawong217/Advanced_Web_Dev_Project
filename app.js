@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/user.route');
 var menuRouter = require('./routes/menu/menu.route');
 var ordersRouter = require('./routes/orders/order.route');
-var counterRouter = require('./routes/counter/counter.route');
+var tablesRouter = require('./routes/tables/table.route');
 
 const config = require('./config/');
 
@@ -49,8 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/menu', menuRouter);
 app.use('/api/orders', ordersRouter);
-app.use('/api/counter', counterRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/tables', tablesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

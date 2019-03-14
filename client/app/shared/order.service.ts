@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { OrderViewModel } from './order-view.model';
-import { OrderItem } from './order-item.model';
-import { Order } from './order.model';
+import { OrderViewModel } from './models/order-view.model';
+import { OrderItem } from '../shared/models/order-item.model';
+import { Order } from '../shared/models/order.model';
 
 @Injectable({
     providedIn: 'root'

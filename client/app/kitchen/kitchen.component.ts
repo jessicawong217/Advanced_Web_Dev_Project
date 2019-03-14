@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { OrderService } from "../shared/order.service";
-import { Order } from "../shared/order.model";
-import { OrderItem } from "../shared/order-item.model";
+import { Order } from "../shared/models/order.model";
+import { OrderItem } from "../shared/models/order-item.model";
 import { OrderSocketService } from "../socket/order-socket.service";
 import { merge } from "rxjs";
 import { tap } from "rxjs/operators";

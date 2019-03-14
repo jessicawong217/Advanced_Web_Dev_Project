@@ -1,4 +1,4 @@
-import { OrderItem } from '../shared/order-item.model';
+import { OrderItem } from '../shared/models/order-item.model';
 
 export class KitchenItem extends OrderItem {
     orderId: string;

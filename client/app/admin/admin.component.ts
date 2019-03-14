@@ -3,6 +3,8 @@ import { MenuService } from '../menu/menu.service';
 import { UsersService } from '../users/users.service';
 import { MenuItem } from "../menu/menu.model";
 import { User } from "../users/user.model";
+import { Table } from "../shared/models/table.model";
+import { TableService } from "../shared/table.service";
 
 /**
  * Class to build admin view
@@ -19,14 +21,16 @@ export class AdminComponent implements OnInit {
 
     newItem: MenuItem = new MenuItem(null, null, null, null, null);
     newUser: User = new User(null, null, null, null);
+    newTable: Table = new Table(null, null, null);
 
     editMenu = false;
     editStaff = false;
+    editTables = false;
     menuOpen = false;
 
-    public menuItems = [];
-
-    public users = [];
+    menuItems: MenuItem[];
+    tables: Table[];
+    users: User[];
 
     private displayOrdersTodayBool;
     private displayOrdersWeekBool;
@@ -34,15 +38,15 @@ export class AdminComponent implements OnInit {
 
     /**
      * Constructor to pass services and modules
-     * @param protectedadminService
      * @param menuService
      * @param usersService
-     * @param formBuilder
+     * @param tableService
      */
     constructor(
         private menuService: MenuService,
-        private usersService: UsersService
-    ) { }
+        private usersService: UsersService,
+        private tableService: TableService
+    ) {}
 
     /**
      * Get data on load
@@ -50,6 +54,7 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.getMenu();
         this.getUsers();
+        this.getTables();
     }
 
     /**
@@ -59,7 +64,6 @@ export class AdminComponent implements OnInit {
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
             this.menuItems = result;
-            console.log(this.menuItems)
         });
     }
 
@@ -74,11 +78,22 @@ export class AdminComponent implements OnInit {
     }
 
     /**
+     * Calls table service to get all tables.
+     * Maps response to Table array
+     */
+    getTables() {
+        this.tableService.getTables().subscribe(result => {
+            this.tables = result;
+        });
+    }
+
+    /**
      * Open Menu nav bar
      */
     openMenuEdit() {
         this.editMenu = true;
         this.editStaff = false;
+        this.editTables = false;
         this.menuOpen = true;
     }
 
@@ -88,6 +103,14 @@ export class AdminComponent implements OnInit {
     openStaffEdit() {
         this.editStaff = true;
         this.editMenu = false;
+        this.editTables = false;
+        this.menuOpen = true;
+    }
+
+    openTableEdit() {
+        this.editTables = true;
+        this.editMenu = false;
+        this.editStaff = false;
         this.menuOpen = true;
     }
 
@@ -105,16 +128,15 @@ export class AdminComponent implements OnInit {
      * @param  item New menu item
      */
     addItem(item: MenuItem) {
-        console.log(item);
         this.menuService.create(item)
             .subscribe(() => {
                 // Reload the menu after the item is added.
                 this.getMenu();
             },
-                () => {
-                    console.log('failed');
-                }
-            );
+            () => {
+                console.log('failed');
+            }
+        );
     }
 
     /**
@@ -122,7 +144,6 @@ export class AdminComponent implements OnInit {
      * @param  id Menu item id to be removed
      */
     removeItem(id: string) {
-
         this.menuService.delete(id)
             .subscribe(() => {
                 this.getMenu();
@@ -168,8 +189,31 @@ export class AdminComponent implements OnInit {
      * @param  user User to be updated
      */
     updateUser(user: User) {
-        this.usersService.update(user._id, user).subscribe(() => {
+        this.usersService.update(user._id, user)
+            .subscribe(() => {
+                this.getUsers();
         });
+    }
+
+    addTable(table: any) {
+        this.tableService.addTable(table)
+            .subscribe(() => {
+                this.getTables();
+            })
+    }
+
+    removeTable(id: string) {
+        this.tableService.deleteTable(id)
+            .subscribe(() => {
+                this.getTables();
+            });
+    }
+
+    updateTable(table: any) {
+        this.tableService.updateTable(table._id, table)
+            .subscribe(() => {
+                this.getTables()
+            });
     }
 
     /**

@@ -21,6 +21,8 @@ import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuFormComponent } from './admin/menu-form/menu-form.component';
 import { StaffFormComponent } from './admin/staff-form/staff-form.component';
+import { TableFormComponent } from './admin/table-form/table-form.component';
+import { TableService } from "./shared/table.service";
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { StaffFormComponent } from './admin/staff-form/staff-form.component';
         LoginComponent,
         WaitingTimeComponent,
         MenuFormComponent,
-        StaffFormComponent
+        StaffFormComponent,
+        TableFormComponent
     ],
     imports: [
         BrowserModule,
@@ -48,7 +51,7 @@ import { StaffFormComponent } from './admin/staff-form/staff-form.component';
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService, OrderService, UsersService, UsersIdGuard],
+    providers: [WaiterService, OrderService, UsersService, TableService, UsersIdGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

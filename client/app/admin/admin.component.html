@@ -1,30 +1,60 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <ul class="nav navbar-nav">
-        <li><a (click)="openMenuEdit()">Edit Menu</a></li>
-        <li><a (click)="openStaffEdit()">Edit Staff</a></li>
-      </ul>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li><a (click)="openMenuEdit()">Edit Menu</a></li>
+                <li><a (click)="openStaffEdit()">Edit Staff</a></li>
+                <li><a (click)="openTableEdit()">Edit Tables</a></li>
+            </ul>
+        </div>
     </div>
   </div>
 </nav>
 
 <div class="container-fluid">
-  <div class="col sidebar" *ngIf="menuOpen">
-    <div *ngIf="editMenu">
-      <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
-      <br><br>
-      <app-menu-form [formType]="'Add'" [item]="newItem" (itemAdded)="addItem($event)">
-      </app-menu-form>
-      <app-menu-form *ngFor="let item of menuItems | orderBy: 'category'" [formType]="'Edit'" [item]="item" (itemUpdated)="updateItem($event)" (itemRemoved)="removeItem($event)">
-      </app-menu-form>
-    </div>
-    <div *ngIf="editStaff">
-      <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
-      <br><br>
-      <app-staff-form [formType]="'Add'" [user]="newUser" (userAdded)="addUser($event)">
-      </app-staff-form>
-      <app-staff-form *ngFor="let user of users | orderBy: 'type'" [formType]="'Edit'" [user]="user" (userUpdated)="updateUser($event)" (userRemoved)="removeUser($event)"></app-staff-form>
+    <div class="col-sm- col-md-4.5 sidebar" *ngIf="menuOpen">
+        <div *ngIf="editMenu">
+            <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-menu-form [formType]="'Add'"
+                           [item]="newItem"
+                           (itemAdded)="addItem($event)">
+            </app-menu-form>
+            <app-menu-form *ngFor="let item of menuItems | orderBy: 'category'"
+                           [formType]="'Edit'"
+                           [item]="item"
+                           (itemUpdated)="updateItem($event)"
+                           (itemRemoved)="removeItem($event)">
+            </app-menu-form>
+        </div>
+        <div *ngIf="editStaff">
+            <button class="btn btn-outline-primary"  (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-staff-form [formType]="'Add'"
+                            [user]="newUser"
+                            (userAdded)="addUser($event)">
+            </app-staff-form>
+            <app-staff-form *ngFor="let user of users | orderBy: 'type'"
+                            [formType]="'Edit'"
+                            [user]="user"
+                            (userUpdated)="updateUser($event)"
+                            (userRemoved)="removeUser($event)"
+            ></app-staff-form>
+        </div>
+        <div *ngIf="editTables">
+            <button class="btn btn-outline-primary"  (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-table-form [formType]="'Add'"
+                            [table]="newTable"
+                            (tableAdded)="addTable($event)">
+            </app-table-form>
+            <app-table-form *ngFor="let table of tables | orderBy: '-id'"
+                            [formType]="'Edit'"
+                            [table]="table"
+                            (tableRemoved)="removeTable($event)"
+                            (tableUpdated)="updateTable($event)"
+            ></app-table-form>
+        </div>
     </div>
   </div>
 

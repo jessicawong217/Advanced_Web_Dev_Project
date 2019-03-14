@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MenuItem } from "../../menu/menu.model";
 import { User } from "../../users/user.model";
 
 /**
