@@ -32,21 +32,21 @@ export class AdminComponent implements OnInit {
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
 
-/**
- * Constructor to pass services and modules
- * @param protectedadminService
- * @param menuService
- * @param usersService
- * @param formBuilder
- */
+    /**
+     * Constructor to pass services and modules
+     * @param protectedadminService
+     * @param menuService
+     * @param usersService
+     * @param formBuilder
+     */
     constructor(
         private menuService: MenuService,
         private usersService: UsersService
-    ) {}
+    ) { }
 
-/**
- * Get data on load
- */
+    /**
+     * Get data on load
+     */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
@@ -92,12 +92,12 @@ export class AdminComponent implements OnInit {
     }
 
     addItem(item: MenuItem) {
-            console.log(item);
-            this.menuService.create(item)
-                .subscribe(() => {
-                    // Reload the menu after the item is added.
-                    this.getMenu();
-                },
+        console.log(item);
+        this.menuService.create(item)
+            .subscribe(() => {
+                // Reload the menu after the item is added.
+                this.getMenu();
+            },
                 () => {
                     console.log('failed');
                 }
@@ -135,8 +135,8 @@ export class AdminComponent implements OnInit {
     }
 
     updateUser(user: User) {
-        //TODO: update user
-
+        this.usersService.update(user._id, user).subscribe(() => {
+        });
     }
 
     /**
