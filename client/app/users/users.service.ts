@@ -73,7 +73,7 @@ export class UsersService {
      * Clear the current logged in user.
      */
     clearUser() {
-        this.clearUser = null;
+        this.currentUser = null;
     }
 
     /**
