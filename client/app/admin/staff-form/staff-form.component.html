@@ -1,0 +1,28 @@
+<form>
+  <div class="form-group">
+    <input type="text" class="form-control name"
+           placeholder="Name"
+           [(ngModel)]="user.name" name="name"
+           [disabled]="userEditing != user._id">
+    <select class="form-control type"
+            [(ngModel)]="user.type" name="type"
+            [disabled]="userEditing != user._id">
+      <option value="Waiter">Waiter</option>
+      <option value="Kitchen">Kitchen</option>
+      <option value="Manager">Manager</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <input type="password" class="form-control pin"
+           placeholder="Pin"
+           [(ngModel)]="user.pin" name="price"
+           [disabled]="userEditing != user._id">
+    <ng-container *ngIf="formType === 'Add'">
+      <button  class="btn btn-success" (click)="addUser(user)">Add</button>
+    </ng-container>
+    <ng-container *ngIf="formType === 'Edit'">
+      <button class="btn btn-primary" *ngIf="userEditing != user._id" (click)="enableEditing(user._id)">Edit</button>
+      <button class="btn btn-success" *ngIf="userEditing == user._id" (click)="updateUser(user)">Save</button>
+      <button class="btn btn-danger" (click)="removeUser(user._id)">Delete</button>
+    </ng-container>
+  </div>
+</form>
