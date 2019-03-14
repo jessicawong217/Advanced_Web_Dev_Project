@@ -12,7 +12,9 @@ const UserSchema = new mongoose.Schema({
     },
     pin: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     }
 });
 
