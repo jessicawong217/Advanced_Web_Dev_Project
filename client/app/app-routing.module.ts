@@ -8,11 +8,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
 
-// Example of requireing a specific type of user for the route. Needed for admin
-// view.
-//
-// data: { userType: 'Admin' }
-// data: { userType: ['Waiter', 'Admin'] }
+
 const routes: Routes = [
     {
         path: 'waiter',
@@ -31,7 +27,9 @@ const routes: Routes = [
     },
     {
         path: 'admin',
-        component: AdminComponent
+        component: AdminComponent,
+        canActivate: [UsersIdGuard],
+        data: { userType: 'Admin' }
     },
     {
         path: 'kitchen',

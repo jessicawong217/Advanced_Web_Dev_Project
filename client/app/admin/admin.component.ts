@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-
 import { MenuService } from '../menu/menu.service';
 import { UsersService } from '../users/users.service';
 import { MenuItem } from "../menu/menu.model";
 import { User } from "../users/user.model";
 
+/**
+ * Class to build admin view
+ * @param  selector admin app
+ * @param  templateUrl HTML page
+ * @param  styleUrls   CSS stylesheet
+ */
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
@@ -27,16 +32,30 @@ export class AdminComponent implements OnInit {
     private displayOrdersWeekBool;
     private displayOrdersMonthBool;
 
+/**
+ * Constructor to pass services and modules
+ * @param protectedadminService
+ * @param menuService
+ * @param usersService
+ * @param formBuilder
+ */
     constructor(
         private menuService: MenuService,
         private usersService: UsersService
     ) {}
 
+/**
+ * Get data on load
+ */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
     }
 
+    /**
+     * Get all items from the menu
+     * @return menu[]
+     */
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
             this.menuItems = result;
@@ -44,12 +63,16 @@ export class AdminComponent implements OnInit {
         });
     }
 
+    /**
+     * Get all users
+     * @return users[]
+     */
     getUsers() {
         this.usersService.getUsers().subscribe(result => {
             this.users = result;
         });
     }
-
+  
     openMenuEdit() {
         this.editMenu = true;
         this.editStaff = false;
@@ -82,6 +105,7 @@ export class AdminComponent implements OnInit {
     }
 
     removeItem(id: string) {
+
         this.menuService.delete(id)
             .subscribe(() => {
                 this.getMenu();
@@ -112,8 +136,12 @@ export class AdminComponent implements OnInit {
 
     updateUser(user: User) {
         //TODO: update user
+
     }
 
+    /**
+     * Display revenue from today
+     */
     displayOrdersToday() {
         this.displayOrdersTodayBool = !this.displayOrdersTodayBool;
         if (this.displayOrdersTodayBool) {
@@ -125,8 +153,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from week
+     */
     displayOrdersWeek() {
-
         this.displayOrdersWeekBool = !this.displayOrdersWeekBool;
         if (this.displayOrdersWeekBool) {
             document.getElementById("summaryWeek").style.display = "none";
@@ -137,6 +167,9 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    /**
+     * Display revenue from month
+     */
     displayOrdersMonth() {
         this.displayOrdersMonthBool = !this.displayOrdersMonthBool;
         if (this.displayOrdersMonthBool) {
