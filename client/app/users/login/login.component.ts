@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
+
 import { UsersService } from '../users.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
         private usersService: UsersService,
         private route: ActivatedRoute,
         private router: Router
-    ) {}
+    ) { }
 
     /**
      * Get the redirection url from the query params.
@@ -68,7 +69,7 @@ export class LoginComponent implements OnInit {
     addKey(key: string) {
         this.clearIfNeeded();
 
-        if (this.pin.length < 6) this.pin += key;
+        if (this.pin.length < 6) { this.pin += key; }
     }
 
     /**
@@ -77,7 +78,7 @@ export class LoginComponent implements OnInit {
     removeClick() {
         this.clearIfNeeded();
 
-        if (this.pin.length > 0) this.pin = this.pin.slice(0, -1);
+        if (this.pin.length > 0) { this.pin = this.pin.slice(0, -1); }
     }
 
     /**

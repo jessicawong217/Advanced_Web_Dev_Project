@@ -12,3 +12,7 @@ export class Order {
         public discount: number
     ) { }
 }
+
+export interface OrderViewModel {
+    order: Order;
+}

@@ -5,13 +5,12 @@ import { tap } from 'rxjs/operators';
 
 import { MenuService } from '../menu/menu.service';
 import { WaiterService } from './waiter.service';
-import { Order } from '../shared/order.model';
+import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
 import { OrderSocketService } from '../socket/order-socket.service';
-import { OrderItem } from '../shared/order-item.model';
+import { OrderItem } from '../shared/models/order-item.model';
 import { UsersService } from '../users/users.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
     selector: 'app-waiter',
@@ -32,23 +31,25 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
     public sidebarOrder = null;
 
+    public errorMessage: string;
+
 
     /**
      * Array of tables within the restaurant.
      */
     public tables = [
-        { id: 1, openOrder: false, orderId: null },
-        { id: 2, openOrder: false, orderId: null },
-        { id: 3, openOrder: false, orderId: null },
-        { id: 4, openOrder: false, orderId: null },
-        { id: 5, openOrder: false, orderId: null },
-        { id: 6, openOrder: false, orderId: null },
-        { id: 7, openOrder: false, orderId: null },
-        { id: 8, openOrder: false, orderId: null },
-        { id: 9, openOrder: false, orderId: null },
-        { id: 10, openOrder: false, orderId: null },
-        { id: 11, openOrder: false, orderId: null },
-        { id: 12, openOrder: false, orderId: null }
+        { id: 1, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 2, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 3, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 4, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 5, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 6, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 7, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 8, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 9, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 10, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 11, openOrder: false, orderId: null, order: null, openId: false },
+        { id: 12, openOrder: false, orderId: null, order: null, openId: false }
     ];
 
     public staff = [
@@ -64,12 +65,14 @@ export class WaiterComponent implements OnInit, OnDestroy {
         private waiterService: WaiterService,
         private orderSocket: OrderSocketService,
         private menuService: MenuService,
-        protected orderSerice: OrderService,
+        protected orderService: OrderService,
         private usersService: UsersService
     ) { }
 
     ngOnInit() {
+        this.getInProgressOrders()
         this.configureSockets();
+
 
 
         // this.test();
@@ -78,13 +81,23 @@ export class WaiterComponent implements OnInit, OnDestroy {
         // on init and assign them to the correct tables at init. The socket
         // events would then handle addition and removal of orders.
 
-        this.menuService.getMenu().subscribe(result => {
-            console.log(result);
-        });
+
     }
 
+    /**
+     * Get all in-progress orders from the database
+     */
+    getInProgressOrders() {
+      this.orderService.getInProgressOrders().subscribe(orders=>{
+        for (let o =0; o < orders.length; o++){
+          const order = orders[o];
+          this.handleOrderEvent(order);
+        }
 
-
+      });
+      //var openOrder = order.status == 'InProgress';
+      //var table = this.tables.filter(t => t.id == order.tableId)[0];
+    }
 
     openMenuNav() {
         document.getElementById("menuBar").style.width = "20%";
@@ -116,8 +129,9 @@ export class WaiterComponent implements OnInit, OnDestroy {
   configureSockets() {
       var openSub$ = this.orderSocket.getOrdersOpened();
       var closedSub$ = this.orderSocket.getOrdersCompleted();
+      var updatedSub$ = this.orderSocket.getOrdersUpdated();
 
-      merge(openSub$, closedSub$)
+      merge(openSub$, closedSub$, updatedSub$)
           .pipe(
               tap(order => this.handleOrderEvent(order)),
               untilDestroyed(this)
@@ -135,13 +149,22 @@ export class WaiterComponent implements OnInit, OnDestroy {
 
       table.openOrder = openOrder;
       table.orderId = order.id;
+      table.order = openOrder? order:null;
+
   }
 
+
+
   startOrderClick(table) {
-      var newOrder = {
+      var newOrder = null;
+      if (table.order!=null){
+        newOrder = table.order;
+      }else {
+       newOrder = {
           tableId: table.id,
           items: []
       };
+    }
 
       this.sidebarOrder = newOrder;
   }

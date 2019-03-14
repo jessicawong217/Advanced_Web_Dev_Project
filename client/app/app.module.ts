@@ -19,7 +19,11 @@ import { WaiterComponent } from './waiter/waiter.component';
 import { WaiterService } from './waiter/waiter.service';
 import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
-
+import { MenuFormComponent } from './admin/menu-form/menu-form.component';
+import { StaffFormComponent } from './admin/staff-form/staff-form.component';
+import { UserInfoComponent } from './users/info/user-info.component';
+import { TableFormComponent } from './admin/table-form/table-form.component';
+import { TableService } from "./shared/table.service";
 
 @NgModule({
     declarations: [
@@ -33,7 +37,11 @@ import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
         KitchenComponent,
         MenuSelectionComponent,
         LoginComponent,
-        WaitingTimeComponent
+        WaitingTimeComponent,
+        MenuFormComponent,
+        StaffFormComponent,
+        UserInfoComponent,
+        TableFormComponent
     ],
     imports: [
         BrowserModule,
@@ -44,7 +52,7 @@ import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService, OrderService, UsersService, UsersIdGuard],
+    providers: [WaiterService, OrderService, UsersService, TableService, UsersIdGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

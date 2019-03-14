@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
-import { Order } from '../shared/order.model';
-import { OrderItem } from '../shared/order-item.model';
+import { OrderItem } from '../shared/models/order-item.model';
+import { Order } from '../shared/models/order.model';
 import { OrderService } from '../shared/order.service';
 
 export type PanelType = 'waiter' | 'counter';
@@ -11,15 +11,19 @@ export type PanelType = 'waiter' | 'counter';
 @Component({
     selector: 'app-order-panel',
     templateUrl: './order-panel.component.html',
-    styleUrls: ['./order-panel.component.css']
+    styleUrls: ['./order-panel.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class OrderPanelComponent implements OnInit {
 
-    @Input() waiterId: any;
+    @Input() waiterId: number;
 
+    // Set the order to the one from the input
+    // Then set the discount to 0 and calculate total
     @Input()
     public set setOrder(order: Order) {
-        this.order = order;
+        // Lazymans deep clone.
+        this.order = JSON.parse(JSON.stringify(order));
         this.setDiscountToZero();
         this.calculateTotal();
     }
@@ -27,20 +31,46 @@ export class OrderPanelComponent implements OnInit {
     @Input()
     type: PanelType;
 
+    /**
+     * Current selected tab to display.
+     */
+    @Input()
+    selectedTab = null;
+
+    /**
+     * Event to close the dialog in the parent component.
+     */
     @Output()
     close = new EventEmitter();
 
+    /**
+     * Order to display details for.
+     */
     public order: Order;
 
     public totalNoDiscount: number;
 
     public totalWithDiscount: number;
 
-    public discountForm: FormGroup;
+    public discountForm = this.formBuilder.group({
+        discount: ['', [
+            Validators.min(0),
+            Validators.max(100)
+        ]]
+    });
 
     /**
-     * Counter Comoponent Constructor
-     *
+     * Message to show in alert.
+     */
+    public message: string;
+
+    /**
+     * The type of message to show in the alert.
+     */
+    public messageType: "success" | "danger";
+
+    /**
+     * Order Panel Comoponent Constructor
      * @param counterService Counter Service
      * @param formBuilder Form Builder
      */
@@ -49,26 +79,27 @@ export class OrderPanelComponent implements OnInit {
         private orderService: OrderService,
     ) { }
 
+    /**
+     * Runs when page initialises
+     */
     ngOnInit() {
-        this.createForm();
         this.calculateTotal();
     }
 
     /**
-     * Creates the form
+     * Switch to or hide a tab.
+     * @param name Tab being selected.
      */
-    createForm(): void {
-        this.discountForm = this.formBuilder.group({
-            discount: this.formBuilder.control(0, [
-                Validators.required,
-                Validators.minLength(1),
-                Validators.maxLength(3)
-            ])
-        });
+    setSelectedTab(name: string) {
+        if (this.selectedTab == name) {
+            this.selectedTab = null;
+            return;
+        }
+        this.selectedTab = name;
     }
 
     /**
-     * Calculate the total of all prices. Item price * quantity
+     * Calculate the total of all prices.
      */
     calculateTotal() {
         this.totalNoDiscount = this.order.items.reduce(
@@ -87,9 +118,9 @@ export class OrderPanelComponent implements OnInit {
             return;
         }
 
-        if (this.order.discount !== undefined && this.discountForm.value.discount === 0) {
-            this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
-
+        if (this.order.discount !== undefined && this.discountForm.invalid) {
+            this.order.discount = 0;
+            this.totalWithDiscount = this.totalNoDiscount;
         } else {
             this.order.discount = (this.discountForm.value.discount / 100) * this.totalNoDiscount;
             this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
@@ -103,25 +134,28 @@ export class OrderPanelComponent implements OnInit {
         if (this.discountForm === undefined) {
             return;
         }
-        this.discountForm.controls.discount.patchValue(0);
+
+        this.discountForm.patchValue({ discount: 0 });
     }
 
     /**
      * Completes the order
      *
-     * @param order Order
+     * @param order Order Model
      */
     completeOrder(order: Order) {
         this.orderService
             .completeOrder(
                 order._id,
-                JSON.stringify({ discountedValue: this.order.discount }
-                )
-            ).subscribe(data => {
-                console.log(data);
-            }, (error) => {
-                console.log(error);
-            });
+                this.order.discount
+            )
+            .subscribe(response => {
+                this.setOrder = response.order;
+                this.setAlertMessage('Successfully completed order.', 'success');
+                },
+                () => {
+                    this.setAlertMessage('Cannot complete order.', 'success');
+                });
     }
 
     /**
@@ -144,16 +178,17 @@ export class OrderPanelComponent implements OnInit {
                 status: 'InProgress'
             }
         ];
+
         this.orderService
-            .updateOrder(
-                order._id,
-                JSON.stringify({ items: itemsDummy }
-                )
-            ).subscribe(data => {
-                console.log(data);
-            }, (error) => {
-                console.log(error);
-            });
+            .updateOrder(order._id, this.order.items.filter(i => i._id == null))
+            .subscribe(
+                (updatedOrder) => {
+                    this.setOrder = updatedOrder.order;
+                    this.setAlertMessage('Successfully updated order.', 'success');
+                },
+                () => {
+                    this.setAlertMessage('Cannot update order.');
+                });
     }
 
     /**
@@ -291,5 +326,12 @@ export class OrderPanelComponent implements OnInit {
 
         doc.output('dataurlnewwindow');
         // doc.open('receipt.pdf'); // If you want to download it
+    }
+
+    setAlertMessage(message: string, type: 'success' | 'danger' = 'danger') {
+        this.message = message;
+        this.messageType = type;
+
+        setTimeout(() => this.message = null, 8000);
     }
 }

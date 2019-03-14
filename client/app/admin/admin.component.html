@@ -1,63 +1,49 @@
-<div class="container-fluid fill-height p-0">
-
-    <div class="row half">
-        <div id="menuBar" class="col-3 sidebar pl-0">
-
-            <!-- <button type="button" class="btn savebtn" (click)="updateMenu()">Save</button> -->
-            <button type="button" class="btn closebtn" (click)="closeMenuNav()">Edit Menu -</button>
-
-            <div class="sideScroll">
-                <table class="table table-hover table-sm" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of menu; trackBy:identifyMenu">
-                            <td [attr.id]="item._id" class="menuName">{{ item.name }}</td>
-                            <td class="menuPrice">£{{ item.price }}</td>
-                            <td class="menuCategory">{{ item.category }}
-                                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs"
-                                    (click)="removeItem(item._id)">-</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <form [formGroup]="newMenuForm" (submit)="addItem()">
-                        <table class="table table-hover table-sm">
-                            <label class="text-info">Add an item</label>
-                            <tr>
-                                <td class="menuName border">
-                                    <input type="text" formControlName="name" placeholder="Name">
-                                </td>
-                                <td class="menuPrice border">
-                                    <input type="text" formControlName="price">
-                                </td>
-                                <td class="menuCategory border">
-                                    <select class="selectBox" id="menuCategorySelect" formControlName="category">
-                                        <option value="Starter">Starter</option>
-                                        <option value="Main">Main</option>
-                                        <option value="Side">Side</option>
-                                        <option value="Dessert">Dessert</option>
-                                        <option value="Drink">Drink</option>
-                                    </select>
-                                    <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </div>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li><a (click)="openMenuEdit()">Edit Menu</a></li>
+                <li><a (click)="openStaffEdit()">Edit Staff</a></li>
+                <li><a (click)="openTableEdit()">Edit Tables</a></li>
+                <li class="user-details">
+                    <app-user-info></app-user-info>
+                </li>
+            </ul>
         </div>
+    </div>
+</nav>
 
-        <div id="menuMain" class="main w-10 pl-0">
-            <button type="button" class="btn openbtn" (click)="openMenuNav()">Edit Menu +</button>
+<div class="container-fluid">
+    <div class="col-sm- col-md-4.5 sidebar" *ngIf="menuOpen">
+        <div *ngIf="editMenu">
+            <button class="btn btn-primary" (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-menu-form [formType]="'Add'" [item]="newItem" (itemAdded)="addItem($event)">
+            </app-menu-form>
+            <app-menu-form *ngFor="let item of menuItems | orderBy: 'category'" [formType]="'Edit'" [item]="item"
+                (itemUpdated)="updateItem($event)" (itemRemoved)="removeItem($event)">
+            </app-menu-form>
         </div>
-        <div class="col content pr-0" id="summary">
+        <div *ngIf="editStaff">
+            <button class="btn btn-primary" (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-staff-form [formType]="'Add'" [user]="newUser" (userAdded)="addUser($event)">
+            </app-staff-form>
+            <app-staff-form *ngFor="let user of users | orderBy: 'type'" [formType]="'Edit'" [user]="user"
+                (userUpdated)="updateUser($event)" (userRemoved)="removeUser($event)"></app-staff-form>
+        </div>
+        <div *ngIf="editTables">
+            <button class="btn btn-primary" (click)="closeMenu()">Close</button>
+            <br><br>
+            <app-table-form [formType]="'Add'" [table]="newTable" (tableAdded)="addTable($event)">
+            </app-table-form>
+            <app-table-form *ngFor="let table of tables | orderBy: '-id'" [formType]="'Edit'" [table]="table"
+                (tableRemoved)="removeTable($event)" (tableUpdated)="updateTable($event)"></app-table-form>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2 main" [ngClass]="{'menuOpen' : menuOpen}">
+        <div class="col content pr-0 " id="summary">
             <h3>Income Summary</h3>
             <hr>
             <div class="row data">
@@ -71,7 +57,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col displayBox m-4">
                     <div class="display">
                         <div class="displayValue text-secondary" *ngIf="weekTotal">
@@ -94,61 +79,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row half">
-        <div id="staffBar" class="col-3 sidebar pl-0">
-            <button type="button" class="btn savebtn" (click)="saveUsers()">Save</button>
-            <button type="button" class="btn closebtn" (click)="closeStaffNav()">Edit Staff -</button>
-            <div class="sideScroll">
-                <table class="table table-hover table-sm" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let user of users; trackBy:identifyUsers">
-                            <td [attr.id]="user._id" class="userName">{{ user.name }}</td>
-                            <td class="userType">{{ user.type }}
-                                <button type="button" class="removeBtn btn btn-outline-secondary btn-xs"
-                                    (click)="removeUser(user._id)">-</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <form [formGroup]="newUserForm" (submit)="addUser()">
-                        <table class="table table-hover table-sm">
-                            <label class="text-info">Add an item</label>
-                            <tr>
-                                <td class="userName border">
-                                    <input type="text" formControlName="name" placeholder="Name">
-                                </td>
-                                <td class="userPin border">
-                                    <select class="selectBox" id="userTypeSelect" formControlName="type">
-                                        <option value="Waiter">Waiter</option>
-                                        <option value="Kitchen">Kitchen</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Admin">Admin</option>
-                                    </select>
-                                </td>
-                                <td class="userPin border">
-                                    <input type="password" class="form-control" id="userPin" placeholder="Pin"
-                                        formControlName="pin">
-                                    <button type="submit" class="btnAdd btn btn-light btn-sm">+</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="staffMain" class="main w-10 pl-0">
-            <button type="button" class="btn openbtn" (click)="openStaffNav()">Edit Staff +</button>
         </div>
     </div>
 

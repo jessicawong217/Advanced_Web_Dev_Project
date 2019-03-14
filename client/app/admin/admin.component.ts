@@ -1,35 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
+import { MenuItem } from '../menu/menu.model';
 import { MenuService } from '../menu/menu.service';
-import { Order } from '../shared/order.model';
+import { Order } from '../shared/models/order.model';
+import { Table } from '../shared/models/table.model';
 import { OrderService } from '../shared/order.service';
+import { TableService } from '../shared/table.service';
+import { User } from '../users/user.model';
 import { UsersService } from '../users/users.service';
 import { AdminService } from './admin.service';
 
+/**
+ * Class to build admin view
+ * @param  selector admin app
+ * @param  templateUrl HTML page
+ * @param  styleUrls   CSS stylesheet
+ */
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-    newMenuForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        price: [0, Validators.required],
-        category: ['Main']
-    });
 
-    newUserForm = this.formBuilder.group({
-        name: ['', [Validators.required]],
-        type: ['Waiter', [Validators.required]],
-        pin: ['', [Validators.required, Validators.pattern('[0-9]{4}')]]
-    });
+    newItem: MenuItem = new MenuItem(null, null, null, null, null);
+    newUser: User = new User(null, null, null, null);
+    newTable: Table = new Table(null, null, null);
 
-    public menu = [];
+    editMenu = false;
+    editStaff = false;
+    editTables = false;
+    menuOpen = false;
 
-    public users = [];
+    menuItems: MenuItem[];
+    tables: Table[];
+    users: User[];
 
     public orders: Order[];
+
+    public timePeriod = new Object({ from: null, to: null });
 
     public todayTotal: number;
 
@@ -37,27 +47,38 @@ export class AdminComponent implements OnInit {
 
     public monthTotal: number;
 
+    /**
+     * Constructor to pass services and modules
+     * @param menuService
+     * @param usersService
+     * @param tableService
+     */
     constructor(
-        protected adminService: AdminService,
         private menuService: MenuService,
         private usersService: UsersService,
         private formBuilder: FormBuilder,
         protected orderSerice: OrderService,
+        private tableService: TableService,
+        private adminService: AdminService
     ) { }
 
+    /**
+     * Get data on load
+     */
     ngOnInit() {
         this.getMenu();
         this.getUsers();
         this.getTotalForToday();
         this.getTotalForLastWeek();
         this.getTotalForLastMonth();
+        this.getTables();
     }
 
     /**
-     * Get total for last 24h
-     */
+    * Get total for last 24h
+    */
     getTotalForToday() {
-        const timePeriod = new Object();
+        const timePeriod = { to: null, from: null };
         timePeriod.to = new Date();
         timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 1));
 
@@ -73,7 +94,7 @@ export class AdminComponent implements OnInit {
      * Get total for last 7 days
      */
     getTotalForLastWeek() {
-        const timePeriod = new Object();
+        const timePeriod = { to: null, from: null };
         timePeriod.to = new Date();
         timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 7));
 
@@ -90,7 +111,7 @@ export class AdminComponent implements OnInit {
      * Get total for last 28 days
      */
     getTotalForLastMonth() {
-        const timePeriod = new Object();
+        const timePeriod = { to: null, from: null };
         timePeriod.to = new Date();
         timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 28));
 
@@ -103,117 +124,129 @@ export class AdminComponent implements OnInit {
             });
     }
 
+    /**
+     * Get all items from the menu
+     * @return menu[]
+     */
     getMenu() {
         this.menuService.getMenu().subscribe(result => {
-            this.menu = result;
+            this.menuItems = result;
         });
     }
 
+    /**
+     * Get all users
+     * @return users[]
+     */
     getUsers() {
         this.usersService.getUsers().subscribe(result => {
             this.users = result;
         });
     }
 
-    identifyMenu(index, item) {
-        return index;
+    /**
+     * Calls table service to get all tables.
+     * Maps response to Table array
+     */
+    getTables() {
+        this.tableService.getTables().subscribe(result => {
+            this.tables = result;
+        });
     }
 
-    identifyUsers(index, item) {
-        return index;
+    openMenuEdit() {
+        this.editMenu = true;
+        this.editStaff = false;
+        this.editTables = false;
+        this.menuOpen = true;
     }
 
-    addItem() {
-        if (this.newMenuForm.valid) {
-            const newItem = this.newMenuForm.value;
-            console.log(newItem);
-            this.menuService.create(newItem).subscribe(
-                data => {
-                    console.log('item created');
-                    console.log(data.item);
+    openStaffEdit() {
+        this.editStaff = true;
+        this.editMenu = false;
+        this.editTables = false;
+        this.menuOpen = true;
+    }
 
-                    // Reload the menu after the item is added.
-                    this.getMenu();
-                },
+    openTableEdit() {
+        this.editTables = true;
+        this.editMenu = false;
+        this.editStaff = false;
+        this.menuOpen = true;
+    }
+
+    closeMenu() {
+        this.menuOpen = false;
+        this.editStaff = false;
+        this.editMenu = false;
+    }
+
+    addItem(item: MenuItem) {
+        this.menuService.create(item)
+            .subscribe(() => {
+                // Reload the menu after the item is added.
+                this.getMenu();
+            },
                 () => {
                     console.log('failed');
                 }
             );
-        }
     }
 
-    removeItem(id) {
-        console.log(id);
-        const element = document.getElementById(id).parentElement;
-        console.log(element.innerHTML);
-        element.remove();
+    removeItem(id: string) {
         this.menuService.delete(id)
-            .subscribe(res => {
-                console.log(res);
+            .subscribe(() => {
+                this.getMenu();
             });
     }
 
-    addUser() {
-        if (this.newUserForm.valid) {
-            const newUser = this.newUserForm.value;
-            console.log(newUser);
-            this.usersService.create(newUser)
-                .subscribe((data) => {
-                    console.log('item created');
-                    console.log(data.user);
-
-                    // Reload the users after the user is added
-                    this.getUsers();
-                }, () => {
-                    console.log('failed');
-                });
-        }
+    updateItem(item: MenuItem) {
+        this.menuService.update(item._id, item).subscribe(() => {
+        });
     }
 
-    removeUser(id) {
-        console.log(id);
-        const element = document.getElementById(id).parentElement;
-        console.log(element.innerHTML);
-        element.remove();
+    addUser(user: User) {
+        this.usersService.create(user)
+            .subscribe(() => {
+                // Reload the users after the user is added
+                this.getUsers();
+            }, () => {
+                console.log('failed');
+            });
+    }
+
+    removeUser(id: string) {
         this.usersService.delete(id)
-            .subscribe(res => {
-                console.log(res);
+            .subscribe(() => {
+                this.getUsers();
             });
     }
 
-    removeBrackets(string) {
-        return string.replace(/\<[^\>]*\>/, '');
+    updateUser(user: User) {
+        this.usersService.update(user._id, user)
+            .subscribe(() => {
+                this.getUsers();
+            });
     }
 
-    isNumeric(num) {
-        return !isNaN(num);
+    addTable(table: any) {
+        this.tableService.addTable(table)
+            .subscribe(() => {
+                this.getTables();
+            });
     }
 
-    openMenuNav() {
-        document.getElementById('menuBar').style.width = '30%';
-        document.getElementById('menuBar').style.display = 'block';
-        document.getElementById('menuMain').style.visibility = 'hidden';
-        document.getElementById('summary').style.marginLeft = '20%';
+    removeTable(id: string) {
+        this.tableService.deleteTable(id)
+            .subscribe(() => {
+                this.getTables();
+            });
     }
 
-    closeMenuNav() {
-        document.getElementById('menuBar').style.width = '0';
-        document.getElementById('menuBar').style.display = 'none';
-        document.getElementById('menuMain').style.visibility = 'visible';
-        document.getElementById('summary').style.marginLeft = '0';
-    }
-
-    openStaffNav() {
-        document.getElementById('staffBar').style.width = '30%';
-        document.getElementById('staffBar').style.display = 'block';
-        document.getElementById('staffMain').style.visibility = 'hidden';
-        document.getElementById('analytics').style.marginLeft = '20%';
-    }
-
-    closeStaffNav() {
-        document.getElementById('staffBar').style.width = '0';
-        document.getElementById('staffBar').style.display = 'none';
-        document.getElementById('staffMain').style.visibility = 'visible';
-        document.getElementById('analytics').style.marginLeft = '0';
+    updateTable(table: any) {
+        this.tableService.updateTable(table._id, table)
+            .subscribe(() => {
+                this.getTables();
+            });
     }
 }

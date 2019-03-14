@@ -23,7 +23,7 @@ var OrderItemsSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['InProgress', 'Completed'],
-        required: true
+        default: 'InProgress'
     }
 });
 
