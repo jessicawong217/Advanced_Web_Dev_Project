@@ -156,6 +156,7 @@ html, body {
   border: 2px solid lightblue;
   border-radius: 20px;
   height: 30vh;
+  white-space: nowrap;
 }
 
 .displayBoxLink {
