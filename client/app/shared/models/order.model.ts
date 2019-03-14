@@ -5,6 +5,7 @@ export class Order {
         public _id: string,
         public tableId: number,
         public status: string,
+        public total: number,
         public createdAt: Date,
         public finishedAt: Date,
         public items: OrderItem[],

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
+import { MenuItem } from '../menu/menu.model';
 import { MenuService } from '../menu/menu.service';
+import { Order } from '../shared/models/order.model';
+import { Table } from '../shared/models/table.model';
+import { OrderService } from '../shared/order.service';
+import { TableService } from '../shared/table.service';
+import { User } from '../users/user.model';
 import { UsersService } from '../users/users.service';
-import { MenuItem } from "../menu/menu.model";
-import { User } from "../users/user.model";
-import { Table } from "../shared/models/table.model";
-import { TableService } from "../shared/table.service";
+import { AdminService } from './admin.service';
 
 /**
  * Class to build admin view
@@ -32,9 +37,15 @@ export class AdminComponent implements OnInit {
     tables: Table[];
     users: User[];
 
-    private displayOrdersTodayBool;
-    private displayOrdersWeekBool;
-    private displayOrdersMonthBool;
+    public orders: Order[];
+
+    public timePeriod = new Object({ from: null, to: null });
+
+    public todayTotal: number;
+
+    public weekTotal: number;
+
+    public monthTotal: number;
 
     /**
      * Constructor to pass services and modules
@@ -45,8 +56,11 @@ export class AdminComponent implements OnInit {
     constructor(
         private menuService: MenuService,
         private usersService: UsersService,
-        private tableService: TableService
-    ) {}
+        private formBuilder: FormBuilder,
+        protected orderSerice: OrderService,
+        private tableService: TableService,
+        private adminService: AdminService
+    ) { }
 
     /**
      * Get data on load
@@ -54,7 +68,60 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.getMenu();
         this.getUsers();
+        this.getTotalForToday();
+        this.getTotalForLastWeek();
+        this.getTotalForLastMonth();
         this.getTables();
+    }
+
+    /**
+    * Get total for last 24h
+    */
+    getTotalForToday() {
+        const timePeriod = { to: null, from: null };
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 1));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.todayTotal = data.total;
+            }, (error) => {
+            });
+    }
+
+    /**
+     * Get total for last 7 days
+     */
+    getTotalForLastWeek() {
+        const timePeriod = { to: null, from: null };
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 7));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.weekTotal = data.total;
+                console.log(data);
+            }, (error) => {
+            });
+    }
+
+    /**
+     * Get total for last 28 days
+     */
+    getTotalForLastMonth() {
+        const timePeriod = { to: null, from: null };
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 28));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.monthTotal = data.total;
+                console.log(data);
+            }, (error) => {
+            });
     }
 
     /**
@@ -133,10 +200,10 @@ export class AdminComponent implements OnInit {
                 // Reload the menu after the item is added.
                 this.getMenu();
             },
-            () => {
-                console.log('failed');
-            }
-        );
+                () => {
+                    console.log('failed');
+                }
+            );
     }
 
     /**
@@ -192,14 +259,14 @@ export class AdminComponent implements OnInit {
         this.usersService.update(user._id, user)
             .subscribe(() => {
                 this.getUsers();
-        });
+            });
     }
 
     addTable(table: any) {
         this.tableService.addTable(table)
             .subscribe(() => {
                 this.getTables();
-            })
+            });
     }
 
     removeTable(id: string) {
@@ -212,49 +279,7 @@ export class AdminComponent implements OnInit {
     updateTable(table: any) {
         this.tableService.updateTable(table._id, table)
             .subscribe(() => {
-                this.getTables()
+                this.getTables();
             });
-    }
-
-    /**
-     * Display revenue from today
-     */
-    displayOrdersToday() {
-        this.displayOrdersTodayBool = !this.displayOrdersTodayBool;
-        if (this.displayOrdersTodayBool) {
-            document.getElementById("summaryToday").style.display = "none";
-            document.getElementById("summaryDetailsToday").style.display = "block";
-        } else {
-            document.getElementById("summaryToday").style.display = "block";
-            document.getElementById("summaryDetailsToday").style.display = "none";
-        }
-    }
-
-    /**
-     * Display revenue from week
-     */
-    displayOrdersWeek() {
-        this.displayOrdersWeekBool = !this.displayOrdersWeekBool;
-        if (this.displayOrdersWeekBool) {
-            document.getElementById("summaryWeek").style.display = "none";
-            document.getElementById("summaryDetailsWeek").style.display = "block";
-        } else {
-            document.getElementById("summaryWeek").style.display = "block";
-            document.getElementById("summaryDetailsWeek").style.display = "none";
-        }
-    }
-
-    /**
-     * Display revenue from month
-     */
-    displayOrdersMonth() {
-        this.displayOrdersMonthBool = !this.displayOrdersMonthBool;
-        if (this.displayOrdersMonthBool) {
-            document.getElementById("summaryMonth").style.display = "none";
-            document.getElementById("summaryDetailsMonth").style.display = "block";
-        } else {
-            document.getElementById("summaryMonth").style.display = "block";
-            document.getElementById("summaryDetailsMonth").style.display = "none";
-        }
     }
 }

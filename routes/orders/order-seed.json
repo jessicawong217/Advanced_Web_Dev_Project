@@ -22,6 +22,7 @@
     {
         "tableId": 2,
         "status": "Completed",
+        "total": 27.9,
         "discount": 20,
         "createdAt": 1551370979222,
         "finishedAt": 1551370999222,
@@ -36,6 +37,40 @@
                 "menuItemId": "321",
                 "name": "Sticky Pork",
                 "price": 18.95,
+                "status": "Completed"
+            }
+        ]
+    },
+    {
+        "tableId": 2,
+        "status": "Completed",
+        "total": 37.9,
+        "discount": 20,
+        "createdAt": 1551370979222,
+        "finishedAt": 1551370999222,
+        "items": [
+            {
+                "menuItemId": "1",
+                "name": "Filet-Mignon",
+                "price": 20,
+                "status": "Completed"
+            },
+            {
+                "menuItemId": "2",
+                "name": "Chicken Soup",
+                "price": 7,
+                "status": "Completed"
+            },
+            {
+                "menuItemId": 7,
+                "name": "Iced Lemon Tea",
+                "price": 3.5,
+                "status": "Completed"
+            },
+            {
+                "menuItemId": 8,
+                "name": "CocaCola",
+                "price": 2.5,
                 "status": "Completed"
             }
         ]

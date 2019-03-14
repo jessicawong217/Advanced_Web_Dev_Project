@@ -34,4 +34,12 @@ router
     /** POST /api/orders/:id/items/:itemId/complete - Mark an order item as completed */
     .post(orderCtrl.completeItem);
 
+router
+    .route('/total-time')
+    /** 
+     * POST /api/orders/total-time - Get the total for Completed orders over
+     * over a period of time
+     */
+    .post(orderCtrl.totalForTimePeriod);
+
 module.exports = router;

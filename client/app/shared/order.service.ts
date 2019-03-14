@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { OrderViewModel } from './models/order-view.model';
 import { OrderItem } from '../shared/models/order-item.model';
 import { Order } from '../shared/models/order.model';
+import { OrderViewModel } from './models/order-view.model';
 
 @Injectable({
     providedIn: 'root'
@@ -38,8 +38,8 @@ export class OrderService {
     /**
      * Calls API endpoint to complete an order
      */
-    completeOrder(orderId: string, discountedValue: number) {
-        return this.http.post<OrderViewModel>('/api/orders/' + orderId + '/complete', { discountedValue })
+    completeOrder(orderId: string, data: object) {
+        return this.http.post<OrderViewModel>('/api/orders/' + orderId + '/complete', data)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -49,7 +49,7 @@ export class OrderService {
      * Calls API endpoint to update an order
      */
     updateOrder(orderId: string, items: OrderItem[]) {
-        return this.http.patch<OrderViewModel>('/api/orders/' + orderId, {items})
+        return this.http.patch<OrderViewModel>('/api/orders/' + orderId, { items })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
