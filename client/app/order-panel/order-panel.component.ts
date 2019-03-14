@@ -17,8 +17,6 @@ export type PanelType = 'waiter' | 'counter';
 })
 export class OrderPanelComponent implements OnInit {
 
-    waiterId: number;
-
     // Set the order to the one from the input
     // Then set the discount to 0 and calculate total
     @Input()
@@ -86,7 +84,6 @@ export class OrderPanelComponent implements OnInit {
      */
     ngOnInit() {
         this.calculateTotal();
-        this.waiterId = this.usersService.currentUser.id;
     }
 
     /**
