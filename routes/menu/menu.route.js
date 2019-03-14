@@ -17,9 +17,4 @@ router
     /** DELETE /api/menu/:id - Delete an item */
     .delete(menuCtrl.remove);
 
-router
-    .route('/seed')
-    /** POST /api/menu/seed - Add data */
-    .post(menuCtrl.seed);
-
 module.exports = router;

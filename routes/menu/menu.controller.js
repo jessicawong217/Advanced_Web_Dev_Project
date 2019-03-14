@@ -38,6 +38,10 @@ function get(req, res, next) {
 function create(req, res, next) {
     const newItem = req.body.item;
 
+    if (newItem == null) {
+        throw new Error('No menu data passed');
+    }
+
     Menu.findOne({}, {}, {
             sort: {
                 'id': -1
@@ -69,6 +73,10 @@ function update(req, res, next) {
     const id = req.params.id;
     const modifiedItem = req.body.item;
 
+    if (modifiedItem == null) {
+        throw new Error('No item data passed');
+    }
+
     Menu.get(id)
         .then(menuItem => {
             menuItem.name = modifiedItem.name;
@@ -97,27 +105,10 @@ function remove(req, res) {
         .catch(e => next(e));
 }
 
-/**
- * Seed the menu item db with static menu data.
- * @param {*} req The express request object.
- * @param {*} res The express result object.
- * @param {*} next Next match route handler.
- */
-function seed(req, res, next) {
-    var dummyArray = require('./menu-seed');
-
-    Menu.insertMany(dummyArray)
-        .then(() => res.json({
-            ok: true
-        }))
-        .catch(e => next(e));
-}
-
 module.exports = {
     list,
     get,
     create,
     update,
-    remove,
-    seed
+    remove
 };
