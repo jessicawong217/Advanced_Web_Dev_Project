@@ -9,12 +9,12 @@
            [(ngModel)]="table.capacity" name="capacity"
            [disabled]="tableEditing != table._id">
     <ng-container *ngIf="formType === 'Add'">
-      <button  class="btn btn-success" (click)="addTable(table)">Add</button>
+      <button  class="btn btn-outline-success" (click)="addTable(table)">Add</button>
     </ng-container>
     <ng-container *ngIf="formType === 'Edit'">
-      <button class="btn btn-primary" *ngIf="tableEditing != table._id" (click)="enableEditing(table._id)">Edit</button>
-      <button class="btn btn-success" *ngIf="tableEditing == table._id" (click)="updateTable(table)">Save</button>
-      <button class="btn btn-danger" (click)="removeTable(table._id)">Delete</button>
+      <button class="btn btn-outline-primary" *ngIf="tableEditing != table._id" (click)="enableEditing(table._id)">Edit</button>
+      <button class="btn btn-outline-success" *ngIf="tableEditing == table._id" (click)="updateTable(table)">Save</button>
+      <button class="btn btn-outline-danger" (click)="removeTable(table._id)">Delete</button>
     </ng-container>
   </div>
 </form>
