@@ -190,7 +190,7 @@ html, body {
   }
 
   .sidebar a {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
 
   .main {
@@ -211,6 +211,6 @@ html, body {
   }
 
   .displayText {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
 }
