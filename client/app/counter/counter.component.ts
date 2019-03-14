@@ -54,7 +54,6 @@ export class CounterComponent implements OnInit, OnDestroy {
             .getAllOrders()
             .subscribe((data) => {
                 this.orders = data;
-                // this.sidebarOrder = data[0];
             }, (error) => {
                 this.errorMessage = 'Cannot get orders.';
             });
