@@ -58,26 +58,6 @@ html, body {
   text-decoration: none;
 }
 
-#menuBar {
-  border-bottom: 0.4px solid white;
-}
-
-#staffBar {
-  border-top: 0.4px solid white;
-}
-
-/* The sidebar links */
-.sidebar a {
-  text-decoration: none;
-  display: block;
-  transition: 0.3s;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidebar a:hover {
-  color: grey;
-}
-
 /* Position and style the close button (top right corner) */
 .sidebar .closebtn {
   position: absolute;
@@ -90,49 +70,6 @@ html, body {
   cursor: pointer;
   border: none;
 }
-
-.savebtn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 10px 15px;
-  font-size: 1.0em;
-  color: white;
-  background-color: lightgreen;
-  cursor: pointer;
-  border: none;
-}
-
-.addBtn {
-  position: relative;
-  top: 0;
-  padding: 10px 15px;
-  font-size: 1.0em;
-  color: white;
-  background-color: lightblue;
-  cursor: pointer;
-  border: none;
-}
-
-/* The button used to open the sidebar */
-.openbtn {
-  font-size: 1.0em;
-  cursor: pointer;
-  background-color: grey;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-}
-
-.openbtn:hover {
-  background-color: #444;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-/*.main {*/
-  /*transition: margin-left .5s;*/
-/*}*/
-
 .main {
   padding: 4rem 1.5rem;
   max-width: inherit;
@@ -147,76 +84,6 @@ html, body {
   transition: margin-left .5s;
   padding: 15px;
   height: 50vh;
-}
-
-.sideScroll {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 50px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 100px;
-  height: calc(100% - 55px);
-  overflow-x: scroll;
-  overflow-y: scroll;
-  font-size: 1em;
-}
-
-.table td {
-  text-decoration-line: underline;
-}
-
-.removeBtn {
-  position: relative;
-  float: right;
-}
-
-.menuName {
-  width: 45%;
-}
-
-.menuPrice {
-  width: 15%;
-}
-
-.menuCategory {
-  width: 40%
-}
-
-.selectBox {
-  border: none;
-  background-color: transparent;
-}
-
-.userName {
-  width: 40%;
-}
-
-.userType {
-  width: 30%;
-}
-
-.userPin {
-  width: 30%
-}
-
-#userPin {
-  width: 3vw;
-  display: inline-block;
-}
-
-td input {
-  width: 100%;
-  vertical-align: middle;
-}
-
-td select {
-  vertical-align: middle;
-}
-
-.btnAdd {
-  float: right;
-  display: inline-block;
 }
 
 .data {
