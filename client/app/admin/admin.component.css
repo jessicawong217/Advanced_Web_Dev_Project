@@ -42,10 +42,6 @@ html, body {
   cursor: pointer;
   border: none;
 }
-.main {
-  padding: 4rem 1.5rem;
-  max-width: inherit;
-}
 
 .menuOpen {
   margin-left: 37%;

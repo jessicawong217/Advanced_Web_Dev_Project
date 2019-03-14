@@ -6,8 +6,8 @@
     background-color: #2e353d;
     position: fixed;
     right: 0;
-    top: 0;
-    height: 100%;
+    top: 70px;
+    bottom: 0;
     color: #e1ffff;
     transition: 0.3s transform ease-in-out;
     width: 100%;

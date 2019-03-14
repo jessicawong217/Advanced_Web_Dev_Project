@@ -16,7 +16,6 @@ import { UsersIdGuard } from './users/guards/users-id-guard.service';
 import { LoginComponent } from './users/login/login.component';
 import { UsersService } from './users/users.service';
 import { WaiterComponent } from './waiter/waiter.component';
-import { WaiterService } from './waiter/waiter.service';
 import { AdminComponent } from './admin/admin.component';
 import { WaitingTimeComponent } from './waiting-time/waiting-time.component';
 import { MenuFormComponent } from './admin/menu-form/menu-form.component';
@@ -52,7 +51,7 @@ import { TableService } from "./shared/table.service";
         ReactiveFormsModule,
         SocketIoModule
     ],
-    providers: [WaiterService, OrderService, UsersService, TableService, UsersIdGuard],
+    providers: [OrderService, UsersService, TableService, UsersIdGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
