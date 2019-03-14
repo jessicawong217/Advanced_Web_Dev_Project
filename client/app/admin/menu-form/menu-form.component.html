@@ -14,7 +14,7 @@
     </ng-container>
     <ng-container *ngIf="formType === 'Edit'">
       <button class="btn btn-outline-primary" *ngIf="itemEditing != item.id" (click)="enableEditing(item.id)">Edit</button>
-      <button class="btn btn-outline=success" *ngIf="itemEditing == item.id" (click)="updateItem(item)">Save</button>
+      <button class="btn btn-outline-success" *ngIf="itemEditing == item.id" (click)="updateItem(item)">Save</button>
       <button class="btn btn-outline-danger" (click)="removeItem(item._id)">Delete</button>
     </ng-container>
   </div>
