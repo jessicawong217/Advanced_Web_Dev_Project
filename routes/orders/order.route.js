@@ -7,6 +7,7 @@ router
     .route('/')
     /** GET /api/orders - Get list of orders */
     .get(orderCtrl.list)
+    /** POST /api/orders - Create new order */
     .post(orderCtrl.create);
 
 router

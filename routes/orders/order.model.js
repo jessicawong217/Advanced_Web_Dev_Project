@@ -123,8 +123,6 @@ OrderSchema.statics = {
     },
 
     getByDates(from, to) {
-        console.log(from);
-        console.log(to);
         return this.find({
             finishedAt: {
                 $gte: from,

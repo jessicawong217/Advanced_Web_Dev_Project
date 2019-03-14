@@ -16,6 +16,16 @@ export class OrderService {
     }
 
     /**
+     * Calls API endpoint to start an order
+     */
+    startOrder(order: Order) {
+        return this.http.post<OrderViewModel>('/api/orders', { order: order })
+            .pipe(
+                catchError((error: any) => observableThrowError(error))
+            );
+    }
+
+    /**
      * Calls API endpoint to get all orders in progress
      */
     getInProgressOrders() {

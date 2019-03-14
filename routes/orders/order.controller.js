@@ -88,7 +88,7 @@ function complete(req, res, next) {
 function update(req, res, next) {
     var orderId = req.params.id;
     var items = req.body.items;
-    
+
     if (items == null || items.length < 1) {
         throw new Error('No discount data passed');
     }
@@ -155,6 +155,8 @@ function completeAllItems(req, res, next) {
  */
 function create(req, res, next) {
     const order = req.body.order;
+
+    order.status = "InProgress";
 
     if (order == null) {
         throw new Error('No order data passed');
