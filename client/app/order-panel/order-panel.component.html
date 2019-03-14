@@ -136,7 +136,7 @@
                         <button type="button" class="btn btn-block btn-success"
                             (click)="completeOrder(order)">Complete</button>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4" *ngIf="order.status === 'Completed'">
                         <button type="button" (click)="printReceipt()" class="btn btn-block btn-info">Print</button>
                     </div>
                 </ng-container>
