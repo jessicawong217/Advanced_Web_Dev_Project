@@ -38,6 +38,10 @@ function update(req, res, next) {
     var tableId = req.params.id;
     var updatedTable = req.body.table;
 
+    if (updatedTable == null) {
+        throw new Error('No table data passed');
+    }
+
     return Table.findById(tableId)
         .then(table => {
             table.id = updatedTable.id;
