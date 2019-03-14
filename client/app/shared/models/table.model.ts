@@ -3,3 +3,7 @@ export class Table {
                 public id: number,
                 public capacity: number) {}
 }
+
+export interface TableViewModel {
+    table: Table;
+}

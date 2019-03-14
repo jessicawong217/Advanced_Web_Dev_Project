@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Table } from "./models/table.model";
+import { Table, TableViewModel } from "./models/table.model";
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -28,7 +28,7 @@ export class TableService {
      * @param table The new table
      */
     addTable(table: Table) {
-        return this.http.post<Table>(`${environment.apiUrl}tables`, { table })
+        return this.http.post<TableViewModel>(`${environment.apiUrl}tables`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -39,7 +39,7 @@ export class TableService {
      * @param  id table id
      */
     deleteTable(id: string) {
-        return this.http.delete<Table>(`${environment.apiUrl}tables/${id}`)
+        return this.http.delete<TableViewModel>(`${environment.apiUrl}tables/${id}`)
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );;
@@ -49,7 +49,7 @@ export class TableService {
      * Calls API endpoint to update a table
      */
     updateTable(tableId: string, table: Table) {
-        return this.http.put<Table>(`${environment.apiUrl}tables/${tableId}`, { table })
+        return this.http.put<TableViewModel>(`${environment.apiUrl}tables/${tableId}`, { table })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
