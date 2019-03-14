@@ -1,153 +1,132 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav">
-                <li><a (click)="openMenuEdit()">Edit Menu</a></li>
-                <li><a (click)="openStaffEdit()">Edit Staff</a></li>
-                <li><a (click)="openTableEdit()">Edit Tables</a></li>
-                <li class="user-details">
-                    <app-user-info></app-user-info>
-                </li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <ul class="nav navbar-nav">
+        <li><a (click)="openMenuEdit()">Edit Menu</a></li>
+        <li><a (click)="openStaffEdit()">Edit Staff</a></li>
+        <li><a (click)="openTableEdit()">Edit Tables</a></li>
+        <li class="user-details">
+          <app-user-info></app-user-info>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
 <div class="container-fluid">
-    <div class="col-sm- col-md-4.5 sidebar" *ngIf="menuOpen">
-        <div *ngIf="editMenu">
-            <button class="btn btn-primary" (click)="closeMenu()">Close</button>
-            <br><br>
-            <app-menu-form [formType]="'Add'"
-                           [item]="newItem"
-                           (itemAdded)="addItem($event)">
-            </app-menu-form>
-            <app-menu-form *ngFor="let item of menuItems | orderBy: 'category'"
-                           [formType]="'Edit'"
-                           [item]="item"
-                           (itemUpdated)="updateItem($event)"
-                           (itemRemoved)="removeItem($event)">
-            </app-menu-form>
-        </div>
-        <div *ngIf="editStaff">
-            <button class="btn btn-primary"  (click)="closeMenu()">Close</button>
-            <br><br>
-            <app-staff-form [formType]="'Add'"
-                            [user]="newUser"
-                            (userAdded)="addUser($event)">
-            </app-staff-form>
-            <app-staff-form *ngFor="let user of users | orderBy: 'type'"
-                            [formType]="'Edit'"
-                            [user]="user"
-                            (userUpdated)="updateUser($event)"
-                            (userRemoved)="removeUser($event)"
-            ></app-staff-form>
-        </div>
-        <div *ngIf="editTables">
-            <button class="btn btn-primary"  (click)="closeMenu()">Close</button>
-            <br><br>
-            <app-table-form [formType]="'Add'"
-                            [table]="newTable"
-                            (tableAdded)="addTable($event)">
-            </app-table-form>
-            <app-table-form *ngFor="let table of tables | orderBy: '-id'"
-                            [formType]="'Edit'"
-                            [table]="table"
-                            (tableRemoved)="removeTable($event)"
-                            (tableUpdated)="updateTable($event)"
-            ></app-table-form>
-        </div>
+  <div class="col-sm- col-md-4.5 sidebar" *ngIf="menuOpen">
+    <div *ngIf="editMenu">
+      <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
+      <br><br>
+      <app-menu-form [formType]="'Add'" [item]="newItem" (itemAdded)="addItem($event)">
+      </app-menu-form>
+      <app-menu-form *ngFor="let item of menuItems | orderBy: 'category'" [formType]="'Edit'" [item]="item" (itemUpdated)="updateItem($event)" (itemRemoved)="removeItem($event)">
+      </app-menu-form>
     </div>
-
-    <div class="col-md-8 col-md-offset-2 main" [ngClass]="{'menuOpen' : menuOpen}">
-        <div class="col content pr-0 " id="summary">
-            <h3>Income Summary</h3>
-            <hr>
-            <div class="row data">
-                <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersToday()">
-                    <div class="display" id="summaryToday">
-                        <div class="displayValue text-secondary">
-                            £837.35
-                        </div>
-                        <div class="displayText text-secondary">
-                            Today
-                        </div>
-                    </div>
-
-                    <div class="summaryDetails" id="summaryDetailsToday">
-                        <p>Placeholder</p>
-                    </div>
-                </div>
-
-                <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersWeek()">
-                    <div class="display" id="summaryWeek">
-                        <div class="displayValue text-secondary">
-                            £12,245.95
-                        </div>
-                        <div class="displayText text-secondary">
-                            This week
-                        </div>
-                    </div>
-
-                    <div class="summaryDetails" id="summaryDetailsWeek">
-                        <p>Placeholder</p>
-                    </div>
-                </div>
-
-                <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersMonth()">
-                    <div class="display" id="summaryMonth">
-                        <div class="displayValue text-secondary">
-                            £64,565.55
-                        </div>
-                        <div class="displayText text-secondary">
-                            This month
-                        </div>
-                    </div>
-                    <div class="summaryDetails" id="summaryDetailsMonth">
-                        <p>Placeholder</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col content pr-0" id="analytics">
-            <h3>Analytics</h3>
-            <hr>
-            <div class="row data">
-                <div class="col displayBox displayBoxLink m-4">
-                    <div class="display">
-                        <div class="displayValue text-secondary">
-                            104
-                        </div>
-                        <div class="displayText text-secondary">
-                            Orders average/day
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col displayBox displayBoxLink m-4">
-                    <div class="display">
-                        <div class="displayValue text-secondary">
-                            £10,864,25
-                        </div>
-                        <div class="displayText text-secondary">
-                            Revenue average/week
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col displayBox displayBoxLink m-4">
-                    <div class="display">
-                        <div class="displayValue text-secondary">
-                            £60,667.05
-                        </div>
-                        <div class="displayText text-secondary">
-                            Revenue average/month
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div *ngIf="editStaff">
+      <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
+      <br><br>
+      <app-staff-form [formType]="'Add'" [user]="newUser" (userAdded)="addUser($event)">
+      </app-staff-form>
+      <app-staff-form *ngFor="let user of users | orderBy: 'type'" [formType]="'Edit'" [user]="user" (userUpdated)="updateUser($event)" (userRemoved)="removeUser($event)"></app-staff-form>
     </div>
+    <div *ngIf="editTables">
+      <button class="btn btn-outline-primary" (click)="closeMenu()">Close</button>
+      <br><br>
+      <app-table-form [formType]="'Add'" [table]="newTable" (tableAdded)="addTable($event)">
+      </app-table-form>
+      <app-table-form *ngFor="let table of tables | orderBy: '-id'" [formType]="'Edit'" [table]="table" (tableRemoved)="removeTable($event)" (tableUpdated)="updateTable($event)"></app-table-form>
+    </div>
+  </div>
+</div>
 
+<div class="col-md-8 col-md-offset-2 main" [ngClass]="{'menuOpen' : menuOpen}">
+  <div class="col content" id="summary">
+    <h3>Income Summary</h3>
+    <hr>
+    <div class="row data">
+      <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersToday()">
+        <div class="display" id="summaryToday">
+          <div class="displayValue text-secondary">
+            £837.35
+          </div>
+          <div class="displayText text-secondary">
+            Today
+          </div>
+        </div>
+
+        <div class="summaryDetails" id="summaryDetailsToday">
+          <p>Placeholder</p>
+        </div>
+      </div>
+
+      <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersWeek()">
+        <div class="display" id="summaryWeek">
+          <div class="displayValue text-secondary">
+            £12,245.95
+          </div>
+          <div class="displayText text-secondary">
+            This week
+          </div>
+        </div>
+
+        <div class="summaryDetails" id="summaryDetailsWeek">
+          <p>Placeholder</p>
+        </div>
+      </div>
+
+      <div class="col displayBox displayBoxLink m-4" (click)="displayOrdersMonth()">
+        <div class="display" id="summaryMonth">
+          <div class="displayValue text-secondary">
+            £64,565.55
+          </div>
+          <div class="displayText text-secondary">
+            This month
+          </div>
+        </div>
+        <div class="summaryDetails" id="summaryDetailsMonth">
+          <p>Placeholder</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col content" id="analytics">
+    <h3>Analytics</h3>
+    <hr>
+    <div class="row data">
+      <div class="col displayBox displayBoxLink m-4">
+        <div class="display">
+          <div class="displayValue text-secondary">
+            104
+          </div>
+          <div class="displayText text-secondary">
+            Orders average/day
+          </div>
+        </div>
+      </div>
+
+      <div class="col displayBox displayBoxLink m-4">
+        <div class="display">
+          <div class="displayValue text-secondary">
+            £10,864,25
+          </div>
+          <div class="displayText text-secondary">
+            Revenue average/week
+          </div>
+        </div>
+      </div>
+
+      <div class="col displayBox displayBoxLink m-4">
+        <div class="display">
+          <div class="displayValue text-secondary">
+            £60,667.05
+          </div>
+          <div class="displayText text-secondary">
+            Revenue average/month
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

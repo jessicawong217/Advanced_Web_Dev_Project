@@ -13,3 +13,11 @@
 .name {
     width: 13rem;
 }
+
+.buttonsShow {
+  display: inline-block;
+}
+
+.buttonsHide {
+  display: hidden;
+}

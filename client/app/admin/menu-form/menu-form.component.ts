@@ -1,10 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MenuItem } from "../../menu/menu.model";
 
+/**
+ * Menu Component to handle the menu sidebar
+ * @param  {selector   [description]
+ * @param  templateUrl Menu sidebar HTML
+ * @param  styleUrls   Menu sidebar CSS
+ */
 @Component({
-  selector: 'app-menu-form',
-  templateUrl: './menu-form.component.html',
-  styleUrls: ['./menu-form.component.css']
+    selector: 'app-menu-form',
+    templateUrl: './menu-form.component.html',
+    styleUrls: ['./menu-form.component.css']
 })
 export class MenuFormComponent implements OnInit {
 
@@ -25,20 +31,36 @@ export class MenuFormComponent implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Add an item to the menu
+     * @param  item New item to be added
+     */
     addItem(item: MenuItem) {
-      this.itemAdded.emit(item);
+        this.itemAdded.emit(item);
     }
 
+    /**
+     * Edit an item from the menu
+     * @param  item Menu item to be edited
+     */
     updateItem(item: MenuItem) {
-      this.itemUpdated.emit(item);
-      this.itemEditing = null;
+        this.itemUpdated.emit(item);
+        this.itemEditing = null;
     }
 
+    /**
+     * Remove an item from the menu
+     * @param  id Menu item id to be removed
+     */
     removeItem(id: string) {
-      this.itemRemoved.emit(id);
+        this.itemRemoved.emit(id);
     }
 
-    enableEditing(id){
+    /**
+     * Option to enable the editing of an item
+     * @param  id Item id to be edited
+     */
+    enableEditing(id) {
         this.itemEditing = id;
     }
 
