@@ -127,7 +127,8 @@
         <div class="nav-side-menu-controls container-fluid">
             <div class="row no-gutters">
                 <div class="col-4" *ngIf="order.status != 'Completed'">
-                    <button type="button" class="btn btn-block btn-warning" *ngIf="!order._id">Start</button>
+                    <button type="button" class="btn btn-block btn-warning" *ngIf="!order._id"
+                        (click)="startOrder(order)">Start</button>
                     <button type="button" class="btn btn-block btn-warning" *ngIf="!!order._id"
                         (click)="updateOrder(order)">Update</button>
                 </div>

@@ -87,6 +87,23 @@ export class OrderPanelComponent implements OnInit {
     }
 
     /**
+     * Start Order
+     */
+    startOrder(order: Order) {
+        this.orderService
+            .startOrder(
+                order
+            )
+            .subscribe(response => {
+                this.setOrder = response.order;
+                this.setAlertMessage('Successfully started order.', 'success');
+            },
+                () => {
+                    this.setAlertMessage('Cannot complete order.', 'danger');
+                });
+    }
+
+    /**
      * Switch to or hide a tab.
      * @param name Tab being selected.
      */

@@ -102,7 +102,6 @@ export class AdminComponent implements OnInit {
             .getTotalForTime(timePeriod)
             .subscribe((data) => {
                 this.weekTotal = data.total;
-                console.log(data);
             }, (error) => {
             });
     }
@@ -119,7 +118,6 @@ export class AdminComponent implements OnInit {
             .getTotalForTime(timePeriod)
             .subscribe((data) => {
                 this.monthTotal = data.total;
-                console.log(data);
             }, (error) => {
             });
     }
