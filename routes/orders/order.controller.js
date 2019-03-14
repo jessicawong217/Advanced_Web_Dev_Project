@@ -26,6 +26,30 @@ function listInProgress(req, res, next) {
 }
 
 /**
+ * Return total for a period of time
+ * @param {*} req The express request object.
+ * @param {*} res The express result object.
+ * @param {*} next Next match route handler.
+ */
+function totalForTimePeriod(req, res, next) {
+    Order.getByDates(req.body.from, req.body.to)
+        .then(data => {
+            var totalForTimePeriod = data.reduce(
+                (accumulator, element) =>
+                    element.total + accumulator,
+                0
+            )
+
+            var totalObj = new Object();
+
+            totalObj.total = totalForTimePeriod;
+
+            res.json(totalObj)
+        })
+        .catch(e => next(e));
+}
+
+/**
  * Handle completing an existing order.
  * TODO: validate there is no pending order items?
  * @param {*} req The express request object.
@@ -141,4 +165,5 @@ module.exports = {
     update,
     completeItem,
     completeAllItems,
+    totalForTimePeriod
 };

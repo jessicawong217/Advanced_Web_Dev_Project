@@ -37,6 +37,9 @@ const OrderSchema = new mongoose.Schema({
         enum: ['InProgress', 'Completed'],
         required: true
     },
+    total: {
+        type: Number
+    },
     discount: {
         type: Number,
         default: 0
@@ -115,6 +118,19 @@ OrderSchema.statics = {
     getByStatus(orderStatus) {
         return this.find({ status: orderStatus })
             .sort({ createdAt: -1 })
+            .exec();
+    },
+
+    getByDates(from, to) {
+        console.log(from);
+        console.log(to);
+        return this.find({
+            finishedAt: {
+                $gte: from,
+                $lt: to
+            },
+            status: "Completed"
+        })
             .exec();
     },
 

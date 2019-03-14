@@ -78,6 +78,7 @@ export class CounterComponent implements OnInit, OnDestroy {
             }, (error) => {
             });
     }
+
     /**
      * Listen for both the open and close methods to update table status on
      * completion.

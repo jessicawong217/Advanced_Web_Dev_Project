@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { AdminService } from './admin.service';
 import { MenuService } from '../menu/menu.service';
-import { MenuItemCategory, MenuItem } from '../menu/menu.model';
+import { Order } from '../shared/order.model';
+import { OrderService } from '../shared/order.service';
 import { UsersService } from '../users/users.service';
+import { AdminService } from './admin.service';
 
 @Component({
     selector: 'app-admin',
@@ -28,20 +29,78 @@ export class AdminComponent implements OnInit {
 
     public users = [];
 
-    private displayOrdersTodayBool;
-    private displayOrdersWeekBool;
-    private displayOrdersMonthBool;
+    public orders: Order[];
+
+    public todayTotal: number;
+
+    public weekTotal: number;
+
+    public monthTotal: number;
 
     constructor(
         protected adminService: AdminService,
         private menuService: MenuService,
         private usersService: UsersService,
-        private formBuilder: FormBuilder
-    ) {}
+        private formBuilder: FormBuilder,
+        protected orderSerice: OrderService,
+    ) { }
 
     ngOnInit() {
         this.getMenu();
         this.getUsers();
+        this.getTotalForToday();
+        this.getTotalForLastWeek();
+        this.getTotalForLastMonth();
+    }
+
+    /**
+     * Get total for last 24h
+     */
+    getTotalForToday() {
+        const timePeriod = new Object();
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 1));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.todayTotal = data.total;
+            }, (error) => {
+            });
+    }
+
+    /**
+     * Get total for last 7 days
+     */
+    getTotalForLastWeek() {
+        const timePeriod = new Object();
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 7));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.weekTotal = data.total;
+                console.log(data);
+            }, (error) => {
+            });
+    }
+
+    /**
+     * Get total for last 28 days
+     */
+    getTotalForLastMonth() {
+        const timePeriod = new Object();
+        timePeriod.to = new Date();
+        timePeriod.from = new Date(new Date().setDate(new Date().getDate() - 28));
+
+        this.adminService
+            .getTotalForTime(timePeriod)
+            .subscribe((data) => {
+                this.monthTotal = data.total;
+                console.log(data);
+            }, (error) => {
+            });
     }
 
     getMenu() {
@@ -66,7 +125,7 @@ export class AdminComponent implements OnInit {
 
     addItem() {
         if (this.newMenuForm.valid) {
-            var newItem = this.newMenuForm.value;
+            const newItem = this.newMenuForm.value;
             console.log(newItem);
             this.menuService.create(newItem).subscribe(
                 data => {
@@ -85,7 +144,7 @@ export class AdminComponent implements OnInit {
 
     removeItem(id) {
         console.log(id);
-        var element = document.getElementById(id).parentElement;
+        const element = document.getElementById(id).parentElement;
         console.log(element.innerHTML);
         element.remove();
         this.menuService.delete(id)
@@ -96,12 +155,12 @@ export class AdminComponent implements OnInit {
 
     addUser() {
         if (this.newUserForm.valid) {
-            var newUser = this.newUserForm.value;
+            const newUser = this.newUserForm.value;
             console.log(newUser);
             this.usersService.create(newUser)
                 .subscribe((data) => {
                     console.log('item created');
-                    console.log(data.user)
+                    console.log(data.user);
 
                     // Reload the users after the user is added
                     this.getUsers();
@@ -113,7 +172,7 @@ export class AdminComponent implements OnInit {
 
     removeUser(id) {
         console.log(id);
-        var element = document.getElementById(id).parentElement;
+        const element = document.getElementById(id).parentElement;
         console.log(element.innerHTML);
         element.remove();
         this.usersService.delete(id)
@@ -131,64 +190,30 @@ export class AdminComponent implements OnInit {
     }
 
     openMenuNav() {
-        document.getElementById("menuBar").style.width = "30%";
-        document.getElementById("menuBar").style.display = "block";
-        document.getElementById("menuMain").style.visibility = "hidden";
-        document.getElementById("summary").style.marginLeft = "20%";
+        document.getElementById('menuBar').style.width = '30%';
+        document.getElementById('menuBar').style.display = 'block';
+        document.getElementById('menuMain').style.visibility = 'hidden';
+        document.getElementById('summary').style.marginLeft = '20%';
     }
 
     closeMenuNav() {
-        document.getElementById("menuBar").style.width = "0";
-        document.getElementById("menuBar").style.display = "none";
-        document.getElementById("menuMain").style.visibility = "visible";
-        document.getElementById("summary").style.marginLeft = "0";
+        document.getElementById('menuBar').style.width = '0';
+        document.getElementById('menuBar').style.display = 'none';
+        document.getElementById('menuMain').style.visibility = 'visible';
+        document.getElementById('summary').style.marginLeft = '0';
     }
 
     openStaffNav() {
-        document.getElementById("staffBar").style.width = "30%";
-        document.getElementById("staffBar").style.display = "block";
-        document.getElementById("staffMain").style.visibility = "hidden";
-        document.getElementById("analytics").style.marginLeft = "20%";
+        document.getElementById('staffBar').style.width = '30%';
+        document.getElementById('staffBar').style.display = 'block';
+        document.getElementById('staffMain').style.visibility = 'hidden';
+        document.getElementById('analytics').style.marginLeft = '20%';
     }
 
     closeStaffNav() {
-        document.getElementById("staffBar").style.width = "0";
-        document.getElementById("staffBar").style.display = "none";
-        document.getElementById("staffMain").style.visibility = "visible";
-        document.getElementById("analytics").style.marginLeft = "0";
-    }
-
-    displayOrdersToday() {
-        this.displayOrdersTodayBool = !this.displayOrdersTodayBool;
-        if (this.displayOrdersTodayBool) {
-            document.getElementById("summaryToday").style.display = "none";
-            document.getElementById("summaryDetailsToday").style.display = "block";
-        } else {
-            document.getElementById("summaryToday").style.display = "block";
-            document.getElementById("summaryDetailsToday").style.display = "none";
-        }
-    }
-
-    displayOrdersWeek() {
-
-        this.displayOrdersWeekBool = !this.displayOrdersWeekBool;
-        if (this.displayOrdersWeekBool) {
-            document.getElementById("summaryWeek").style.display = "none";
-            document.getElementById("summaryDetailsWeek").style.display = "block";
-        } else {
-            document.getElementById("summaryWeek").style.display = "block";
-            document.getElementById("summaryDetailsWeek").style.display = "none";
-        }
-    }
-
-    displayOrdersMonth() {
-        this.displayOrdersMonthBool = !this.displayOrdersMonthBool;
-        if (this.displayOrdersMonthBool) {
-            document.getElementById("summaryMonth").style.display = "none";
-            document.getElementById("summaryDetailsMonth").style.display = "block";
-        } else {
-            document.getElementById("summaryMonth").style.display = "block";
-            document.getElementById("summaryDetailsMonth").style.display = "none";
-        }
+        document.getElementById('staffBar').style.width = '0';
+        document.getElementById('staffBar').style.display = 'none';
+        document.getElementById('staffMain').style.visibility = 'visible';
+        document.getElementById('analytics').style.marginLeft = '0';
     }
 }

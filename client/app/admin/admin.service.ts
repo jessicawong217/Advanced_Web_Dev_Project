@@ -12,9 +12,9 @@ export class AdminService {
         private http: HttpClient
     ) { }
 
-    getCounter(): Observable<any> {
-
-        return this.http.get('http://localhost:3000/api/admin')
+    getTotalForTime(body): Observable<any> {
+        return this.http.post('/api/orders/total-time', body
+        )
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
