@@ -73,12 +73,14 @@ export class WaiterComponent implements OnInit, OnDestroy {
      * Handle locking a table when a order is added and unlocking when it is
      * completed.
      */
-    handleOrderEvent(order) {
+    handleOrderEvent(order: Order) {
         var openOrder = order.status == 'InProgress';
         var table = this.tables.filter(t => t.id == order.tableId)[0];
 
-        table.orderId = openOrder ? order.id : null;
-        table.order = openOrder ? order : null;
+        if (table != null) {
+             table.orderId = openOrder ? order._id : null;
+            table.order = openOrder ? order : null;
+        }
     }
 
     startOrderClick(table) {
