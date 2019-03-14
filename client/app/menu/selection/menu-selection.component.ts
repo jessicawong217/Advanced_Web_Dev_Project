@@ -21,7 +21,11 @@ export class MenuSelectionComponent implements OnInit {
     /**
      * List of displayed menu items for selection.
      */
-    items: MenuItem[];
+    items: {[cat: string] : MenuItem[]} = {};
+
+    categories = ['Starter', 'Main', 'Side', 'Dessert', 'Drink'];
+
+    selectedCategory = 'Starter';
 
     /**
      * Search string subject.
@@ -40,12 +44,21 @@ export class MenuSelectionComponent implements OnInit {
             .pipe(
                 debounceTime(1000),
                 switchMap(v => this.menuService.getMenu(1, 50, v)),
-                tap(items => (this.items = items))
+                tap(items => (this.items = this.formatItems(items)))
             )
             .subscribe();
 
         // Load the initial list of menu items.
-        this.menuService.getMenu().subscribe(items => (this.items = items));
+        this.menuService.getMenu().subscribe(items => (this.items = this.formatItems(items)));
+    }
+
+    formatItems(items: MenuItem[]) {
+        return items.reduce((acc, item) => {
+            var currentCatItems = acc[item.category] ? acc[item.category] : [];
+            currentCatItems.push(item);
+            acc[item.category] = currentCatItems;
+            return acc;
+        }, {} as { [cat: string]: MenuItem[] });
     }
 
     /**
@@ -53,7 +66,7 @@ export class MenuSelectionComponent implements OnInit {
      * @param item The new menu item to add.
      */
     addItemClick(item: MenuItem) {
-        this.itemAdded.emit({ name: item.name, price: item.price, menuItemId: item._id });
+        this.itemAdded.emit({ name: item.name, price: item.price, menuItemId: item.id });
     }
 
     /**

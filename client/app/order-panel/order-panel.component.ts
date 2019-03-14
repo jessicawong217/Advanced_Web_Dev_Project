@@ -1,17 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as jsPDF from 'jspdf';
 
 import { OrderItem } from '../shared/order-item.model';
 import { Order } from '../shared/order.model';
 import { OrderService } from '../shared/order.service';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 
 export type PanelType = 'waiter' | 'counter';
 
 @Component({
     selector: 'app-order-panel',
     templateUrl: './order-panel.component.html',
-    styleUrls: ['./order-panel.component.css']
+    styleUrls: ['./order-panel.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class OrderPanelComponent implements OnInit {
 
@@ -30,22 +32,46 @@ export class OrderPanelComponent implements OnInit {
     @Input()
     type: PanelType;
 
+    /**
+     * Current selected tab to display.
+     */
+    @Input()
+    selectedTab = null;
+
+    /**
+     * Event to close the dialog in the parent component.
+     */
     @Output()
     close = new EventEmitter();
 
+    /**
+     * Order to display details for.
+     */
     public order: Order;
 
     public totalNoDiscount: number;
 
     public totalWithDiscount: number;
 
-    public discountForm: FormGroup;
+    public discountForm = this.formBuilder.group({
+        discount: ['', [
+            Validators.min(0),
+            Validators.max(100)
+        ]]
+    });
 
-    public errorMessage: string;
+    /**
+     * Message to show in alert.
+     */
+    public message: string;
+
+    /**
+     * The type of message to show in the alert.
+     */
+    public messageType: "success" | "danger";
 
     /**
      * Order Panel Comoponent Constructor
-     *
      * @param counterService Counter Service
      * @param formBuilder Form Builder
      */
@@ -58,21 +84,19 @@ export class OrderPanelComponent implements OnInit {
      * Runs when page initialises
      */
     ngOnInit() {
-        this.createForm();
         this.calculateTotal();
     }
 
     /**
-     * Creates the form and set the validation rules
+     * Switch to or hide a tab.
+     * @param name Tab being selected.
      */
-    createForm(): void {
-        this.discountForm = this.formBuilder.group({
-            discount: this.formBuilder.control(0, [
-                Validators.required,
-                Validators.minLength(1),
-                Validators.maxLength(3)
-            ])
-        });
+    setSelectedTab(name: string) {
+        if (this.selectedTab == name) {
+            this.selectedTab = null; 
+            return;
+        }
+        this.selectedTab = name;
     }
 
     /**
@@ -95,9 +119,9 @@ export class OrderPanelComponent implements OnInit {
             return;
         }
 
-        if (this.order.discount !== undefined && this.discountForm.value.discount === 0) {
-            this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
-
+        if (this.order.discount !== undefined && this.discountForm.invalid) {
+            this.order.discount = 0;
+            this.totalWithDiscount = this.totalNoDiscount;
         } else {
             this.order.discount = (this.discountForm.value.discount / 100) * this.totalNoDiscount;
             this.totalWithDiscount = this.totalNoDiscount - this.order.discount;
@@ -112,7 +136,7 @@ export class OrderPanelComponent implements OnInit {
             return;
         }
 
-        this.discountForm.controls.discount.patchValue(0);
+        this.discountForm.patchValue({ discount: 0 });
     }
 
     /**
@@ -124,11 +148,15 @@ export class OrderPanelComponent implements OnInit {
         this.orderService
             .completeOrder(
                 order._id,
-                JSON.stringify({ discountedValue: this.order.discount }
-                )
-            ).subscribe(error => {
-                this.errorMessage = 'Cannot complete order.';
-            });
+                this.order.discount
+            )
+            .subscribe(response => {
+                this.setOrder = response.order;
+                this.setAlertMessage('Successfully completed order.', 'success');
+                }, 
+                () => {
+                    this.setAlertMessage('Cannot complete order.', 'success');
+                });
     }
 
     /**
@@ -152,17 +180,15 @@ export class OrderPanelComponent implements OnInit {
             }
         ];
 
-        var newItems = this.order.items.filter(i => i._id == null);
-        
-        console.log(newItems);
         this.orderService
-            .updateOrder(order._id, newItems)
+            .updateOrder(order._id, this.order.items.filter(i => i._id == null))
             .subscribe(
                 (updatedOrder) => {
                     this.setOrder = updatedOrder.order;
+                    this.setAlertMessage('Successfully updated order.', 'success');
                 },
-                (error) => {
-                    this.errorMessage = 'Cannot update order.';
+                () => {
+                    this.setAlertMessage('Cannot update order.');
                 });
     }
 
@@ -301,5 +327,12 @@ export class OrderPanelComponent implements OnInit {
 
         doc.output('dataurlnewwindow');
         // doc.open('receipt.pdf'); // If you want to download it
+    }
+
+    setAlertMessage(message: string, type: 'success' | 'danger' = 'danger') {
+        this.message = message;
+        this.messageType = type;
+
+        setTimeout(() => this.message = null, 8000);
     }
 }

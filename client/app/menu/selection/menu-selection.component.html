@@ -1,30 +1,49 @@
-<hr style="border-color:white;">
-<div>
-    <h2>Menu</h2>
-    <!-- <div class="form-group">
-        <input
-            type="search"
-            class="form-control"
-            (input)="searchInput($event)"
-            placeholder="Search"
-        />
-    </div> -->
+<div class="form-group">
+    <input
+        type="search"
+        class="form-control"
+        (input)="searchInput($event)"
+        placeholder="Search"
+    />
+</div>
 
-    <div class="menu-content" *ngIf="items?.length > 0">
-        <div class="row" *ngFor="let item of items">
+<div class="menu-categories d-flex">
+    <a
+        class="menu-category"
+        *ngFor="let category of categories"
+        [ngClass]="{ 'menu-category--selected': selectedCategory == category }"
+        (click)="selectedCategory = category"
+    >
+        {{ category + 's' }}
+    </a>
+</div>
+
+<ng-container [ngSwitch]="items[selectedCategory]?.length > 0">
+    <div class="menu-list" *ngSwitchCase="true">
+        <div class="row menu-row" *ngFor="let item of items[selectedCategory]">
             <div class="col-2">
-                {{item.name}}
+                {{ item.id }}
             </div>
 
-            <div class="col-1">
-                £{{item.price}}
+            <div class="col-4">
+                {{ item.name }}
             </div>
 
-            <div class="col-1">
-                <button type="submit" class="btn btn-sm btn-primary" (click)="addItemClick(item)">Add</button>
+            <div class="col-4">£{{ item.price.toFixed(2) }}</div>
+
+            <div class="col-2">
+                <button
+                    type="submit"
+                    class="btn btn-sm btn-primary"
+                    (click)="addItemClick(item)"
+                >
+                    Add
+                </button>
             </div>
         </div>
     </div>
-</div>
 
-<hr style="border-color:white;">
+    <div class="nav-side-menu-section-message" *ngSwitchDefault>
+        No items found matching your search.
+    </div>
+</ng-container>

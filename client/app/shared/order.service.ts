@@ -38,8 +38,8 @@ export class OrderService {
     /**
      * Calls API endpoint to complete an order
      */
-    completeOrder(orderId: string, discountedValue: any): Observable<any> {
-        return this.http.post('/api/orders/' + orderId + '/complete', discountedValue)
+    completeOrder(orderId: string, discountedValue: number) {
+        return this.http.post<OrderViewModel>('/api/orders/' + orderId + '/complete', { discountedValue })
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             );
@@ -48,7 +48,7 @@ export class OrderService {
     /**
      * Calls API endpoint to update an order
      */
-    updateOrder(orderId: string, items: OrderItem[]): Observable<any> {
+    updateOrder(orderId: string, items: OrderItem[]) {
         return this.http.patch<OrderViewModel>('/api/orders/' + orderId, {items})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
@@ -62,7 +62,7 @@ export class OrderService {
      * @param itemId Id of the item on the order.
      */
     completeItem(id: string, itemId: string) {
-        return this.http.post(`/api/orders/${id}/items/${itemId}/complete`, {})
+        return this.http.post<OrderViewModel>(`/api/orders/${id}/items/${itemId}/complete`, {})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             ) as Observable<OrderViewModel>;
@@ -73,7 +73,7 @@ export class OrderService {
      * @param id The order id.
      */
     completeAllItems(id: string) {
-        return this.http.post(`/api/orders/${id}/items/complete`, {})
+        return this.http.post<OrderViewModel>(`/api/orders/${id}/items/complete`, {})
             .pipe(
                 catchError((error: any) => observableThrowError(error))
             ) as Observable<OrderViewModel>;
